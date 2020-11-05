@@ -6,7 +6,7 @@ categories: [django, python, programming]
 
 ![_djangooru1]({{ site.baseurl }}/images/djangooru1.png)
 
-Djangooru is a taggable Image Board written in Django using the help of [django-tagging](https://pypi.org/project/django-tagging/). It's simple and has a better look than danbooru.
+Djangooru is a taggable Image Board written in Django using the help of [django-tagging](https://pypi.org/project/django-tagging/). It's simple and has a better look than danbooru. Github: <https://github.com/mochidaz/djangooru>
 
 ## Filters
 
