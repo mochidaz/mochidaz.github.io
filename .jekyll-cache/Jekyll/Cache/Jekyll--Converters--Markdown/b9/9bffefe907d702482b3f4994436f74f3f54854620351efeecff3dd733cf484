@@ -1,0 +1,27 @@
+I"<p><img src="/images/djangooru1.png" alt="_djangooru1" /></p>
+
+<p>Djangooru is a taggable Image Board written in Django using the help of <a href="https://pypi.org/project/django-tagging/">django-tagging</a>. It’s simple and has a better look than danbooru.</p>
+
+<h2 id="filters">Filters</h2>
+
+<p>Djangooru’s tag filtering works just like any other taggable image-board. It does support multiple tag search. The search system works like danbooru: Underscore to replace space, and space to separate tags.</p>
+
+<p><img src="/images/djangooru2.png" alt="_djangooru2" /></p>
+
+<h2 id="post-detail">Post Detail</h2>
+
+<p>Post detail shows the post id, source, artist, and the uploader. The image is resized, but for now, because it looks poor on mobile if the image is resized with percentage, i decided to not resizing it. If you can make a resize system without making the page looks poor, you can just submit a pull request.</p>
+
+<p><img src="/images/djangooru4.png" alt="_djangooru4" /></p>
+
+<h2 id="upload">Upload</h2>
+
+<p>Upload form without good design because it will return an error if i use crispy template</p>
+
+<p><img src="/images/djangooru5.png" alt="_djangooru5" /></p>
+
+<h2 id="pagination-and-nextprev">Pagination and next/prev</h2>
+
+<p>Next/prev and pagination are done. On detail view, if next/previous post is available, it will jump to the next/previous post id. If you are searching i</p>
+
+:ET
