@@ -2,6 +2,7 @@
 layout: post
 title: Onidamashi-hen
 categories: [review, anime, higurashi]
+date: 2020-11-5 09:43:08
 ---
 
 ![_onidamashi]({{ site.baseurl }}/images/onidamashi1.jpg)

@@ -2,6 +2,7 @@
 layout: post
 title: Djangooru Progress (5/11/20)
 categories: [django, python, programming]
+date: 2020-11-5 11:41:20
 ---
 
 ![_djangooru1]({{ site.baseurl }}/images/djangooru1.png)

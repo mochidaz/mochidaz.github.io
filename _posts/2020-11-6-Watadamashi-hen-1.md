@@ -2,6 +2,7 @@
 layout: post
 title: Watadamashi-hen 1
 categories: [review, theories, higurashi, anime]
+date: 2020-11-6 09:36:13
 ---
 
 ![watadamashi1]({{site.baseurl}}/images/watadamashi1.jpg)
