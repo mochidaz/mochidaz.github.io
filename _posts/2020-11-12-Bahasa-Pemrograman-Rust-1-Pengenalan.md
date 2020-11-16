@@ -124,7 +124,7 @@ $ cargo run
 
 Perintah ini akan menjalankan program secara langsung, setelah membuild program.
 
-### Intall Package
+### Install Package
 
 Untuk menginstall sebuah package, umumnya kita harus menuliskan nama package dan versinya di `Cargo.toml` dan saat proses build, cargo akan otomatis menginstallnya untuk kita. Contohnya, bila kita menggunakan package scraper pada project kita, maka kita harus menulis scraper di dependencies seperti ini:
 
