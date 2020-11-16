@@ -1,0 +1,102 @@
+I"A<p><img src="/images/rustlogo.png" alt="rust" /></p>
+
+<h3 id="pengenalan">Pengenalan</h3>
+
+<p>Bahasa Pemrograman Rust merupakan bahasa yang diciptakan oleh Graydon Hoare pada 2014 lalu. Bahasa berkembang dengan sangat cepat. Rust merupakan bahasa yang menyediakan meomry safety atau keamanan memory tanpa perlu mengalokasikannya secara manual seperti dengan malloc() pada bahasa C. Rust memiliki masa depan yang cerah sebagai sebuah bahasa pemrograman. Bahasa low level yang dapat digunakan untuk embedded system, yang menyediakan memory safety, bagaimana tidak akan populer. Beberapa company mulai menulis ulang project mereka yang awalnya ditulis dalam C++ ke Rust. Firefox juga akan mengganti engine mereka dari Gecko ke engine yang ditulis dalam Rust.</p>
+
+<h3 id="instalasi">Instalasi</h3>
+
+<p>Menginstall rust cukup mudah. Bila anda memakai Linux, anda dapat menginstall rustup dengan pacakge manager anda.</p>
+
+<h4 id="debianubuntu">Debian/Ubuntu</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt install rustup
+</code></pre></div></div>
+
+<h4 id="red-hatfedoraopensuse">Red Hat/Fedora/OpenSUSE</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo dnf install rustup
+</code></pre></div></div>
+
+<h4 id="archmanjaro">Arch/Manjaro</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo pacman -S rustup
+</code></pre></div></div>
+
+<h4 id="instalasi-dengan-curl">Instalasi dengan Curl</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+</code></pre></div></div>
+
+<h4 id="instalasi-dalam-windows">Instalasi dalam Windows</h4>
+
+<p>Untuk instalasi dengan windows, anda dapat melihat instruksi disini.</p>
+
+<p><a href="https://forge.rust-lang.org/infra/other-installation-methods.html">https://forge.rust-lang.org/infra/other-installation-methods.html</a></p>
+
+<h3 id="cargo">Cargo</h3>
+
+<p>Cargo adalah package manager rust sekaligus project manager. Dengan cargo, dependency yang ditulis dalam file khusus bernama Cargo.toml akan diinstall, kemudian program dicompile dan dirun. File executable akan disimpan dalam folder khusus didalamnya. Cargo sudah datang bersama rustup, rustc, dan toolchain lainnya. Bila semua sudah siap, mari kita buat project baru.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cargo new helloworld
+</code></pre></div></div>
+
+<p>Dengan command diatas, cargo akan membuat sebuah project bernama helloworld. Anda dapat mengganti nama helloworld dengan apapun sesuai nama project anda. Mari kita lihat struktur project rust.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── Cargo.toml
+└── src
+    └── main.rs
+</code></pre></div></div>
+
+<p>Sebelum project di-build atau di-run, seperti inilah struktur project rust. <code class="language-plaintext highlighter-rouge">Cargo.toml</code> memuat manifest sebuah project seperti nama project, author, versi, dan edisi. <code class="language-plaintext highlighter-rouge">Cargo.toml</code> jugalah tempat kita menulis dependency project kita. Selanjutnya, <code class="language-plaintext highlighter-rouge">src</code> adalah folder untuk source file. Di dalam folder itulah kita membuat file-file yang akan kita tuliskan source code didalamnya seperti <code class="language-plaintext highlighter-rouge">main.rs</code> yang merupakan main file dimana entry point terletak. Sekarang mari lihat isi file main.rs, yang berisi hello world program secara otomatis.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fn main() {
+    println!("Hello, world!");
+}
+</code></pre></div></div>
+
+<p>Kira-kira begitulah entry point rust. Namun, kali ini akan membahas tentang cargo terlebih dahulu. Untuk pemrogramannya, akan kita bahas di post berikutnya. Baik, sekarang mari lanjutkan ke command cargo berikutnya.</p>
+
+<p>Untuk build sebuah project dan menginstall dependency yang dibutuhkan secara otomatis, kita harus menjalankan sebuah command cargo, yaitu</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cargo build
+</code></pre></div></div>
+
+<p>Dengan menjalankan perintah ini, maka program akan dicompile secara otomatis. Sekarang, mari kita jalankan.</p>
+
+<p>Sudah menjalankan? Sekarang struktur project akan berubah menjadi seperti ini</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── Cargo.lock
+├── Cargo.toml
+├── src
+│   └── main.rs
+└── target
+    ├── CACHEDIR.TAG
+    └── debug
+        ├── build
+        ├── deps
+        │   ├── helloworld-2b5eaaa0d7f413f8
+        │   └── helloworld-2b5eaaa0d7f413f8.d
+        ├── examples
+        ├── helloworld
+        ├── helloworld.d
+        └── incremental
+            └── helloworld-1wkj4tbmbf4ld
+                ├── s-fszg58f8sz-1k6u8ve-1oa8bie7cqsss
+                │   ├── 1dqgm8rogc77u7hp.o
+                │   ├── 1lbiykn7to4xjn8o.o
+                │   ├── 1xt5ymq0w7pid6v2.o
+                │   ├── 2bk3804w6neb0cj4.o
+                │   ├── 2dsc7rk80ct1rqsz.o
+                │   ├── 32j4umd5agl7q4ck.o
+                │   ├── 43kc0tbeopmdjeu9.o
+                │   ├── dep-graph.bin
+                │   ├── query-cache.bin
+                │   ├── work-products.bin
+                │   └── x8t9z996m5lb9b8.o
+                └── s-fszg58f8sz-1k6u8ve.lock
+</code></pre></div></div>
+
+<p>File binary terletak dalam <code class="language-plaintext highlighter-rouge">target/debug/helloworld</code> yang dapat dijalankan dengan <code class="language-plaintext highlighter-rouge">target/debug/helloworld</code> bila posisi anda sekarang dalam root directory.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello, world!
+</code></pre></div></div>
+
+<p>Bila anda ingin langsung menjalankan program tanpa perlu menngeksekusi binary nya secara manual, jalankan lah cargo</p>
+:ET
