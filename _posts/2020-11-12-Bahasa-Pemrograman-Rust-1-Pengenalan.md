@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Bahasa Pemrograman Rust 1: Perkenalan dan Cargo"
+title: "Bahasa Pemrograman Rust 1: Perkenalan, Instalasi, dan Cargo"
 categories: [cerita]
 date: 2020-11-11 14:41:20
 permalink: /id/Bahasa-Rust-1
 ---
 
-![rust]({{ site.baseurl }}/images/rustlogo.png)
+![rust]({{ site.baseurl }}/images/rust-1.png)
 
 ### Pengenalan
 
@@ -41,6 +41,26 @@ $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 Untuk instalasi dengan windows, anda dapat melihat instruksi disini.
 
 <https://forge.rust-lang.org/infra/other-installation-methods.html>
+
+#### Menginstall toolchain dan mengatur default toolchain
+
+Rust memiliki tiga channel toolchain yaitu stable, beta, dan nightly. Fitur-fitur yang belum stabil hanya tersedia di nightly rust. Namun, untuk sekarang, kita pakai channel stable terlebih dahulu. Untuk menginstall toolchain, run perintah berikut:
+
+```
+$ rustup install stable
+```
+
+Bila anda ingin menginstall beta atau nightly toolchain, ganti stable menjadi toolchain yang anda inginkan.
+
+Sekarang, untuk mengatur default toolchain, jalankan perintah berikut:
+
+```
+$ rustup default stable
+```
+
+Lakukan hal yang sama yaitu mengganti stable dengan channel yang anda inginkan bila anda ingin menggunakan channel lain sebagai default toolchain.
+
+Anda akan dapat memakai cargo dan rustc setelah melakukan semua diatas.
 
 ### Cargo
 
