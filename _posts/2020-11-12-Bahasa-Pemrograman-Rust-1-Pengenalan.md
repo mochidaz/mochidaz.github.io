@@ -17,22 +17,22 @@ Bahasa Pemrograman Rust merupakan bahasa yang diciptakan oleh Graydon Hoare pada
 Menginstall rust cukup mudah. Bila anda memakai Linux, anda dapat menginstall rustup dengan package manager anda.
 
 #### Debian/Ubuntu
-```
+```bash
 $ sudo apt install rustup
 ```
 
 #### Red Hat/Fedora/OpenSUSE
-```
+```bash
 $ sudo dnf install rustup
 ```
 
 #### Arch/Manjaro
-```
+```bash
 $ sudo pacman -S rustup
 ```
 
 #### Instalasi dengan Curl
-```
+```bash
 $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 ```
 
@@ -46,7 +46,7 @@ Untuk instalasi dengan windows, anda dapat melihat instruksi disini.
 
 Rust memiliki tiga channel toolchain yaitu stable, beta, dan nightly. Fitur-fitur yang belum stabil hanya tersedia di nightly rust. Namun, untuk sekarang, kita pakai channel stable terlebih dahulu. Untuk menginstall toolchain, run perintah berikut:
 
-```
+```bash
 $ rustup install stable
 ```
 
@@ -54,7 +54,7 @@ Bila anda ingin menginstall beta atau nightly toolchain, ganti stable menjadi to
 
 Sekarang, untuk mengatur default toolchain, jalankan perintah berikut:
 
-```
+```bash
 $ rustup default stable
 ```
 
@@ -66,7 +66,7 @@ Anda akan dapat memakai cargo dan rustc setelah melakukan semua diatas.
 
 Cargo adalah package manager rust sekaligus project manager. Dengan cargo, dependency yang ditulis dalam file khusus bernama Cargo.toml akan diinstall, kemudian program dicompile dan dirun. File executable akan disimpan dalam folder khusus didalamnya. Cargo sudah datang bersama rustup, rustc, dan toolchain lainnya. Bila semua sudah siap, mari kita buat project baru.
 
-```
+```bash
 $ cargo new helloworld
 ```
 
@@ -80,7 +80,7 @@ Dengan command diatas, cargo akan membuat sebuah project bernama helloworld. And
   
 Sebelum project di-build atau di-run, seperti inilah struktur project rust. `Cargo.toml` memuat manifest sebuah project seperti nama project, author, versi, dan edisi. `Cargo.toml` jugalah tempat kita menulis dependency project kita. Selanjutnya, `src` adalah folder untuk source file. Di dalam folder itulah kita membuat file-file yang akan kita tuliskan source code didalamnya seperti `main.rs` yang merupakan main file dimana entry point terletak. Sekarang mari lihat isi file main.rs, yang berisi hello world program secara otomatis.
 
-```
+```rust
 fn main() {
     println!("Hello, world!");
 }
@@ -148,7 +148,7 @@ Perintah ini akan menjalankan program secara langsung, setelah membuild program.
 
 Untuk menginstall sebuah package, umumnya kita harus menuliskan nama package dan versinya di `Cargo.toml` dan saat proses build, cargo akan otomatis menginstallnya untuk kita. Contohnya, bila kita menggunakan package scraper pada project kita, maka kita harus menulis scraper di dependencies seperti ini:
 
-```
+```toml
 [package]
 name = "helloworld"
 version = "0.1.0"
@@ -164,13 +164,13 @@ Bila anda tidak tahu versi berapa yang terakhir rilis, anda dapat menulisnya den
 
 Namun, kita bisa menginstall package cargo secara manual dengan command berikut
 
-```
+```bash
 $ cargo install <nama package>
 ```
 
 Misalnya seperti diatas, kita ingin menginstall scraper, maka kita hanya tinggal menjalankan
 
-```
+```bash
 $ cargo install scraper
 ```
 

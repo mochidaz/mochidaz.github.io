@@ -18,7 +18,7 @@ Namun, keyword `let` meiliki tipe data default. Bila anda me-assign sebuah nilai
 keyword `let`, maka integer tersebut otomatis akan menjadi 32 bit integer (i32). Bila anda ingin memakai 8 bit integer, maka anda harus 
 menuliskannya secara eksplisit. Hal ini juga berlaku pada nilai float.
 
-```
+```rust
 const FOO: i8 = 10;
 static BAR: i8 = 1;
 
@@ -37,7 +37,7 @@ immutable atau tidak dapat diubah. Untuk membuat sebuah variabel mutable atau da
 untuk re-assign atau memberikan nilai kembali pada suatu variabel. Bila anda mengubah nilai dari suatu variabel tanpa keyword `mut`, maka akan terjadi error.
 
 
-```
+```rust
 fn main() {
   let mut x = 10;
   // Output: 10
@@ -53,7 +53,7 @@ fn main() {
 ### Primitive Type
 
 | Tipe Data| Nama Tipe                              |
-| :---     |    :----:                              |
+|-------   |-------------------------------------   |
 | `i8`     | 8-bit Integer                          |
 | `i16`    |   16-bit Integer                       |
 | `i32`    | 32-bit Integer                         |
@@ -75,3 +75,5 @@ fn main() {
 | `tuple`  | Tuple                                  |
 | `slice`  | Slice                                  |
 | `isize`  | Signed Integer dengan ukuran Pointer   |
+
+
