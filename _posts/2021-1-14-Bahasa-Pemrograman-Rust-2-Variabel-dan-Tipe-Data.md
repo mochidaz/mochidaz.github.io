@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Bahasa Pemrograman Rust 2: Variabel, Mutability, dan Tipe Data"
-categories: [cerita]
+tags: rust programming coding
+lang: id
 date: 2021-1-16 19:19
 permalink: /id/Bahasa-Rust-2
 ---

@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Bahasa Pemrograman Rust 1: Perkenalan, Instalasi, dan Cargo"
-categories: [cerita]
+tags: rust programming coding
+lang: id
 date: 2020-11-11 14:41:20
 permalink: /id/Bahasa-Rust-1
 ---

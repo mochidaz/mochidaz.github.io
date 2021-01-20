@@ -2,21 +2,8 @@
 layout: default
 ---
 <div>
-	<h1>Ayo welcome. I put articles and things inside my mind here</h1>
-	<p>Just read things from here and if you like my posts, dont forget to donate me in <a href="https://trakteer.id/mochida">Trakteer</a>. This blog is about my mind or something i want to talk about even though i rarely write articles here. This blog is bilingual. This blog also has Rust Programming Language Tutorial (In Indonesian Language of course). Okay that's it. I hope you'll enjoy this blog</p>
-</div>
+	<h1>Welcome to this blog</h1>
+	<p>The contents are mostly about technology, random thoughts or something i want to talk about. Billingual blog, because why not? Has Rust Programming Language tutorial but of course its in Indonesian. To start reading my articles, go to <a href="/blog">blog</a>. The link is always in the navbar above. Go to <a href="/id/">/id/</a> to read Indonesian articles and <a href="/en/">/en/</a> to read English articles. Enjoy!</p>
+	<img src="{{ site.baseurl }}images/kurisu.jpg">
 
-<div class="posts">
-  {% for post in site.posts %}
-    <article class="post">
-
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
-
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
-
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
-  {% endfor %}
 </div>

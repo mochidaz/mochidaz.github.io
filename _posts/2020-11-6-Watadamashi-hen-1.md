@@ -1,8 +1,10 @@
 ---
 layout: post
 title: Watadamashi-hen 1
-categories: [review, theories, higurashi, anime]
+tags: higurashi review anime
+lang: en
 date: 2020-11-6 09:36:13
+permalink: /en/Watadamashi-hen-1
 ---
 
 ![watadamashi1]({{site.baseurl}}/images/watadamashi1.jpg)
