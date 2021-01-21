@@ -17,7 +17,7 @@ Touhou Project merupakan game dojin yang dikembangkan oleh Jun'ya Ota atau yang 
 
 Di kebanyakan distro, Wine sudah tersedia di repository utama. Namun, di Arch Linux, kita harus mengaktifkan repository multilib terlebih dahulu. Cara mengaktifkan repository multilib adalah dengan berikut:
 
-1. Jalankan perintah berikut: `sudo <teks editor pilihan anda> /etc/pacman.conf`. Anda bebas memakai text editor manapun yang anda suka. Namun disini, saya akan menggunakan vim. `sudo vim /etc/pacman.conf`.
+1. Jalankan perintah berikut: `sudo <teks editor pilihan anda> /etc/pacman.conf`. Anda bebas memakai text editor manapun yang anda suka. Untuk saya sendiri, text editor yang saya biasa gunakan adalah `vim` sehingga saya akan mengedit file tersebut dengan: `sudo vim /etc/pacman.conf`.
 
 2. Turun kebawah, dan cari baris berikut:
 ```
