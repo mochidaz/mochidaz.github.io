@@ -5,6 +5,8 @@ date: 2021-1-21 23:37
 permalink: /id/Bermain-Touhou-di-Linux
 ---
 
+![touhou]({{site.baseurl}}/images/touhou.png)
+
 Bermain game terutama game Windows di Linux dewasa ini bukanlah lagi sebuah sesuatu yang luar biasa. Dengan banyak usaha dari komunitas open source yang membangun compatibility layer, menjalankan software Windows terutama game menjadi sangatlah mudah. Compatibility layer yang dimaksud tersebut adalah Wine. Wine merupakan software compatibility layer Windows untuk Linux yang dapat dipakai dengan sangat mudah.
 
 #### Touhou Project
@@ -33,18 +35,49 @@ Include = /etc/pacman.d/mirrorlist
 
 5. Jalankan `sudo pacman -S wine` untuk menginstall wine.
 
-6. Install winetricks dengan `sudo pacman -S winetricks`
+6. Install winetricks dengan: `sudo pacman -S winetricks`
 
-7. Install Microsoft Visual C++ 2015 dengan `winetricks vcrun2015`
+7. Install Microsoft Visual C++ 2015 dengan: `winetricks vcrun2015`
 
-8. Install wine-mono dengan `sudo pacman -S wine-mono`
+8. Install wine-mono dengan: `sudo pacman -S wine-mono`
 
-9. Install lib32 dari libgnutls dengan `sudo pacman -S lib32-gnutls`
+9. Install lib32 dari libgnutls dengan: `sudo pacman -S lib32-gnutls`
 
 10. Biasanya setelah semua langkah diatas, Touhou sudah dapat dimainkan. Silahkan coba dengan menjalankan perintah `cd` ke directory dimana Touhou terletak. Contoh: `cd "~/Games/Touhou 10 - Mountain of Faith"` kemudian jalankan dengan `wine Touhou10.exe` atau apapun nama executable dari game Touhou tersebut.
 
 11. Touhou harusnya sudah bisa berjalan. Namun bila ternyata tidak ada suara dan kalian menggunakan pulseaudio dan alsa, maka anda harus menginstall lib32 dari alsa, openal, dan pulseaudio terlebih dahulu dengan perintah berikut: `sudo pacman -S lib32-alsa-plugins lib32-libpulse lib32-openal`.
 
 12. Dengan begini, Touhou termasuk game fightingnya (13.5, 14.5, 15.5 dsb) sudah dapat dijalankan dengan baik.
+
+## Screenshot
+
+### Danmaku
+
+#### Touhou 10: Mountain of Faith
+
+![touhou2]({{site.baseurl}}/images/touhou-mof.png)
+
+#### Touhou 13: Ten Desires
+
+![touhou3]({{site.baseurl}}/images/touhou-td.png)
+
+#### Touhou 14: Double Dealing Character
+
+![touhou4]({{site.baseurl}}/images/touhou-ddc.png)
+
+### Fighting Game
+
+#### Touhou 12.3: Hisoutensoku
+![touhou5]({{site.baseurl}}/images/touhou-hisoutensoku.png)
+
+#### Touhou 13.5: Hopeless Masquerade
+
+![touhou6]({{site.baseurl}}/images/touhou-hm.png)
+
+#### Touhou 14.5: Urban Legends in Limbo
+![touhou7]({{site.baseurl}}/images/touhou-ulil.png)
+
+#### Touhou 15.5: Antinomy of Common Flowers
+![touhou8]({{site.baseurl}}/images/touhou-aocf.jpg)
 
 Terima kasih telah membaca artikel ini. Bila ada pertanyaan, kamu dapat mengirim email ke rahmanhakim2435@pm.me :).
