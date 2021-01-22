@@ -1,4 +1,4 @@
-I"¢<p><img src="/images/touhou.png" alt="touhou" /></p>
+I"(<p><img src="/images/touhou.png" alt="touhou" /></p>
 
 <p>Bermain game terutama game Windows di Linux dewasa ini bukanlah lagi sebuah sesuatu yang luar biasa. Dengan banyak usaha dari komunitas open source yang membangun compatibility layer, menjalankan software Windows terutama game menjadi sangatlah mudah. Compatibility layer yang dimaksud tersebut adalah Wine. Wine merupakan software compatibility layer Windows untuk Linux yang dapat dipakai dengan sangat mudah.</p>
 
@@ -12,7 +12,7 @@
 
 <ol>
   <li>
-    <p>Jalankan perintah berikut: <code class="language-plaintext highlighter-rouge">sudo &lt;teks editor pilihan anda&gt; /etc/pacman.conf</code>. Anda bebas memakai text editor manapun yang anda suka. Namun disini, saya akan menggunakan vim. <code class="language-plaintext highlighter-rouge">sudo vim /etc/pacman.conf</code>.</p>
+    <p>Jalankan perintah berikut: <code class="language-plaintext highlighter-rouge">sudo &lt;teks editor pilihan anda&gt; /etc/pacman.conf</code>. Anda bebas memakai text editor manapun yang anda suka. Untuk saya sendiri, text editor yang saya biasa gunakan adalah <code class="language-plaintext highlighter-rouge">vim</code> sehingga saya akan mengedit file tersebut dengan: <code class="language-plaintext highlighter-rouge">sudo vim /etc/pacman.conf</code>.</p>
   </li>
   <li>Turun kebawah, dan cari baris berikut:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#[multilib]
