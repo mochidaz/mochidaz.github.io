@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Membersihkan Wine dan Package Mulitlib di Arch Linux"
+title: "Membersihkan Wine dan Package Multilib di Arch Linux"
 permalink: /id/Membersihkan-Wine-dan-Package-Multilib
 lang: id
 date: 2021-1-22 03:16
