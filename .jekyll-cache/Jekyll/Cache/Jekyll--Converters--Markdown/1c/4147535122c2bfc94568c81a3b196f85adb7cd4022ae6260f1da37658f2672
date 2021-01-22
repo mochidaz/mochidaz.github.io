@@ -1,0 +1,124 @@
+I"�7<p><img src="/images/rust-3.png" alt="rust" /></p>
+
+<p>Pada bagian ketiga ini, sesuai judul, kita akan membahas tentang fungsi, prosedur, dan return type atau tipe data yang dikembalikan oleh sebuah fungsi. 
+Anda pastinya sudah tidak asing dengan fungsi bila anda telah belajar tentang fungsi pada matematika, atau bahasa pemrograman lain. Benar, fungsi menerima 
+parameter, memproses data, kemudian mengembalikannya dengan berupa sebuah nilai tertentu. Lalu, apa bedanya fungsi dan prosedur? Bagaimana cara 
+kita mendefinisikan fungsi pada Bahasa Rust? Bagaimana cara kita mendefinisikan return type dan mengembalikan sebuah nilai dari fungsi tersebut? Mari simak baik-baik!</p>
+
+<h2 id="statement-dan-expression">Statement dan Expression</h2>
+
+<p>Sebelum masuk ke pembahasan utama, ada baiknya kita pahami tentang <em>statement</em> dan <em>expression</em> terlebih dahulu.</p>
+
+<p><em>Statement</em> adalah sebuah pernyataan yang menyatakan sebuah perintah untuk melakukan sesuatu. <em>Statement</em> tidak mengembalikan nilai apapun. Ia hanyalah instruksi. 
+Contoh dari statement adalah pendeklarasian variabel, pendefinisian fungsi, perintah loop seperti <code class="language-plaintext highlighter-rouge">for</code> dan <code class="language-plaintext highlighter-rouge">while</code>, dan semacamnya.</p>
+
+<p><em>Expression</em> adalah sebuah ekspresi yang mengevaluasi sebuah nilai. <em>Expression</em> mengembalikan sebuah nilai. Contoh dari <em>expression</em> adalah <code class="language-plaintext highlighter-rouge">1 + 1</code>, <code class="language-plaintext highlighter-rouge">7 - 4</code>, <code class="language-plaintext highlighter-rouge">5 != 2</code>, 
+dan pernyataan yang aritmatika lainnnya yang juga dapat melibatkan <code class="language-plaintext highlighter-rouge">boolean</code>.</p>
+
+<p>Rust merupakan <code class="language-plaintext highlighter-rouge">expression-oriented language</code> atau bahasa berorientasi ekspresi yang berarti hampir semua yang ada di dalamnya berupa ekspresi.</p>
+
+<p><em>Expression</em> dapat berada dalam <em>statement</em>. Contohnya adalah dalam pendeklarasian variabel: <code class="language-plaintext highlighter-rouge">let x = 10;</code>. Disana, <code class="language-plaintext highlighter-rouge">let x =</code> merupakan sebuah <em>statement</em> sedangkan 
+<em>expression</em> adalah nilai dari variabel itu sendiri: 10.</p>
+
+<h2 id="fungsi">Fungsi</h2>
+
+<p>Fungsi adalah sebuah “modul” kode yang “mandiri” yang digunakan untuk menyelesaikan tugas khusus. Seperti yang sudah saya jelaskan diatas, fungsi biasanya 
+mengambil data tertentu, memprosesnya, kemudian mengembalikan nilai hasil proses tersebut. Fungsi dapat dipanggil dalam fungsi lain dan dapat digunakan berulang 
+kali untuk data yang nilainya berbeda. Mendefinisikan fungsi di Rust tidak sulit. Kita menggunakan keyword <code class="language-plaintext highlighter-rouge">fn</code> untuk mendefinisikan fungsi dalam bahasa ini. Anda 
+pasti tidak asing dengan keyword ini karena anda pastinya telah melihat bentuk dari <em>entry point</em> Rust yaitu fungsi utama atau <em>main function</em>-nya.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Fungsi diatas adalah fungsi utama, dan tidak mengembalikan maupun menerima nilai apapun. Fungi yang tidak mengembalikan apapun disebut juga dengan <code class="language-plaintext highlighter-rouge">void function</code>.</p>
+
+<h3 id="parameter">Parameter</h3>
+
+<p>Parameter adalah variabel dalam definisi fungsi yang terletak didalam kurung fungsi. Kurang lebih, parameter bertindak seperti <em>placeholder</em> yang mewakili sebuah nilai 
+yang kemudian ditunjukkan bagaimana ia akan diproses dalam fungsi tersebut. Parameter menerima data yang disebut dengan argumen. Dalam fungsi, kita akan “menjelaskan” 
+tentunya dengan algoritma yang kita buat untuk bagaimana sang nilai akan diproses. Dan nilai itu diwakili dengan parameter tersebut, yang nantinya disaat sebuah nilai 
+diberikan, sang nilai akan diproses sesuai dengan bagaimana parameter di dalam fungsi tersebut diproses. Untuk mendefinisikan sebuah parameter, tidak seperti C++ yang 
+menaruh tipe data dibelakang nama parameter (contoh: <code class="language-plaintext highlighter-rouge">int x</code>), Rust menaruh tipe data di depan parameter dengan pembatas “:”. Seperti ini: <code class="language-plaintext highlighter-rouge">x: i32</code>.</p>
+
+<h3 id="return-dan-return-type">Return dan Return Type</h3>
+
+<p>Return merupakan sebuah <em>statement</em> untuk memerintahkan sebuah fungsi mengembalikan value tertentu, yang tentunya harus sesuai dengan tipe data yang dituliskan pada return type. Return type merupakan jenis tipe data dari nilai yang dikembalikan oleh sang fungsi setelah diproses. Rust menggunakan tanda <code class="language-plaintext highlighter-rouge">-&gt;</code> kemudian menaruh 
+nama tipe data yang akan dikembalikan didepan tanda panah tersebut. Bila nilai yang dikembalikan tidak sesuai dengan return type yang dituliskan, maka akan terjadi error.</p>
+
+<p>Sekarang, mari kita langsung lanjutkan ke contoh sederhana dan penggunaan dengan lebih mendetail.</p>
+
+<p>Dibawah ini adalah sebuah fungsi yang dapat menambahkan dua 32-bit integer kemudian mengembalikan sebuah value, yaitu hasilnya.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+   <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="p">}</span> 
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">-&gt; i32</code> diatas merupakan return typenya yang merupakan 32-bit integer. <code class="language-plaintext highlighter-rouge">x: i32, y:i32</code> merupakan parameter yang melambangkan bahwa nilai yang akan diberikan kepada fungsi tersebut 
+adalah 32-bit integer dan nilai tersebut diwakili dengan variabel <code class="language-plaintext highlighter-rouge">x</code> dan <code class="language-plaintext highlighter-rouge">y</code> yang sebenarnya dapat dengan bebas kita namakan apapun seperti variabel pada umumnya. Lalu yang terakhir, 
+<code class="language-plaintext highlighter-rouge">x + y</code> dibawah merupakan sebuah <em>expression</em>, yang menjadi nilai yang dikembalikan atau direturn. Dalam bahasa Rust, kita dapat mengembalikan nilai dari sebuah fungsi dengan dua cara: 
+Menggunakan keyword <code class="language-plaintext highlighter-rouge">return</code>, atau menaruh sebuah <em>expression</em> di paling akhir baris fungsi TANPA TITIK KOMA. Keduanya sama saja, namun menggunakan <code class="language-plaintext highlighter-rouge">return</code> dianggap sebagai gaya penulisan yang buruk 
+atau <em>bad style</em>. Mengapa begitu? Karena Rust merupakan <em>expression-oriented language</em>. Untuk menekankan bahwa Rust merupakan <em>expression-oriented language</em>, hal semacam itu dilakukan. 
+Bila kita ingin mengembalikan nilai dengan gaya seperti itu, JANGAN taruh titik koma di akhir baris karena <em>expression</em> tersebut akan berubah menjadi <em>statement</em>. Bila menggunakan <code class="language-plaintext highlighter-rouge">return</code>, maka bebas 
+bila anda ingin menaruh titik koma di akhir baris atau tidak. Fungsi membutuhkan variabel saat dipanggil, untuk menyimpan nilai yang dikembalikan di dalam variabel tersebut.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+   <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+  <span class="c">// Menyimpan nilai yang dikembalikan oleh fungsi ke variabel hasil</span>
+  <span class="k">let</span> <span class="n">hasil</span> <span class="o">=</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+  
+  <span class="c">// OUTPUT: 30</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">hasil</span><span class="p">);</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="prosedur">Prosedur</h2>
+
+<p>Sebenarnya mungkin semua <code class="language-plaintext highlighter-rouge">void function</code> juga dapat disebut sebagai prosedur dikarenakan prosedur pada dasarnya adalah fungsi, namun tidak mengembalikan apapun. 
+Namun, saya akan menanamkan pemahaman prosedur dan pengertiannya secara lebih dalam untuk apa prosedur tersebut digunakan.</p>
+
+<p>Prosedur hanya mengeksekusi sebuah perintah. Prosedur tidak membutuhkan variabel dan dapat secara begitu saja dipanggil dikarenakan prosedur hanya untuk mengeksekusi 
+perintah tertentu dan tidak mengembalikan apapun. Nilai yang biasanya dimasukkan ke dalam parameter prosedur adalah berupa <code class="language-plaintext highlighter-rouge">reference</code> yang akan kita bahas nanti. Dengan 
+reference, nilai tidak menjadi terpisah dengan variabel asli diluar fungsi namun nilai yang dimasukkan akan ikut berubah secara langsung. Seperti ini contohnya:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">add_five</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>
+   <span class="o">*</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+   <span class="nf">add_five</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">a</span><span class="p">);</span>
+   <span class="c">// OUTPUT: 15</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Nah, prosedur <code class="language-plaintext highlighter-rouge">add_five</code> diatas berfungsi untuk menambahkan 5 ke suatu variabel 32 bit integer. Misalnya kita membuat sebuah fungsi hanya untuk hal seperti diatas, nantinya malah 
+lebih panjang dan terlihat lebih “ribet”. Kita tidak akan membutuhkan variabel <code class="language-plaintext highlighter-rouge">a</code> lagi setelah kita mendeklarasi sebuah variabel yang memuat nilai return dari fungsi yang menambah 5 
+variabel a diatas. Hal itu akan memakan lebih banyak memory. Oleh karena itu, dengan prosedur, variabel <code class="language-plaintext highlighter-rouge">a</code> dapat digunakan berkali-kali dan diubah-ubah nilainya. Bagi yang tidak tahu, 
+tanda bintang <code class="language-plaintext highlighter-rouge">*</code> diatas merupakan pointer untuk de-reference sebuah reference, yang artinya, ia mengubah alamat memory yang menunjuk pada suatu nilai menjadi nilai yang ditunjuk kembali.</p>
+
+<p>Kita juga dapat menggunakan prosedur untuk membuat “printer” atau sesuatu yang mem-print output khusus untuk aplikasi command line seperti berikut:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">print_selamat_datang</span><span class="p">(</span><span class="n">nama</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"SELAMAT DATANG"</span><span class="p">);</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"      DI      "</span><span class="p">);</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"APLIKASI SAYA,"</span><span class="p">);</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"Pak/Bu {}"</span><span class="p">,</span> <span class="n">nama</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="n">nama</span> <span class="o">=</span> <span class="s">"Rahman"</span><span class="p">;</span>
+   <span class="nf">print_selamat_datang</span><span class="p">(</span><span class="n">nama</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kira-kira untuk pembahasan Fungsi, Prosedur, dan Return Type cukup sampai disini. Nantikan artikel berikutnya :).</p>
+:ET

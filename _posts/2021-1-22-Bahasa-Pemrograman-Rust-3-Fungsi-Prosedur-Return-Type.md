@@ -10,8 +10,8 @@ date: 2021-1-22 23:58
 
 Pada bagian ketiga ini, sesuai judul, kita akan membahas tentang fungsi, prosedur, dan return type atau tipe data yang dikembalikan oleh sebuah fungsi. 
 Anda pastinya sudah tidak asing dengan fungsi bila anda telah belajar tentang fungsi pada matematika, atau bahasa pemrograman lain. Benar, fungsi menerima 
-parameter, memproses data, kemudian mengembalikannya dengan berupa sebuah nilai tertentu. Lalu, apa bedanya fungsi dan return type, lalu bagaimana cara 
-kita mendefinisikan fungsi pada Bahasa Rust? Mari simak baik-baik!
+parameter, memproses data, kemudian mengembalikannya dengan berupa sebuah nilai tertentu. Lalu, apa bedanya fungsi dan prosedur? Bagaimana cara 
+kita mendefinisikan fungsi pada Bahasa Rust? Bagaimana cara kita mendefinisikan return type dan mengembalikan sebuah nilai dari fungsi tersebut? Mari simak baik-baik!
 
 ## Statement dan Expression
 
