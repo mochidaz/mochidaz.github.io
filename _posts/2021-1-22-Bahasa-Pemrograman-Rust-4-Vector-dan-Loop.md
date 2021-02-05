@@ -213,7 +213,7 @@ fn main() {
    let mut vec = (1..10).collect::<Vec<i32>>();
    let mut vec_kali_3 = vec.iter().map(|x| x * 3).collect::<Vec<_>>();
    // OUTPUT: [3, 6, 9, 12, 15, 18, 21, 24, 27]
-   println!("{:?}", vec_tambah_7);
+   println!("{:?}", vec_kali_3);
 }
 ```
 
