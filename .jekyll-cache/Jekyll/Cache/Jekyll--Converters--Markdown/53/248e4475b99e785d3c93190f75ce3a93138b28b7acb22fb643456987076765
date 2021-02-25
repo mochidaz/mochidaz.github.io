@@ -1,4 +1,4 @@
-I"^b<p><img src="/images/rust-4.png" alt="rust" /></p>
+I"\b<p><img src="/images/rust-4.png" alt="rust" /></p>
 
 <p>Looping merupakan sebuah logika dimana sebuah <em>iterator</em> akan terus mengulang hingga batas yang ditentukan, atau selamanya. Loop dibagi menjadi for loop dan while loop dimana 
 dalam for loop kita dapat menentukan <em>iterable</em> untuk mengulang untuk setiap elemen dalam <em>iterator</em> sedangkan while akan mengulang sampai kondisi terpenuhi. Vector merupakan array dinamis yang <em>iterable</em> atau dapat kita iterasi untuk setiap elemen di dalamnya. Di bagian ke-4 ini kita akan membahas tentang cara-cara looping yang “idiomatic” dan method-methodnya. Untuk for loop tidak akan dibahas secara langsung dan hanya akan masuk ke dalam contoh-contoh disini. While loop dapat dilihat sendiri <a href="https://doc.rust-lang.org/1.2.0/book/while-loops.html">disini</a>.</p>
@@ -189,7 +189,7 @@ menggunakan <code class="language-plaintext highlighter-rouge">Vec&lt;_&gt;</cod
    <span class="k">let</span> <span class="k">mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">)</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;&gt;</span><span class="p">();</span>
    <span class="k">let</span> <span class="k">mut</span> <span class="n">vec_kali_3</span> <span class="o">=</span> <span class="n">vec</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="mi">_</span><span class="o">&gt;&gt;</span><span class="p">();</span>
    <span class="c">// OUTPUT: [3, 6, 9, 12, 15, 18, 21, 24, 27]</span>
-   <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">vec_tambah_7</span><span class="p">);</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">vec_kali_3</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
