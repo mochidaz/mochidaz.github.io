@@ -27,14 +27,14 @@ use std::fs;
 use std::io::{self, prelude::*};
 
 fn main() {
-	// Isi dari tes.txt: Halo
-	let file = fs::File::open("tes.txt");
+    // Isi dari tes.txt: Halo
+    let file = fs::File::open("tes.txt");
     let mut content = String::new();
 
-	let mut file = match file {
-		Ok(f) => f,
-		Err(e) => panic!("Error terjadi: {}", e)
-	};
+    let mut file = match file {
+       Ok(f) => f,
+       Err(e) => panic!("Error terjadi: {}", e)
+    };
     file.read_to_string(&mut content);
     
     println!("{}", content);
@@ -43,15 +43,15 @@ fn main() {
 
 Kode diatas merupakan kode untuk membuka dan membaca sebuah file bernama `tes.txt`. Bila file tersebut ada dan dapat dibuka, maka pattern matching diatas, yaitu `match file` akan mengembalikan file tersebut. Karena `std::fs::File::open` mengembalikan sebuah Result, maka pattern matching yang tersedia adalah antara `Ok(T)` atau `Err(E)`. Bila pattern yang ditemukan merupakan `Ok(f)` dimana `f` merupakan nama variabel `T` yang dapat kita ganti dengan apapun, maka kembalikan value yang diwrap didalam `Ok(T)` tersebut, yaitu `f` itu sendiri: `Ok(f) => f`. Sedangkan yang kedua, bila pattern yang ditemukan merupakan `Err(e)` dimana sama seperti `f`, `e` merupakan nama variabel pengganti `E`, maka print errornya dengan macro `panic!` dan `e` merupakan pesan errornya. Selanjutnya adalah `file.read_to_string(&mut content)` yang merupakan sebuah method dari `std::fs::File` dimana dia akan secara langsung memanipulasi `String` yang mutable dengan mengonversi dan mengappend hasil bacaan file dari `std::fs::File` ke sebuah `&mut String` atau mutable string.
 
-Cara diatas bisa dibilang lumayan ribet. Dengan menaruh return type `std::io::Result<T>`, maka kode diatas akan lebih pendek. Apa bedanya `Result<T, E>` dan `std::io::Result<T>`? Mereka sama. `std::io::Result<T>` merupakan sebuah `Result<T, E>` yang telah diganti bentuk typenya menjadi `Result<T, Error>` dari library `fs` itu dengan keyword `type. Error yang dikembalikan merupakan `std::io::Error`, error khusus dari library `io` itu sendiri, untuk error yang terjadi pada proses Input/Output. Begini kira-kira implementasinya:
+Cara diatas bisa dibilang lumayan ribet. Dengan menaruh return type `std::io::Result<T>`, maka kode diatas akan lebih pendek. Apa bedanya `Result<T, E>` dan `std::io::Result<T>`? Mereka sama. `std::io::Result<T>` merupakan sebuah `Result<T, E>` yang telah diganti bentuk typenya menjadi `Result<T, Error>` dari library `fs` itu dengan keyword `type`. Error yang dikembalikan merupakan `std::io::Error`, error khusus dari library `io` itu sendiri, untuk error yang terjadi pada proses Input/Output. Begini kira-kira implementasinya:
 
 ```rust
 use std::fs;
 use std::io::{self, prelude::*};
 
 fn main() -> io::Result<()> {
-	// Isi dari tes.txt: Halo
-	let mut file = fs::File::open("tes.txt")?;
+    // Isi dari tes.txt: Halo
+    let mut file = fs::File::open("tes.txt")?;
     let mut content = String::new();
     file.read_to_string(&mut content)?;
     println!("{}", content);
@@ -65,8 +65,8 @@ use std::fs;
 use std::io::{self, prelude::*};
 
 fn main() {
-	// Isi dari tes.txt: Halo
-	let mut file = fs::File::open("tes.txt").expect("Tidak bisa membuka file");
+    // Isi dari tes.txt: Halo
+    let mut file = fs::File::open("tes.txt").expect("Tidak bisa membuka file");
     let mut content = String::new();
     file.read_to_string(&mut content).expect("Tidak bisa membaca file");
     println!("{}", content);
@@ -82,16 +82,16 @@ use std::fs;
 use std::io::{self, prelude::*};
 
 fn read_file(filename: &str) -> io::Result<String> {
-	let mut file = fs::File::open(filename)?;
+    let mut file = fs::File::open(filename)?;
     let mut content = String::new();
     file.read_to_string(&mut content)?;
-	Ok(content)
+    Ok(content)
 }
 
 fn main() {
-	// Isi dari tes.txt: Halo
-	let content = read_file("tes.txt").unwrap();
-	// OUTPUT: Halo
+    // Isi dari tes.txt: Halo
+    let content = read_file("tes.txt").unwrap();
+    // OUTPUT: Halo
     println!("{}", content);
 }
 ```
@@ -106,22 +106,22 @@ use std::fs;
 use std::io::{self, prelude::*};
 
 fn read_file(filename: &str) -> io::Result<String> {
-	let file = fs::File::open(filename);
+    let file = fs::File::open(filename);
     let mut content = String::new();
 
-	let mut file = match file {
-		Ok(f) => f,
-		Err(e) => return Err(e)
-	};
+    let mut file = match file {
+	Ok(f) => f,
+	Err(e) => return Err(e)
+    };
     file.read_to_string(&mut content)?;
     
     Ok(content)
 }
 
 fn main() {
-	// Isi dari tes.txt: Halo
-	let content = read_file("tes.txt").unwrap();
-	println!("{}", content);
+    // Isi dari tes.txt: Halo
+    let content = read_file("tes.txt").unwrap();
+    println!("{}", content);
 }
 ``` 
 
@@ -132,21 +132,21 @@ use std::fs;
 use std::io::{self, prelude::*};
 
 fn read_file(filename: &str) -> io::Result<String> {
-	let file = fs::File::open(filename);
+    let file = fs::File::open(filename);
     let mut content = String::new();
 
-	let mut file = match file {
-		Ok(f) => f,
-		Err(e) => return Err(e)
-	};
+    let mut file = match file {
+	Ok(f) => f,
+	Err(e) => return Err(e)
+    };
     file.read_to_string(&mut content)?;
     
     Ok(content)
 }
 
 fn main() {
-	// Isi dari tes.txt: Halo
-	let content = read_file("tes.txt");
+    // Isi dari tes.txt: Halo
+    let content = read_file("tes.txt");
     match content {
         Ok(f) => println!("Success! Content: {}", f),
         Err(e) => println!("Failed! Error: {}", e)
