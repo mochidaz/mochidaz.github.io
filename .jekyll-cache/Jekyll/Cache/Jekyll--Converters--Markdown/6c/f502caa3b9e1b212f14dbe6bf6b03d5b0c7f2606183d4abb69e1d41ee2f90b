@@ -1,4 +1,4 @@
-I"õ‹<p><img src="/images/rust-5.png" alt="rust" /></p>
+I"|Œ<p><img src="/images/rust-5.png" alt="rust" /></p>
 
 <p>Error handling merupakan salah satu logika penting dalam pemrograman. Error handling merupakan cara untuk memproses suatu logika disaat logika yang lainnya mengalami <code class="language-plaintext highlighter-rouge">error</code> atau kegagalan. Error handling dapat juga disebut dengan <code class="language-plaintext highlighter-rouge">exception handling</code>. 
 Umumnya, bahasa pemrograman lain memakai sebuah logika bernama <code class="language-plaintext highlighter-rouge">try-catch</code> untuk melakukan exception handling dimana <code class="language-plaintext highlighter-rouge">try</code> mencoba untuk menjalankan suatu logika yang berpotensi untuk error, dan <code class="language-plaintext highlighter-rouge">catch</code> merupakan logika yang menangkap error tersebut, lalu menjalankan logika lainnya bila error yang ditangkap sesuai. 
@@ -18,14 +18,14 @@ Bahasa pemrograman lain umumnya memiliki <code class="language-plaintext highlig
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c">// Isi dari tes.txt: Halo</span>
-	<span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">);</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">);</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
 
-	<span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
-		<span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
-		<span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">panic!</span><span class="p">(</span><span class="s">"Error terjadi: {}"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-	<span class="p">};</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
+       <span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
+       <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">panic!</span><span class="p">(</span><span class="s">"Error terjadi: {}"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="p">};</span>
     <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">);</span>
     
     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
@@ -34,14 +34,14 @@ Bahasa pemrograman lain umumnya memiliki <code class="language-plaintext highlig
 
 <p>Kode diatas merupakan kode untuk membuka dan membaca sebuah file bernama <code class="language-plaintext highlighter-rouge">tes.txt</code>. Bila file tersebut ada dan dapat dibuka, maka pattern matching diatas, yaitu <code class="language-plaintext highlighter-rouge">match file</code> akan mengembalikan file tersebut. Karena <code class="language-plaintext highlighter-rouge">std::fs::File::open</code> mengembalikan sebuah Result, maka pattern matching yang tersedia adalah antara <code class="language-plaintext highlighter-rouge">Ok(T)</code> atau <code class="language-plaintext highlighter-rouge">Err(E)</code>. Bila pattern yang ditemukan merupakan <code class="language-plaintext highlighter-rouge">Ok(f)</code> dimana <code class="language-plaintext highlighter-rouge">f</code> merupakan nama variabel <code class="language-plaintext highlighter-rouge">T</code> yang dapat kita ganti dengan apapun, maka kembalikan value yang diwrap didalam <code class="language-plaintext highlighter-rouge">Ok(T)</code> tersebut, yaitu <code class="language-plaintext highlighter-rouge">f</code> itu sendiri: <code class="language-plaintext highlighter-rouge">Ok(f) =&gt; f</code>. Sedangkan yang kedua, bila pattern yang ditemukan merupakan <code class="language-plaintext highlighter-rouge">Err(e)</code> dimana sama seperti <code class="language-plaintext highlighter-rouge">f</code>, <code class="language-plaintext highlighter-rouge">e</code> merupakan nama variabel pengganti <code class="language-plaintext highlighter-rouge">E</code>, maka print errornya dengan macro <code class="language-plaintext highlighter-rouge">panic!</code> dan <code class="language-plaintext highlighter-rouge">e</code> merupakan pesan errornya. Selanjutnya adalah <code class="language-plaintext highlighter-rouge">file.read_to_string(&amp;mut content)</code> yang merupakan sebuah method dari <code class="language-plaintext highlighter-rouge">std::fs::File</code> dimana dia akan secara langsung memanipulasi <code class="language-plaintext highlighter-rouge">String</code> yang mutable dengan mengonversi dan mengappend hasil bacaan file dari <code class="language-plaintext highlighter-rouge">std::fs::File</code> ke sebuah <code class="language-plaintext highlighter-rouge">&amp;mut String</code> atau mutable string.</p>
 
-<p>Cara diatas bisa dibilang lumayan ribet. Dengan menaruh return type <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code>, maka kode diatas akan lebih pendek. Apa bedanya <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> dan <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code>? Mereka sama. <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code> merupakan sebuah <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> yang telah diganti bentuk typenya menjadi <code class="language-plaintext highlighter-rouge">Result&lt;T, Error&gt;</code> dari library <code class="language-plaintext highlighter-rouge">fs</code> itu dengan keyword <code class="language-plaintext highlighter-rouge">type. Error yang dikembalikan merupakan </code>std::io::Error<code class="language-plaintext highlighter-rouge">, error khusus dari library </code>io` itu sendiri, untuk error yang terjadi pada proses Input/Output. Begini kira-kira implementasinya:</p>
+<p>Cara diatas bisa dibilang lumayan ribet. Dengan menaruh return type <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code>, maka kode diatas akan lebih pendek. Apa bedanya <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> dan <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code>? Mereka sama. <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code> merupakan sebuah <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> yang telah diganti bentuk typenya menjadi <code class="language-plaintext highlighter-rouge">Result&lt;T, Error&gt;</code> dari library <code class="language-plaintext highlighter-rouge">fs</code> itu dengan keyword <code class="language-plaintext highlighter-rouge">type</code>. Error yang dikembalikan merupakan <code class="language-plaintext highlighter-rouge">std::io::Error</code>, error khusus dari library <code class="language-plaintext highlighter-rouge">io</code> itu sendiri, untuk error yang terjadi pada proses Input/Output. Begini kira-kira implementasinya:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
-	<span class="c">// Isi dari tes.txt: Halo</span>
-	<span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
     <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
@@ -54,8 +54,8 @@ Bahasa pemrograman lain umumnya memiliki <code class="language-plaintext highlig
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c">// Isi dari tes.txt: Halo</span>
-	<span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.expect</span><span class="p">(</span><span class="s">"Tidak bisa membuka file"</span><span class="p">);</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.expect</span><span class="p">(</span><span class="s">"Tidak bisa membuka file"</span><span class="p">);</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
     <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="nf">.expect</span><span class="p">(</span><span class="s">"Tidak bisa membaca file"</span><span class="p">);</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
@@ -70,16 +70,16 @@ Bahasa pemrograman lain umumnya memiliki <code class="language-plaintext highlig
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="p">{</span>
-	<span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
     <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-	<span class="nf">Ok</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c">// Isi dari tes.txt: Halo</span>
-	<span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
-	<span class="c">// OUTPUT: Halo</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+    <span class="c">// OUTPUT: Halo</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -93,22 +93,22 @@ Bahasa pemrograman lain umumnya memiliki <code class="language-plaintext highlig
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="p">{</span>
-	<span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
 
-	<span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
-		<span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
-		<span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-	<span class="p">};</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
+	<span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
+	<span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="p">};</span>
     <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
     
     <span class="nf">Ok</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c">// Isi dari tes.txt: Halo</span>
-	<span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
-	<span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -118,21 +118,21 @@ Bahasa pemrograman lain umumnya memiliki <code class="language-plaintext highlig
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="p">{</span>
-	<span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
 
-	<span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
-		<span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
-		<span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-	<span class="p">};</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
+	<span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
+	<span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="p">};</span>
     <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
     
     <span class="nf">Ok</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c">// Isi dari tes.txt: Halo</span>
-	<span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">);</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">);</span>
     <span class="k">match</span> <span class="n">content</span> <span class="p">{</span>
         <span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Success! Content: {}"</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span>
         <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Failed! Error: {}"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
