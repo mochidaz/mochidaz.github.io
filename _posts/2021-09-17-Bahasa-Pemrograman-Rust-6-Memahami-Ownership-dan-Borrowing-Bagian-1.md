@@ -110,7 +110,7 @@ let a = String::from("Halo");
 let b = a.clone();
 println!("{} {}", a, b);
 ```
-`clone()` akan membuat data baru yang sama - yang dialokasikan di _heap_ dan kemudian me-assignnya pada variabel baru, yang dalam kasus diatas, pada variabel`b`. Method `.clone()` membuat sebuah "kopi" dari si memori. Jadi, kedua variabel tersebut merupakan variabel yang benar-benar berbeda. Namun, _cloning_ relatif "mahal" pada _heap_.
+`clone()` akan membuat data baru yang sama - yang dialokasikan di _heap_ dan kemudian me-assignnya pada variabel baru, yang dalam kasus diatas, pada variabel `b`. Method `.clone()` membuat sebuah "kopi" dari si memori. Jadi, kedua variabel tersebut merupakan variabel yang benar-benar berbeda. Namun, _cloning_ relatif "mahal" pada _heap_.
 
 Yang kedua adalah dengan "meminjam" atau "_borrow_" si _ownership_ sebagai sebuah _reference_.
 
