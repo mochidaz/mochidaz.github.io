@@ -36,7 +36,7 @@ error[E0382]: borrow of moved value: `x`
 Untuk mengetahui apa yang terjadi disini, kita harus mengetahui beda dari tipe _stack_ dan _heap_.
 
 ## Tipe _stack_
-Variabel _stack_ dibuat untuk pembuatan dan pengambilan memori yang cepat. Memori secara otomatis diambil kembali oleh program setelah si variabel keluar dari scope. Tipe _stack_ merupakan tipe default dalam Rust. _stack_ mencakup tipe-tipe primitif, yang memiliki ukuran yang telah ditetapkan atau _fixed size_ dimana compiler dapat mengetahui ukuran memori yang tepat pada saat _compile time_ seperti berikut:
+_Stack_ dibuat untuk pembuatan dan pengambilan memori yang cepat. Memori secara otomatis diambil kembali oleh program setelah si variabel keluar dari scope. Tipe _stack_ merupakan tipe default dalam Rust. _stack_ mencakup tipe-tipe primitif, yang memiliki ukuran yang telah ditetapkan atau _fixed size_ dimana compiler dapat mengetahui ukuran memori yang tepat pada saat _compile time_ seperti berikut:
 
 ```rust
 let int: i32 = 10;
@@ -85,7 +85,7 @@ let b = a;
 println!("{} {}", a, b);
 ```
 
-Kode diatas memuat sebuah tipe kompleks yaitu `a` yang bertipe `String`. Seperti pada potongan kode yang memuat `stack`, kita me-assign variabel `a` ke `b`. Segalanya terlihat sama. Namun, mengapa terjadi _error_? Nah, disini terlihat perbedaan bagaimana Rust mengatur _stack_ dan _heap_ dengan jelas. Variabel _stack_ - para tipe primitif akan di-copy, karena mengcopy variabel _stack_ itu "murah". Tipe-tipe primitif memiliki trait `Copy` yang memungkinkan itu terjadi sedangkan tipe kompleks - Rust memindahkan (_move_) _ownership_ dan tidak mengimplementasikan trait `Copy`.
+Kode diatas memuat sebuah tipe kompleks yaitu `a` yang bertipe `String`. Seperti pada potongan kode yang memuat `stack`, kita me-assign variabel `a` ke `b`. Segalanya terlihat sama. Namun, mengapa terjadi _error_? Nah, disini terlihat perbedaan bagaimana Rust mengatur _stack_ dan _heap_ dengan jelas. Variabel _stack-allocated_ - para tipe primitif akan di-copy, karena mengcopy variabel _stack_ itu "murah". Tipe-tipe primitif memiliki trait `Copy` yang memungkinkan itu terjadi sedangkan tipe kompleks - Rust memindahkan (_move_) _ownership_ dan tidak mengimplementasikan trait `Copy`.
 
 ## Ownership dan Borrowing
 
