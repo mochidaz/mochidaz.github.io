@@ -270,7 +270,7 @@ pub trait TraitApalah {
 }
 ```
 
-Nah, sekarang kita sudah membuat trait kita. Ingat bahwa seperti struct, kita juga harus menggunakan keyword `pub` agar kita dapat mengakses trait tersebut di file lain, seperti struct namun kita tidak boleh menuliskan `pub` untuk method didalamnya. Kita tidak menuliskan `method body`, melainkan nama method, parameter `&self`, dan return type secara langsung dan diakhiri dengan titik koma untuk setiap method. Parameter `&self` diatas akan menunjuk pada setiap field dalam tipe yang diimplementasikan.
+Nah, sekarang kita sudah membuat trait kita. Ingat bahwa seperti struct, kita juga harus menggunakan keyword `pub` agar kita dapat mengakses trait tersebut di file lain, seperti struct namun kita tidak harus menuliskan `pub` untuk setiap method didalamnya. Kita tidak menuliskan `method body`, melainkan nama method, parameter `&self`, dan return type secara langsung dan diakhiri dengan titik koma untuk setiap method. Parameter `&self` diatas akan menunjuk pada setiap field dalam tipe yang diimplementasikan.
 
 Mari kita coba implementasikan `TraitApalah` pada `TipeApalah`. 
 ```rust
