@@ -408,10 +408,12 @@ fn main() {
 	
 	tipe_apalah.tambah_satu();
 	
-	print_jika_valid(tipe_saya);
-	print_jika_valid(tipe_apalah);
+	print_jika_valid(&tipe_saya);
+	print_jika_valid(&tipe_apalah);
 }
 ```
+
+Jangan lupa untuk menggunakan ampersand (&) karena `print_jika_valid` menerima `&dyn TraitApalah`.
 
 Sekarang kita akan membahas tentang trait-trait built-in rust yang sangat berguna, dan juga menggunakan macro `derive`.
 
@@ -465,8 +467,8 @@ fn main() {
 	
 	tipe_apalah.tambah_satu();
 	
-	print_jika_valid(tipe_saya);
-	print_jika_valid(tipe_apalah);
+	print_jika_valid(&tipe_saya);
+	print_jika_valid(&tipe_apalah);
 	
 	println!("{:?}", tipe_saya);
 }
