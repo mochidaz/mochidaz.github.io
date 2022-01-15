@@ -201,7 +201,7 @@ fn main() {
 	
 	let tipe_apalah2 = TipeApalah::new(20);
 	
-	let check = tipe_apalah2.bil_bulat(30);
+	let check = tipe_apalah2.lebih_dari(30);
 }
 ```
 Nah, lihat perbedaannya? Pada `tipe_apalah2`, kita memakai `::` untuk memanggil method `new()` sedangkan pada `check`, kita memakai `.` untuk memanggil method `bil_bulat()`. Yang membuatnya berbeda adalah dari `&self` di parameter. Bila kita tidak memakai `&self` pada parameter method kita, kita memakai operator `::` untuk memanggilnya. Namun bila kita memakai `&self`, kita memakai dot operator/`.` untuk memanggilnya.
@@ -249,7 +249,7 @@ fn main() {
 	
 	let tipe_apalah2 = TipeApalah::new(20);
 	
-	let check = tipe_apalah2.bil_bulat(30);
+	let check = tipe_apalah2.lebih_dari(30);
 	
 	tipe_apalah.tambah_satu();
 }
