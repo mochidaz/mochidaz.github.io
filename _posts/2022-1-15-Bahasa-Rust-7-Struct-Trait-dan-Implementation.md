@@ -115,7 +115,7 @@ pub struct TipeApalah {
 }
 ```
 
-Dan bingo! Semua akan berjalan dengan lancar. Hal ini juga berlaku pada fungsi, namun tidak pada method. Method akan dapat dipanggil dengan normal tanpa `pub` sekalipun.
+Dan bingo! Semua akan berjalan dengan lancar. Hal ini juga berlaku pada fungsi dan method.
 
 Sekarang kita akan coba membuat method untuk struct `TipeApalah`.
 
@@ -124,7 +124,7 @@ Untuk membuat method, kita menggunakan keyword `impl` yang berarti _implement_ a
 ```rust
 //apalah.rs
 impl TipeApalah {
-	fn new(x: i32) -> Self {
+	pub fn new(x: i32) -> Self {
 		Self {
 			hitung: 0,
 			bil_bulat: x,
@@ -164,7 +164,7 @@ Sekarang, mari kita coba membuat satu method lagi yang berbeda dari method `new(
 ```rust
 //apalah.rs
 impl TipeApalah {
-	fn new(x: i32) -> Self {
+	pub fn new(x: i32) -> Self {
 		Self {
 			hitung: 0,
 			bil_bulat: x,
@@ -172,7 +172,7 @@ impl TipeApalah {
 		}
 	}
 	
-	fn lebih_dari(&self, x: i32) -> bool {
+	pub fn lebih_dari(&self, x: i32) -> bool {
 		self.bil_bulat > x 
 	}
 }
@@ -213,7 +213,7 @@ Nah, sekarang kita akan membuat satu method lagi untuk `TipeApalah`.
 ```rust
 //apalah.rs
 impl TipeApalah {
-	fn new(x: i32) -> Self {
+	pub fn new(x: i32) -> Self {
 		Self {
 			hitung: 0,
 			bil_bulat: x,
@@ -221,11 +221,11 @@ impl TipeApalah {
 		}
 	}
 	
-	fn lebih_dari(&self, x: i32) -> bool {
+	pub fn lebih_dari(&self, x: i32) -> bool {
 		self.bil_bulat > x 
 	}
 	
-	fn tambah_satu(&mut self) {
+	pub fn tambah_satu(&mut self) {
 		self.hitung += 1
 	}
 }
@@ -321,7 +321,7 @@ fn main() {
 	
 	let tipe_apalah2 = TipeApalah::new(20);
 	
-	let check = tipe_apalah2.bil_bulat(30);
+	let check = tipe_apalah2.lebih_dari(30);
 	
 	tipe_apalah.tambah_satu();
 }
@@ -363,7 +363,7 @@ fn print_jika_valid(check: &dyn TraitApalah) {
 ```
 Lihat, fungsi diatas tidak menerima sebuah struct - melainkan sebuah trait! Kita menggunakan keyword `dyn` dengan didahului oleh ampersand untuk menggunakan trait sebagai tipe pada parameter, atau menggunakan trait sebagai return type.
 
-Dengan begini, fungsi diatas dapat digunakan untuk kedua struct kita, yaitu `StructSaya` dan `StructApalah`! Sekarang, `main.rs` kita akan terlihat seperti ini:
+Dengan begini, fungsi diatas dapat digunakan untuk kedua struct kita, yaitu `TipeSaya` dan `TipeApalah`! Sekarang, `main.rs` kita akan terlihat seperti ini:
 
 ```rust
 //main.rs
@@ -404,7 +404,7 @@ fn main() {
 	
 	let tipe_apalah2 = TipeApalah::new(20);
 	
-	let check = tipe_apalah2.bil_bulat(30);
+	let check = tipe_apalah2.lebih_dari(30);
 	
 	tipe_apalah.tambah_satu();
 	
@@ -419,7 +419,7 @@ Kita dapat mengimplementasikan trait `Default` untuk membuat default value untuk
 
 ```
 //main.rs
-impl Default for StructSaya {
+impl Default for TipeSaya {
 	fn default() -> Self {
 		Self {
 			field_a: 0,
@@ -461,7 +461,7 @@ fn main() {
 	
 	let tipe_apalah2 = TipeApalah::new(20);
 	
-	let check = tipe_apalah2.bil_bulat(30);
+	let check = tipe_apalah2.lebih_dari(30);
 	
 	tipe_apalah.tambah_satu();
 	
