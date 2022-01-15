@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Bahasa Rust 5: Result, Option, dan Pattern Matching"
 permalink: /id/Bahasa-Rust-5 
 lang: id
