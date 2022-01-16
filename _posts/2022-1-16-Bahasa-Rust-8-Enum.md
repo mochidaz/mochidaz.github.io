@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Bahasa Rust 8: Enumerasi"
+title: "Bahasa Pemrograman Rust 8: Enumerasi"
 permalink: /id/Bahasa-Rust-8
 lang: id
 date: 2022-01-16 01:00

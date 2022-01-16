@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Bahasa Rust 9: Generics"
+title: "Bahasa Pemrograman Rust 9: Generics"
 permalink: /id/Bahasa-Rust-9
 lang: id
 date: 2022-01-16 02:00
