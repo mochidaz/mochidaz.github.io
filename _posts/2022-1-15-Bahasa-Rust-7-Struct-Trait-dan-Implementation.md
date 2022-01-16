@@ -1,9 +1,8 @@
 ---
-layout: title
+layout: post
 title: "Bahasa Pemrograman Rust 7: Struct, Trait, dan Implementasi"
 permalink: /id/Bahasa-Rust-7 
 lang: id
-layout: post
 date: 2022-01-15
 ---
 
@@ -204,7 +203,7 @@ fn main() {
 	let check = tipe_apalah2.lebih_dari(30);
 }
 ```
-Nah, lihat perbedaannya? Pada `tipe_apalah2`, kita memakai `::` untuk memanggil method `new()` sedangkan pada `check`, kita memakai `.` untuk memanggil method `bil_bulat()`. Yang membuatnya berbeda adalah dari `&self` di parameter. Bila kita tidak memakai `&self` pada parameter method kita, kita memakai operator `::` untuk memanggilnya. Namun bila kita memakai `&self`, kita memakai dot operator/`.` untuk memanggilnya.
+Nah, lihat perbedaannya? Pada `tipe_apalah2`, kita memakai `::` untuk memanggil method `new()` sedangkan pada `check`, kita memakai `.` untuk memanggil method `lebih_dari()`. Yang membuatnya berbeda adalah dari `&self` di parameter. Bila kita tidak memakai `&self` pada parameter method kita, kita memakai operator `::` untuk memanggilnya. Namun bila kita memakai `&self`, kita memakai dot operator/`.` untuk memanggilnya.
 
 Omong-omong, kita juga dapat menjadikan struct lainnya sebagai field pada struct kita.
 

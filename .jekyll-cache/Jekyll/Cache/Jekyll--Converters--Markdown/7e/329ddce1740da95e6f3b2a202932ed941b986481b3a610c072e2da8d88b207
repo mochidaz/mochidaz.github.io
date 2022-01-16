@@ -1,4 +1,4 @@
-I"]¯<p><img src="/images/rust-7.png" alt="rust" /></p>
+I"±<p><img src="/images/rust-7.png" alt="rust" /></p>
 
 <p>Di artikel kali ini, kita akan membahas tentang structs, traits, dan implementasi. Pertama-tama, kita harus mengetahui terlebih dahulu secara umum tentang struct.</p>
 
@@ -98,7 +98,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Dan bingo! Semua akan berjalan dengan lancar. Hal ini juga berlaku pada fungsi, namun tidak pada method. Method akan dapat dipanggil dengan normal tanpa <code class="language-plaintext highlighter-rouge">pub</code> sekalipun.</p>
+<p>Dan bingo! Semua akan berjalan dengan lancar. Hal ini juga berlaku pada fungsi dan method, namun tidak untuk method dari trait yang diimplementasikan pada struct.</p>
 
 <p>Sekarang kita akan coba membuat method untuk struct <code class="language-plaintext highlighter-rouge">TipeApalah</code>.</p>
 
@@ -106,7 +106,7 @@
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//apalah.rs</span>
 <span class="k">impl</span> <span class="n">TipeApalah</span> <span class="p">{</span>
-	<span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Self</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Self</span> <span class="p">{</span>
 		<span class="n">Self</span> <span class="p">{</span>
 			<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
 			<span class="n">bil_bulat</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
@@ -144,7 +144,7 @@
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//apalah.rs</span>
 <span class="k">impl</span> <span class="n">TipeApalah</span> <span class="p">{</span>
-	<span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Self</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Self</span> <span class="p">{</span>
 		<span class="n">Self</span> <span class="p">{</span>
 			<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
 			<span class="n">bil_bulat</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
@@ -152,7 +152,7 @@
 		<span class="p">}</span>
 	<span class="p">}</span>
 	
-	<span class="k">fn</span> <span class="nf">lebih_dari</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">lebih_dari</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
 		<span class="k">self</span><span class="py">.bil_bulat</span> <span class="o">&gt;</span> <span class="n">x</span> 
 	<span class="p">}</span>
 <span class="p">}</span>
@@ -180,10 +180,10 @@
 	
 	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
 	
-	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.bil_bulat</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>Nah, lihat perbedaannya? Pada <code class="language-plaintext highlighter-rouge">tipe_apalah2</code>, kita memakai <code class="language-plaintext highlighter-rouge">::</code> untuk memanggil method <code class="language-plaintext highlighter-rouge">new()</code> sedangkan pada <code class="language-plaintext highlighter-rouge">check</code>, kita memakai <code class="language-plaintext highlighter-rouge">.</code> untuk memanggil method <code class="language-plaintext highlighter-rouge">bil_bulat()</code>. Yang membuatnya berbeda adalah dari <code class="language-plaintext highlighter-rouge">&amp;self</code> di parameter. Bila kita tidak memakai <code class="language-plaintext highlighter-rouge">&amp;self</code> pada parameter method kita, kita memakai operator <code class="language-plaintext highlighter-rouge">::</code> untuk memanggilnya. Namun bila kita memakai <code class="language-plaintext highlighter-rouge">&amp;self</code>, kita memakai dot operator/<code class="language-plaintext highlighter-rouge">.</code> untuk memanggilnya.</p>
+<p>Nah, lihat perbedaannya? Pada <code class="language-plaintext highlighter-rouge">tipe_apalah2</code>, kita memakai <code class="language-plaintext highlighter-rouge">::</code> untuk memanggil method <code class="language-plaintext highlighter-rouge">new()</code> sedangkan pada <code class="language-plaintext highlighter-rouge">check</code>, kita memakai <code class="language-plaintext highlighter-rouge">.</code> untuk memanggil method <code class="language-plaintext highlighter-rouge">lebih_dari()</code>. Yang membuatnya berbeda adalah dari <code class="language-plaintext highlighter-rouge">&amp;self</code> di parameter. Bila kita tidak memakai <code class="language-plaintext highlighter-rouge">&amp;self</code> pada parameter method kita, kita memakai operator <code class="language-plaintext highlighter-rouge">::</code> untuk memanggilnya. Namun bila kita memakai <code class="language-plaintext highlighter-rouge">&amp;self</code>, kita memakai dot operator/<code class="language-plaintext highlighter-rouge">.</code> untuk memanggilnya.</p>
 
 <p>Omong-omong, kita juga dapat menjadikan struct lainnya sebagai field pada struct kita.</p>
 
@@ -191,7 +191,7 @@
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//apalah.rs</span>
 <span class="k">impl</span> <span class="n">TipeApalah</span> <span class="p">{</span>
-	<span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Self</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Self</span> <span class="p">{</span>
 		<span class="n">Self</span> <span class="p">{</span>
 			<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
 			<span class="n">bil_bulat</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
@@ -199,11 +199,11 @@
 		<span class="p">}</span>
 	<span class="p">}</span>
 	
-	<span class="k">fn</span> <span class="nf">lebih_dari</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">lebih_dari</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
 		<span class="k">self</span><span class="py">.bil_bulat</span> <span class="o">&gt;</span> <span class="n">x</span> 
 	<span class="p">}</span>
 	
-	<span class="k">fn</span> <span class="nf">tambah_satu</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">tambah_satu</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
 		<span class="k">self</span><span class="py">.hitung</span> <span class="o">+=</span> <span class="mi">1</span>
 	<span class="p">}</span>
 <span class="p">}</span>
@@ -226,7 +226,7 @@
 	
 	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
 	
-	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.bil_bulat</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
 	
 	<span class="n">tipe_apalah</span><span class="nf">.tambah_satu</span><span class="p">();</span>
 <span class="p">}</span>
@@ -295,7 +295,7 @@
 	
 	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
 	
-	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.bil_bulat</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
 	
 	<span class="n">tipe_apalah</span><span class="nf">.tambah_satu</span><span class="p">();</span>
 <span class="p">}</span>
@@ -334,7 +334,7 @@
 </code></pre></div></div>
 <p>Lihat, fungsi diatas tidak menerima sebuah struct - melainkan sebuah trait! Kita menggunakan keyword <code class="language-plaintext highlighter-rouge">dyn</code> dengan didahului oleh ampersand untuk menggunakan trait sebagai tipe pada parameter, atau menggunakan trait sebagai return type.</p>
 
-<p>Dengan begini, fungsi diatas dapat digunakan untuk kedua struct kita, yaitu <code class="language-plaintext highlighter-rouge">StructSaya</code> dan <code class="language-plaintext highlighter-rouge">StructApalah</code>! Sekarang, <code class="language-plaintext highlighter-rouge">main.rs</code> kita akan terlihat seperti ini:</p>
+<p>Dengan begini, fungsi diatas dapat digunakan untuk kedua struct kita, yaitu <code class="language-plaintext highlighter-rouge">TipeSaya</code> dan <code class="language-plaintext highlighter-rouge">TipeApalah</code>! Sekarang, <code class="language-plaintext highlighter-rouge">main.rs</code> kita akan terlihat seperti ini:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//main.rs</span>
 <span class="k">mod</span> <span class="n">apalah</span><span class="p">;</span>
@@ -374,21 +374,23 @@
 	
 	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
 	
-	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.bil_bulat</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
 	
 	<span class="n">tipe_apalah</span><span class="nf">.tambah_satu</span><span class="p">();</span>
 	
-	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="n">tipe_saya</span><span class="p">);</span>
-	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="n">tipe_apalah</span><span class="p">);</span>
+	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tipe_saya</span><span class="p">);</span>
+	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tipe_apalah</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
+<p>Jangan lupa untuk menggunakan ampersand (&amp;) karena <code class="language-plaintext highlighter-rouge">print_jika_valid</code> menerima <code class="language-plaintext highlighter-rouge">&amp;dyn TraitApalah</code>.</p>
 
 <p>Sekarang kita akan membahas tentang trait-trait built-in rust yang sangat berguna, dan juga menggunakan macro <code class="language-plaintext highlighter-rouge">derive</code>.</p>
 
 <p>Kita dapat mengimplementasikan trait <code class="language-plaintext highlighter-rouge">Default</code> untuk membuat default value untuk struct kita seperti ini:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//main.rs
-impl Default for StructSaya {
+impl Default for TipeSaya {
 	fn default() -&gt; Self {
 		Self {
 			field_a: 0,
@@ -428,12 +430,12 @@ impl Default for StructSaya {
 	
 	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
 	
-	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.bil_bulat</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
 	
 	<span class="n">tipe_apalah</span><span class="nf">.tambah_satu</span><span class="p">();</span>
 	
-	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="n">tipe_saya</span><span class="p">);</span>
-	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="n">tipe_apalah</span><span class="p">);</span>
+	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tipe_saya</span><span class="p">);</span>
+	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tipe_apalah</span><span class="p">);</span>
 	
 	<span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">tipe_saya</span><span class="p">);</span>
 <span class="p">}</span>

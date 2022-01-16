@@ -1,0 +1,153 @@
+I"}<<p><img src="/images/rust-8.png" alt="rust" /></p>
+
+<p>Kita sudah pernah membahas tentang enum di <a href="https://mochidaz.github.io/id/Bahasa-Rust-5">Bab Result, Option, dan Pattern Matching</a>. Namun, kita belum membahasnya lebih dalam lagi. Artikel kali ini akan lebih pendek dari artikel-artikel sebelumnya, namun sangatlah berguna. Artikel kali ini akan menyambung dengan artikel selanjutnya yaitu tentang generics. Karena itu, bacalah artikel ini dengan baik!</p>
+
+<p>Enum merupakan fitur yang sangat berguna pada Rust. Untuk mendefinisikan sebuah enum, cukup gunakan keyword <code class="language-plaintext highlighter-rouge">enum</code> diikuti dengan nama enum kita. Seperti struct, <em>naming convention</em> untuk enum adalah dengan PascalCase, dan itu juga berlaku untuk setiap enumerasi didalamnya.</p>
+
+<p>Untuk contoh yang lebih detail, saya akan gunakan contoh tentang tipe pembayaran misalnya.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Pembayaran</span> <span class="p">{</span>
+	<span class="n">Cash</span><span class="p">,</span>
+	<span class="n">KartuKredit</span><span class="p">,</span>
+	<span class="n">KartuDebit</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Lalu kita akan menggunakan pattern matching untuk enum kita ini.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="n">pembayaran</span> <span class="o">=</span> <span class="nn">Pembayaran</span><span class="p">::</span><span class="n">Cash</span><span class="p">;</span>
+	
+	<span class="k">match</span> <span class="n">pembayaran</span> <span class="p">{</span>
+		<span class="nn">Pembayaran</span><span class="p">::</span><span class="n">Cash</span> <span class="k">=&gt;</span> <span class="p">{</span>
+			<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan cash!"</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nn">Pembayaran</span><span class="p">::</span><span class="n">KartuKredit</span> <span class="k">=&gt;</span> <span class="p">{</span>
+			<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan Kartu Kredit!);
+		}
+		Pembayaran::KartuDebit =&gt; {
+			println!("</span><span class="n">Membayar</span> <span class="n">dengan</span> <span class="n">Kartu</span> <span class="nd">Debit!</span><span class="s">");
+		}
+	}
+}
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">match</code> akan mencocokkan dengan variabel <code class="language-plaintext highlighter-rouge">pembayaran</code>, enumerasi mana yang dimiliki oleh <code class="language-plaintext highlighter-rouge">pembayaran</code> yang dalam kasus ini adalah <code class="language-plaintext highlighter-rouge">Pembayaran::Cash</code>. Saat pattern matching, kita diharuskan untuk menuliskan semua enumerasi kita. Semua kondisi yang memungkinkan harus terpenuhi. Bila tidak, akan terjadi error seperti berikut:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">match</span> <span class="n">pembayaran</span> <span class="p">{</span>
+	<span class="nn">Pembayaran</span><span class="p">::</span><span class="n">Cash</span> <span class="k">=&gt;</span> <span class="p">{</span>
+		<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan cash!"</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="nn">Pembayaran</span><span class="p">::</span><span class="n">KartuKredit</span> <span class="k">=&gt;</span> <span class="p">{</span>
+		<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan Kartu Kredit!);
+	}
+}
+</span></code></pre></div></div>
+<p>Akan terjadi error pada kode diatas karena <code class="language-plaintext highlighter-rouge">Pembayaran::KartuDebit</code> tidak terpenuhi. Kita juga dapat menggunakan tanda underscore <code class="language-plaintext highlighter-rouge">_</code> untuk meng-cover sisa dari enumerasi seperti ini misalnya.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">match</span> <span class="n">pembayaran</span> <span class="p">{</span>
+	<span class="nn">Pembayaran</span><span class="p">::</span><span class="n">Cash</span> <span class="k">=&gt;</span> <span class="p">{</span>
+		<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan cash!"</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="mi">_</span> <span class="k">=&gt;</span> <span class="p">{</span>
+		<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan kartu!"</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Tanda <code class="language-plaintext highlighter-rouge">_</code> diatas akan meng-cover kedua kemungkinan yaitu <code class="language-plaintext highlighter-rouge">Pembayaran::KartuKredit</code> dan <code class="language-plaintext highlighter-rouge">Pembayaran::KartuDebit</code>.</p>
+
+<p>Sekarang kita akan membahas tentang fitur yang akan menjadi fitur favorit kita tentang enum. Yaitu mengasosiasikan data pada enumerasi!</p>
+
+<p>Sekarang kita akan mengganti enum pembayaran menjadi seperti ini:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Pembayaran</span> <span class="p">{</span>
+	<span class="nf">Cash</span><span class="p">(</span><span class="nb">f64</span><span class="p">),</span>
+	<span class="nf">KartuKredit</span><span class="p">(</span><span class="nb">String</span><span class="p">,</span> <span class="nb">f64</span><span class="p">),</span>
+	<span class="n">KartuDebit</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Lalu kita akan membuat sebuah struct baru yang bernama <code class="language-plaintext highlighter-rouge">DataDebit</code> untuk data pada <code class="language-plaintext highlighter-rouge">KartuDebit</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">DataDebit</span> <span class="p">{</span>
+	<span class="n">nomor_kartu</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+	<span class="n">jumlah</span><span class="p">:</span> <span class="nb">f64</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Sekarang, ganti <code class="language-plaintext highlighter-rouge">KartuDebit</code> menjadi seperti ini:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Pembayaran</span> <span class="p">{</span>
+	<span class="nf">Cash</span><span class="p">(</span><span class="nb">f64</span><span class="p">),</span>
+	<span class="nf">KartuKredit</span><span class="p">(</span><span class="nb">String</span><span class="p">,</span> <span class="nb">f64</span><span class="p">),</span>
+	<span class="nf">KartuDebit</span><span class="p">(</span><span class="n">DataDebit</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Hebat, bukan? Kita juga dapat menggunakan tipe kita sendiri untuk <code class="language-plaintext highlighter-rouge">enum</code>. Lalu bagaimana cara kerjanya? Mari kita lihat!</p>
+
+<p>Sekarang, kita akan mengganti nama variabel <code class="language-plaintext highlighter-rouge">pembayaran</code> ke <code class="language-plaintext highlighter-rouge">cash</code>, kemudian menambah value, lalu membuat dua variabel lainnya untuk dua enumerasi lainnya dengan satu variabel dari struct <code class="language-plaintext highlighter-rouge">DataDebit</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="n">cash</span> <span class="o">=</span> <span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">Cash</span><span class="p">(</span><span class="mf">20000.0</span><span class="p">);</span>
+	<span class="k">let</span> <span class="n">kredit</span> <span class="o">=</span> <span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">KartuKredit</span><span class="p">(</span><span class="s">"12345"</span><span class="nf">.to_string</span><span class="p">(),</span> <span class="mf">100000.0</span><span class="p">);</span>
+	
+	<span class="k">let</span> <span class="n">data_debit</span> <span class="o">=</span> <span class="n">DataDebit</span> <span class="p">{</span>
+		<span class="n">nomor_kartu</span><span class="p">:</span> <span class="s">"11111"</span><span class="nf">.to_string</span><span class="p">(),</span>
+		<span class="n">jumlah</span><span class="p">:</span> <span class="mf">200000.0</span><span class="p">,</span>
+	<span class="p">};</span>
+	
+	<span class="k">let</span> <span class="n">debit</span> <span class="o">=</span> <span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">KartuDebit</span><span class="p">(</span><span class="n">data_debit</span><span class="p">);</span>
+	
+	<span class="o">...</span>
+</code></pre></div></div>
+
+<p>Sekarang, kita buat fungsi baru untuk pattern matching. Pindahkan saja pattern matching pada fungsi <code class="language-plaintext highlighter-rouge">main</code> tadi kesini, kemudian ganti menjadi seperti ini:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">bayar</span><span class="p">(</span><span class="n">metode</span><span class="p">:</span> <span class="n">Pembayaran</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">match</span> <span class="n">metode</span> <span class="p">{</span>
+		<span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">Cash</span><span class="p">(</span><span class="n">jumlah</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+			<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan cash dengan jumlah: {}"</span><span class="p">,</span> <span class="n">jumlah</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">KartuKredit</span><span class="p">(</span><span class="n">no_kartu</span><span class="p">,</span> <span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+			<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan kartu kredit bernomor {}"</span><span class="p">,</span> <span class="n">no_kartu</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">KartuDebit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+			<span class="nd">println!</span><span class="p">(</span><span class="s">"Membayar dengan kartu debit bernomor {} dan berjumlah {}"</span><span class="p">,</span> <span class="n">data</span><span class="py">.nomor_kartu</span><span class="p">,</span> <span class="n">data</span><span class="py">.jumlah</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kalian lihat. Kita tinggal memberi variabel baru didalam setiap enumerasi seperti <code class="language-plaintext highlighter-rouge">jumlah</code> pada <code class="language-plaintext highlighter-rouge">Pembayaran::Cash</code>. Setiap variabel menandai data yang dimiliki enum tersebut. Nama yang digunakan bebas. Kalian akan dapat menggunakannya didalam block enumerasi kalian seperti diatas. Lalu apa fungsi dari <code class="language-plaintext highlighter-rouge">_</code> pada <code class="language-plaintext highlighter-rouge">Pembayaran::KartuKredit</code>? Itu adalah tanda untuk memberitahu compiler bahwa kita tidak akan menggunakan data tersebut didalam block enumerasi pada pattern matching kita. Kita juga dapat menamai data yang tidak akan dipakai dengan menggunakan prefix <code class="language-plaintext highlighter-rouge">_</code> juga seperti <code class="language-plaintext highlighter-rouge">_jumlah</code>. Namun untuk sekarang, saya lebih memilih menggunakan hanya underscore saja.</p>
+
+<p>Mari kita panggil fungsi diatas dalam fungsi <code class="language-plaintext highlighter-rouge">main</code> kita.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="n">cash</span> <span class="o">=</span> <span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">Cash</span><span class="p">(</span><span class="mf">20000.0</span><span class="p">);</span>
+	<span class="k">let</span> <span class="n">kredit</span> <span class="o">=</span> <span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">KartuKredit</span><span class="p">(</span><span class="s">"12345"</span><span class="nf">.to_string</span><span class="p">(),</span> <span class="mf">100000.0</span><span class="p">);</span>
+	
+	<span class="k">let</span> <span class="n">data_debit</span> <span class="o">=</span> <span class="n">DataDebit</span> <span class="p">{</span>
+		<span class="n">nomor_kartu</span><span class="p">:</span> <span class="s">"11111"</span><span class="nf">.to_string</span><span class="p">(),</span>
+		<span class="n">jumlah</span><span class="p">:</span> <span class="mf">200000.0</span><span class="p">,</span>
+	<span class="p">};</span>
+	
+	<span class="k">let</span> <span class="n">debit</span> <span class="o">=</span> <span class="nn">Pembayaran</span><span class="p">::</span><span class="nf">KartuDebit</span><span class="p">(</span><span class="n">data_debit</span><span class="p">);</span>
+	
+	<span class="nf">bayar</span><span class="p">(</span><span class="n">cash</span><span class="p">);</span>
+	<span class="nf">bayar</span><span class="p">(</span><span class="n">kredit</span><span class="p">);</span>
+	<span class="nf">bayar</span><span class="p">(</span><span class="n">debit</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Dan bingo! Anda akan melihat output seperti ini:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Membayar dengan cash dengan jumlah: 20000
+Membayar dengan kartu kredit bernomor 12345
+Membayar dengan kartu debit bernomor 11111 dan berjumlah 200000
+</code></pre></div></div>
+
+<p>Dengan begitu, materi enumerasi kali ini selesai.</p>
+
+<p>Terima kasih telah membaca, bila ada pertanyaan, silahkan untuk mengirim email pada rahmanhakim2435@pm.me :).</p>
+:ET
