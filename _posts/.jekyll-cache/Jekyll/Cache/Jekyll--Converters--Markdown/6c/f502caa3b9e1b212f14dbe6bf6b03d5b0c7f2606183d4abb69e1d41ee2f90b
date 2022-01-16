@@ -1,0 +1,193 @@
+I"|�<p><img src="/images/rust-5.png" alt="rust" /></p>
+
+<p>Error handling merupakan salah satu logika penting dalam pemrograman. Error handling merupakan cara untuk memproses suatu logika disaat logika yang lainnya mengalami <code class="language-plaintext highlighter-rouge">error</code> atau kegagalan. Error handling dapat juga disebut dengan <code class="language-plaintext highlighter-rouge">exception handling</code>. 
+Umumnya, bahasa pemrograman lain memakai sebuah logika bernama <code class="language-plaintext highlighter-rouge">try-catch</code> untuk melakukan exception handling dimana <code class="language-plaintext highlighter-rouge">try</code> mencoba untuk menjalankan suatu logika yang berpotensi untuk error, dan <code class="language-plaintext highlighter-rouge">catch</code> merupakan logika yang menangkap error tersebut, lalu menjalankan logika lainnya bila error yang ditangkap sesuai. 
+Rust tidak menggunakan <code class="language-plaintext highlighter-rouge">try-catch</code>. Rust menggunakan sebuah <code class="language-plaintext highlighter-rouge">enum</code> bernama <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> dimana T merupakan generic untuk tipe data yang akan di-<code class="language-plaintext highlighter-rouge">wrap</code> dalam bentuk <code class="language-plaintext highlighter-rouge">Ok(T)</code> dan E merupakan generic untuk tipe data bentuk error yang akan di-<code class="language-plaintext highlighter-rouge">wrap</code> dalam bentuk <code class="language-plaintext highlighter-rouge">Err(E)</code>. Yang kedua adalah <code class="language-plaintext highlighter-rouge">null</code>. 
+Bahasa pemrograman lain umumnya memiliki <code class="language-plaintext highlighter-rouge">null</code> atau nilai kosong yang benar-benar kosong (Bukan 0, karena 0 merupakan integer). Namun <code class="language-plaintext highlighter-rouge">null reference</code> dianggap sebagai sesuatu yang buruk dalam Computer Science. Oleh karena itu, Rust tidak memiliki <code class="language-plaintext highlighter-rouge">null</code>, melainkan sebuah <code class="language-plaintext highlighter-rouge">enum</code> bernama <code class="language-plaintext highlighter-rouge">Option</code>. <code class="language-plaintext highlighter-rouge">enum</code> ini digunakan untuk sesuatu yang memiliki kemungkinan tidak ada atau <code class="language-plaintext highlighter-rouge">None</code>. 
+<code class="language-plaintext highlighter-rouge">enum</code> ini akan mengembalikan <code class="language-plaintext highlighter-rouge">Some(value)</code> atau <code class="language-plaintext highlighter-rouge">None</code>.</p>
+
+<p>Ingat bahwa <code class="language-plaintext highlighter-rouge">T</code> yang sudah kalian lihat diatas dan akan kalian terus lihat dibawah sini berarti “Type” atau tipe. Biasanya, <code class="language-plaintext highlighter-rouge">T</code> sangat umum dipakai sebagai perwakilan tipe data generic dimana kita dapat memasukkan apapun kedalam sana. Jangan bingung dengan <code class="language-plaintext highlighter-rouge">T</code> dibawah. Bila anda melihat sesuatu semacam <code class="language-plaintext highlighter-rouge">Ok(T)</code>, maka itu berarti didalam <code class="language-plaintext highlighter-rouge">Ok()</code> kita dapat memasukkan value apapun, dan hanya merupakan sebuah perwakilan dari tipe sebelum kita memasukkan apapun kesana. Mirip seperti variabel pada aljabar (2x + 3y dan semacamnya) sedangkan <code class="language-plaintext highlighter-rouge">E</code> merupakan perwakilan untuk tipe error.</p>
+
+<p>Omong-omong, perlu diingat bahwa Pattern Matching yang akan dibahas disini merupakan pattern matching dasar untuk menghandle kedua <code class="language-plaintext highlighter-rouge">enum</code> ini. Detailnya akan dibahas di lain waktu.</p>
+
+<h2 id="resultt-e">Result&lt;T, E&gt;</h2>
+
+<p>Yang pertama adalah <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code>. Untuk yang baru saja belajar bahasa Rust, tentu akan kebingungan tentang bagaimana cara melakukan <code class="language-plaintext highlighter-rouge">error handling</code> di bahasa ini. Jawabannya adalah dengan <code class="language-plaintext highlighter-rouge">enum</code> berikut. <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> akan mengembalikan success value atau nilai bila sukses dan tidak terjadi error dalam <code class="language-plaintext highlighter-rouge">Ok(T)</code> dan mengembalikan failure atau kegagalan dalam bentuk <code class="language-plaintext highlighter-rouge">Err(E)</code>. Dikarenakan mereka merupakan <code class="language-plaintext highlighter-rouge">enum</code>, kita dapat menggunakan <code class="language-plaintext highlighter-rouge">pattern matching</code> untuk me-handle error yang dikembalikan:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
+       <span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
+       <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">panic!</span><span class="p">(</span><span class="s">"Error terjadi: {}"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="p">};</span>
+    <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">);</span>
+    
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kode diatas merupakan kode untuk membuka dan membaca sebuah file bernama <code class="language-plaintext highlighter-rouge">tes.txt</code>. Bila file tersebut ada dan dapat dibuka, maka pattern matching diatas, yaitu <code class="language-plaintext highlighter-rouge">match file</code> akan mengembalikan file tersebut. Karena <code class="language-plaintext highlighter-rouge">std::fs::File::open</code> mengembalikan sebuah Result, maka pattern matching yang tersedia adalah antara <code class="language-plaintext highlighter-rouge">Ok(T)</code> atau <code class="language-plaintext highlighter-rouge">Err(E)</code>. Bila pattern yang ditemukan merupakan <code class="language-plaintext highlighter-rouge">Ok(f)</code> dimana <code class="language-plaintext highlighter-rouge">f</code> merupakan nama variabel <code class="language-plaintext highlighter-rouge">T</code> yang dapat kita ganti dengan apapun, maka kembalikan value yang diwrap didalam <code class="language-plaintext highlighter-rouge">Ok(T)</code> tersebut, yaitu <code class="language-plaintext highlighter-rouge">f</code> itu sendiri: <code class="language-plaintext highlighter-rouge">Ok(f) =&gt; f</code>. Sedangkan yang kedua, bila pattern yang ditemukan merupakan <code class="language-plaintext highlighter-rouge">Err(e)</code> dimana sama seperti <code class="language-plaintext highlighter-rouge">f</code>, <code class="language-plaintext highlighter-rouge">e</code> merupakan nama variabel pengganti <code class="language-plaintext highlighter-rouge">E</code>, maka print errornya dengan macro <code class="language-plaintext highlighter-rouge">panic!</code> dan <code class="language-plaintext highlighter-rouge">e</code> merupakan pesan errornya. Selanjutnya adalah <code class="language-plaintext highlighter-rouge">file.read_to_string(&amp;mut content)</code> yang merupakan sebuah method dari <code class="language-plaintext highlighter-rouge">std::fs::File</code> dimana dia akan secara langsung memanipulasi <code class="language-plaintext highlighter-rouge">String</code> yang mutable dengan mengonversi dan mengappend hasil bacaan file dari <code class="language-plaintext highlighter-rouge">std::fs::File</code> ke sebuah <code class="language-plaintext highlighter-rouge">&amp;mut String</code> atau mutable string.</p>
+
+<p>Cara diatas bisa dibilang lumayan ribet. Dengan menaruh return type <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code>, maka kode diatas akan lebih pendek. Apa bedanya <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> dan <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code>? Mereka sama. <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code> merupakan sebuah <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> yang telah diganti bentuk typenya menjadi <code class="language-plaintext highlighter-rouge">Result&lt;T, Error&gt;</code> dari library <code class="language-plaintext highlighter-rouge">fs</code> itu dengan keyword <code class="language-plaintext highlighter-rouge">type</code>. Error yang dikembalikan merupakan <code class="language-plaintext highlighter-rouge">std::io::Error</code>, error khusus dari library <code class="language-plaintext highlighter-rouge">io</code> itu sendiri, untuk error yang terjadi pada proses Input/Output. Begini kira-kira implementasinya:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
+    <span class="nf">Ok</span><span class="p">(())</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Dengan menggunakan operator <code class="language-plaintext highlighter-rouge">?</code>, maka error handling akan semakin lebih mudah dan kode kita terlihat lebih rapi. Namun perlu diingat bahwa operator <code class="language-plaintext highlighter-rouge">?</code> hanya berlaku untuk fungsi yang mengembalikan <code class="language-plaintext highlighter-rouge">Result</code>. Lalu, Ok(T) atau Err(E) dibutuhkan sebagai ekspresi untuk pengembalian pada sebuah fungsi yang mengembalikan <code class="language-plaintext highlighter-rouge">Result</code>. <code class="language-plaintext highlighter-rouge">Ok(())</code> dibawah adalah untuk mewrap <code class="language-plaintext highlighter-rouge">void</code>, atau tidak ada value didalam sebuah <code class="language-plaintext highlighter-rouge">Ok(T)</code>. Pengembalian harus sesuai dengan jenis <code class="language-plaintext highlighter-rouge">T</code> yang akan dikembalikan dan didefinisikan didalam <code class="language-plaintext highlighter-rouge">Result</code> pada return type. Seperti yang diatas, karena fungsi diatas mengembalikan <code class="language-plaintext highlighter-rouge">Result&lt;()&gt;</code> dimana <code class="language-plaintext highlighter-rouge">()</code> merupakan <code class="language-plaintext highlighter-rouge">empty tuple</code> yang tidak mengembalikan value apapun, maka kita harus mewrap <code class="language-plaintext highlighter-rouge">empty tuple</code> juga didalam <code class="language-plaintext highlighter-rouge">Ok(T)</code>. Rust juga memiliki cara lain untuk error handling seperti dengan menggunakan <code class="language-plaintext highlighter-rouge">expect()</code>. Method ini akan mengeluarkan pesan yang kita tulis didalam parameternya bila terjadi sebuah error dan tanpa perlu menggunakan return type <code class="language-plaintext highlighter-rouge">enum Result</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.expect</span><span class="p">(</span><span class="s">"Tidak bisa membuka file"</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="nf">.expect</span><span class="p">(</span><span class="s">"Tidak bisa membaca file"</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Simpel sekali bukan? Sekarang, kita akan membahas method <code class="language-plaintext highlighter-rouge">unwrap()</code>.</p>
+
+<p>Method <code class="language-plaintext highlighter-rouge">unwrap()</code> merupakan sebuah method yang akan mengabaikan error atau sukses dan langsung mengambil value apapun yang diwrap didalam sebuah <code class="language-plaintext highlighter-rouge">Ok(T)</code> atau <code class="language-plaintext highlighter-rouge">Some(T)</code> (bagian dari <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code>, akan dibahas nanti).</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
+
+<span class="k">fn</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+    <span class="c">// OUTPUT: Halo</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kode diatas adalah contoh penggunaan dari <code class="language-plaintext highlighter-rouge">unwrap()</code> yaitu disaat kita ingin mengambil value dari “wrapper” sebuah enum. Bila kita tidak menggunakan <code class="language-plaintext highlighter-rouge">unwrap()</code> pada kode diatas, maka kita harus menggunakan formatting khusus untuk <code class="language-plaintext highlighter-rouge">println!()</code> yang berupa <code class="language-plaintext highlighter-rouge">{:?}</code> dan kemudian hasil yang akan dikeluarkan adalah <code class="language-plaintext highlighter-rouge">Ok("Halo\n")</code> dikarenakan isi file masih diwrap dalam <code class="language-plaintext highlighter-rouge">Ok(T)</code>.</p>
+
+<h2 id="early-return">Early Return</h2>
+
+<p>Early return merupakan sebuah kondisi dimana kita menggunakan keyword <code class="language-plaintext highlighter-rouge">return</code> untuk mengembalikan suatu value sebelum seluruh kode dalam fungsi tersebut diproses. Biasanya early return digabungkan dengan pattern matching untuk mengembalikan sebuah <code class="language-plaintext highlighter-rouge">Err(E)</code> di sebuah fungsi yang memiliki return type <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code>.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
+
+<span class="k">fn</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
+	<span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
+	<span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="p">};</span>
+    <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kode diatas akan langsung mengembalikan <code class="language-plaintext highlighter-rouge">Err(E)</code> bila ada masalah dengan file <code class="language-plaintext highlighter-rouge">tes.txt</code>dan program akan terhenti ketika kita mencapai <code class="language-plaintext highlighter-rouge">unwrap()</code>. Kita juga dapat me-handlenya lagi dengan pattern matching seperti berikut:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="nn">prelude</span><span class="p">::</span><span class="o">*</span><span class="p">};</span>
+
+<span class="k">fn</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">content</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="k">match</span> <span class="n">file</span> <span class="p">{</span>
+	<span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="p">,</span>
+	<span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="p">};</span>
+    <span class="n">file</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">content</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Isi dari tes.txt: Halo</span>
+    <span class="k">let</span> <span class="n">content</span> <span class="o">=</span> <span class="nf">read_file</span><span class="p">(</span><span class="s">"tes.txt"</span><span class="p">);</span>
+    <span class="k">match</span> <span class="n">content</span> <span class="p">{</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Success! Content: {}"</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Failed! Error: {}"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kode diatas akan mengeluarkan output “Success! Content: &lt;Konten File&gt;” bila berhasil dan “Failed! Error: &lt;Jenis Error&gt;” bila gagal.</p>
+
+<h2 id="optiont"><code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code></h2>
+
+<p>Yang kedua adalah <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code>. Enum ini merupakan <code class="language-plaintext highlighter-rouge">enum</code> yang sangat berguna bila ada dua kemungkinan kondisi dimana dalam satu kondisi value berhasil ditemukan dan dalam kondisi lain value tidak ada (None). Untuk lebih jelasnya, mari kita bahas lewat contoh.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">count_word</span><span class="p">(</span><span class="n">sentence</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">word</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">sentence</span><span class="nf">.split</span><span class="p">(</span><span class="s">" "</span><span class="p">)</span><span class="nf">.map</span><span class="p">(|</span><span class="n">s</span><span class="p">|</span> <span class="n">s</span><span class="nf">.to_string</span><span class="p">())</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">vec</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">word</span> <span class="p">{</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nb">None</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nf">Some</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">sentence</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Aku sedang coding bahasa Rust dan bahasa Rust ini sangat keren"</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">count</span> <span class="o">=</span> <span class="nf">count_word</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="s">"Rust"</span><span class="p">);</span>
+    <span class="k">match</span> <span class="n">count</span> <span class="p">{</span>
+        <span class="nb">None</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Tidak ditemukan kata tersebut di kalimat tersebut"</span><span class="p">),</span>
+        <span class="nf">Some</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Ditemukan {} kata tersebut di kalimat tersebut"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kode diatas dapat menghitung ada berapa kata spesifik di dalam sebuah kalimat. Bila tidak ditemukan, maka kita akan mengembalikan <code class="language-plaintext highlighter-rouge">None</code>. Bila ditemukan, maka <code class="language-plaintext highlighter-rouge">Some(count)</code> dimana count adalah hasil penghitungan jumlah kata di dalam kalimat tersebutlah yang akan dikembalikan. Sama seperti <code class="language-plaintext highlighter-rouge">Ok(T)</code>, <code class="language-plaintext highlighter-rouge">Some(T)</code> mewrap value. Kita dapat mengambil value tersebut dengan pattern matching seperti diatas maupun method <code class="language-plaintext highlighter-rouge">unwrap()</code>. Kita juga dapat mengatur default value dengan <code class="language-plaintext highlighter-rouge">unwrap_or(T)</code> dimana bila <code class="language-plaintext highlighter-rouge">None</code> ditemukan, maka value secara otomatis akan berubah menjadi si T yang kita berikan. Contoh:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">default_example</span><span class="p">(</span><span class="n">opt</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="nb">str</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">opt</span><span class="nf">.unwrap_or</span><span class="p">(</span><span class="s">"Ini adalah value default"</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">default_example</span><span class="p">(</span><span class="nf">Some</span><span class="p">(</span><span class="s">"Test"</span><span class="p">));</span>
+    <span class="nf">default_example</span><span class="p">(</span><span class="nb">None</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Pada baris pertama fungsi <code class="language-plaintext highlighter-rouge">main()</code>, <code class="language-plaintext highlighter-rouge">default_example()</code> akan mengeluarkan output “Test” dikarenakan <code class="language-plaintext highlighter-rouge">Option&lt;&amp;str&gt;</code> pada parameter <code class="language-plaintext highlighter-rouge">default_example()</code> memiliki value. Sedangkan pada baris kedua, yaitu <code class="language-plaintext highlighter-rouge">default_example(None)</code>, output yang akan dikeluarkan adalah “Ini adalah value default” dikarenakan <code class="language-plaintext highlighter-rouge">Option&lt;&amp;str&gt;</code> pada parameter fungsi itu mengembalikan <code class="language-plaintext highlighter-rouge">None</code> dan tidak memiliki value sehingga <code class="language-plaintext highlighter-rouge">unwrap_or(T)</code> secara otomatis akan mengambil value yang dipass pada parameternya sebagai argumen dan untuk kasus disini, itu adalah “Ini adalah value default”.</p>
+
+<p>Terima kasih telah membaca, nantikan artikel selanjutnya.</p>
+
+<p>Bila anda melihat sebuah kesalahan atau typo atau kata-kata yang agak kurang jelas, boleh kontak saya di email rahmanhakim2435@pm.me atau dm Instagram rahmanhakim2435_. Begitu juga bila anda ingin bertanya, jangan ragu untuk mengirim pesan pada email atau dm Instagram!</p>
+:ET

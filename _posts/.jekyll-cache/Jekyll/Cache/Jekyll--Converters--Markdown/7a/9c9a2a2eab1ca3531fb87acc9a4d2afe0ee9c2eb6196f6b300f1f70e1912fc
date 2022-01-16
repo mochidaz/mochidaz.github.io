@@ -1,4 +1,4 @@
-I"m$<p><img src="/images/rustlogo.png" alt="rust" /></p>
+I"Ñ(<p><img src="/images/rust-1.png" alt="rust" /></p>
 
 <h3 id="pengenalan">Pengenalan</h3>
 
@@ -9,19 +9,19 @@
 <p>Menginstall rust cukup mudah. Bila anda memakai Linux, anda dapat menginstall rustup dengan package manager anda.</p>
 
 <h4 id="debianubuntu">Debian/Ubuntu</h4>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt install rustup
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>rustup
 </code></pre></div></div>
 
 <h4 id="red-hatfedoraopensuse">Red Hat/Fedora/OpenSUSE</h4>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo dnf install rustup
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>dnf <span class="nb">install </span>rustup
 </code></pre></div></div>
 
 <h4 id="archmanjaro">Arch/Manjaro</h4>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo pacman -S rustup
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>pacman <span class="nt">-S</span> rustup
 </code></pre></div></div>
 
 <h4 id="instalasi-dengan-curl">Instalasi dengan Curl</h4>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">--proto</span> <span class="s1">'=https'</span> <span class="nt">--tlsv1</span>.2 https://sh.rustup.rs <span class="nt">-sSf</span> | sh
 </code></pre></div></div>
 
 <h4 id="instalasi-dalam-windows">Instalasi dalam Windows</h4>
@@ -34,14 +34,14 @@
 
 <p>Rust memiliki tiga channel toolchain yaitu stable, beta, dan nightly. Fitur-fitur yang belum stabil hanya tersedia di nightly rust. Namun, untuk sekarang, kita pakai channel stable terlebih dahulu. Untuk menginstall toolchain, run perintah berikut:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rustup install stable
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rustup <span class="nb">install </span>stable
 </code></pre></div></div>
 
 <p>Bila anda ingin menginstall beta atau nightly toolchain, ganti stable menjadi toolchain yang anda inginkan.</p>
 
 <p>Sekarang, untuk mengatur default toolchain, jalankan perintah berikut:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rustup default stable
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rustup default stable
 </code></pre></div></div>
 
 <p>Lakukan hal yang sama yaitu mengganti stable dengan channel yang anda inginkan bila anda ingin menggunakan channel lain sebagai default toolchain.</p>
@@ -52,7 +52,7 @@
 
 <p>Cargo adalah package manager rust sekaligus project manager. Dengan cargo, dependency yang ditulis dalam file khusus bernama Cargo.toml akan diinstall, kemudian program dicompile dan dirun. File executable akan disimpan dalam folder khusus didalamnya. Cargo sudah datang bersama rustup, rustc, dan toolchain lainnya. Bila semua sudah siap, mari kita buat project baru.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cargo new helloworld
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo new helloworld
 </code></pre></div></div>
 
 <p>Dengan command diatas, cargo akan membuat sebuah project bernama helloworld. Anda dapat mengganti nama helloworld dengan apapun sesuai nama project anda. Mari kita lihat struktur project rust.</p>
@@ -64,9 +64,9 @@
 
 <p>Sebelum project di-build atau di-run, seperti inilah struktur project rust. <code class="language-plaintext highlighter-rouge">Cargo.toml</code> memuat manifest sebuah project seperti nama project, author, versi, dan edisi. <code class="language-plaintext highlighter-rouge">Cargo.toml</code> jugalah tempat kita menulis dependency project kita. Selanjutnya, <code class="language-plaintext highlighter-rouge">src</code> adalah folder untuk source file. Di dalam folder itulah kita membuat file-file yang akan kita tuliskan source code didalamnya seperti <code class="language-plaintext highlighter-rouge">main.rs</code> yang merupakan main file dimana entry point terletak. Sekarang mari lihat isi file main.rs, yang berisi hello world program secara otomatis.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fn main() {
-    println!("Hello, world!");
-}
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>Kira-kira begitulah entry point rust. Namun, kali ini akan membahas tentang cargo terlebih dahulu. Untuk pemrogramannya, akan kita bahas di post berikutnya. Baik, sekarang mari lanjutkan ke command cargo berikutnya.</p>
@@ -127,14 +127,14 @@
 
 <p>Untuk menginstall sebuah package, umumnya kita harus menuliskan nama package dan versinya di <code class="language-plaintext highlighter-rouge">Cargo.toml</code> dan saat proses build, cargo akan otomatis menginstallnya untuk kita. Contohnya, bila kita menggunakan package scraper pada project kita, maka kita harus menulis scraper di dependencies seperti ini:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[package]
-name = "helloworld"
-version = "0.1.0"
-authors = ["Nama Author &lt;email_author@mail.com&gt;"]
-edition = "2018"
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[package]</span>
+<span class="py">name</span> <span class="p">=</span> <span class="s">"helloworld"</span>
+<span class="py">version</span> <span class="p">=</span> <span class="s">"0.1.0"</span>
+<span class="py">authors</span> <span class="p">=</span> <span class="p">[</span><span class="s">"Nama Author &lt;email_author@mail.com&gt;"</span><span class="p">]</span>
+<span class="py">edition</span> <span class="p">=</span> <span class="s">"2018"</span>
 
-[dependencies]
-scraper = "0.12.0"
+<span class="nn">[dependencies]</span>
+<span class="py">scraper</span> <span class="p">=</span> <span class="s">"0.12.0"</span>
 
 </code></pre></div></div>
 
@@ -142,12 +142,12 @@ scraper = "0.12.0"
 
 <p>Namun, kita bisa menginstall package cargo secara manual dengan command berikut</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cargo install &lt;nama package&gt;
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo <span class="nb">install</span> &lt;nama package&gt;
 </code></pre></div></div>
 
 <p>Misalnya seperti diatas, kita ingin menginstall scraper, maka kita hanya tinggal menjalankan</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cargo install scraper
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo <span class="nb">install </span>scraper
 </code></pre></div></div>
 
 <p>Kira-kira untuk pengenalan dasar dari cargo sudah cukup sampai disini. Sampai jumpa di post selanjutnya!</p>

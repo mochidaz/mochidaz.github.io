@@ -253,7 +253,7 @@ where T: std::ops::Add<Output=T> + std::ops::Sub<Output=T> + std::fmt::Debug,
 }
 ```
 
-Untuk menambahkan constraint lain, cukup dengan menambah koma saja di akhir _constraint_ untuk satu tipe, bukan operator `+`.
+Untuk menambahkan constraint pada tipe lain, cukup dengan menambah koma saja di akhir _constraint_ untuk satu tipe, bukan operator `+`.
 
 ```rust
 fn main() {

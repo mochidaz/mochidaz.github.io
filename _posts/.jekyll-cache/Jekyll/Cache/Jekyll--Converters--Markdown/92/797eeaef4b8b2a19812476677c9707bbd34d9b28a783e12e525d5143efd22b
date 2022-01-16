@@ -1,0 +1,194 @@
+I"�z<p><img src="/images/rust-6.png" alt="rust" /></p>
+
+<p>Kali ini kita masuk ke topik yang lumayan ribet dan membingungkan bagi siapapun yang baru saja belajar Rust, entah itu seorang programmer yang berpengalaman maupun tidak. Topik ini merupakan hal yang membuat Rust unik - yang membuat Rust adalah Rust. Benar, kita akan membahas tentang Ownership, fitur terunik bahasa Rust yang menjamin keamanan memory tanpa penggunaan garbage collector. Di artikel ini, kita akan membahas tentang ownership dan borrowing, juga tipe <em>stack</em> dan tipe <em>heap</em>.</p>
+
+<p>Ownership dan Borrowing akan sangat sangat membingungkan pemula, namun sangatlah penting dan vital karena ownership merupakan fitur utama bahasa ini. Dalam bahasa lain, masalah memory dapat menyebabkan kesalahan data dan crash pada program - dan Rust, Rust menekankan keamanan memory atau <em>memory safety</em> terlebih dahulu. Sekarang, mari kita lihat sebuah <em>error</em> yang sangat membuat pusing para pemula dalam bahasa Rust.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="s">"Ini adalah variabel"</span><span class="nf">.to_string</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Dalam kode diatas, kita me-assign variabel <code class="language-plaintext highlighter-rouge">x</code> pada <code class="language-plaintext highlighter-rouge">y</code>, lalu memasukkan <code class="language-plaintext highlighter-rouge">x</code> kedalam macro <code class="language-plaintext highlighter-rouge">println!</code>. Lalu apakah yang akan terjadi? Benar, error berikut akan terjadi:</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error[E0382]: borrow of moved value: <span class="sb">`</span>x<span class="sb">`</span>
+ <span class="nt">--</span><span class="o">&gt;</span> struct.rs:4:20
+  |
+2 |     <span class="nb">let </span>x <span class="o">=</span> <span class="s2">"Ini adalah variabel"</span>.to_string<span class="o">()</span><span class="p">;</span>
+  |         - move occurs because <span class="sb">`</span>x<span class="sb">`</span> has <span class="nb">type</span> <span class="sb">`</span>String<span class="sb">`</span>, which does not implement the <span class="sb">`</span>Copy<span class="sb">`</span> trait
+3 |     <span class="nb">let </span>y <span class="o">=</span> x<span class="p">;</span>
+  |             - value moved here
+4 |     println!<span class="o">(</span><span class="s2">"{}"</span>, x<span class="o">)</span><span class="p">;</span>
+  |                    ^ value borrowed here after move
+
+</code></pre></div></div>
+<p>Untuk mengetahui apa yang terjadi disini, kita harus mengetahui beda dari tipe <em>stack</em> dan <em>heap</em>.</p>
+
+<h2 id="tipe-stack">Tipe <em>stack</em></h2>
+<p><em>Stack</em> dibuat untuk pembuatan dan pengambilan memori yang cepat. Memori secara otomatis diambil kembali oleh program setelah si variabel keluar dari scope. Tipe <em>stack</em> merupakan tipe default dalam Rust. <em>stack</em> mencakup tipe-tipe primitif, yang memiliki ukuran yang telah ditetapkan atau <em>fixed size</em> dimana compiler dapat mengetahui ukuran memori yang tepat pada saat <em>compile time</em> seperti berikut:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nb">int</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="k">let</span> <span class="nb">float</span><span class="p">:</span> <span class="nb">f32</span> <span class="o">=</span> <span class="mf">5.5</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">boolean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">char</span> <span class="o">=</span> <span class="sc">'a'</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Mengapa <em>string</em> tidak termasuk kedalam <em>stack</em>? Karena <em>string</em> merupakan sebuah koleksi/<em>collection</em> dari <code class="language-plaintext highlighter-rouge">u8</code>.</p>
+
+<p>Lalu mengapa dipanggil dengan “<em>stack</em>”? Ketika anda membuat variabel baru, variabel tersebut akan dialokasi diatas variabel <em>stack</em> sebelumnya, seperti menumpuk kertas. Ketika sebuah variabel tidak dibutuhkan kembali, maka si variabel akan disingkirkan dari tumpukan tersebut jadi memory dapat diambil kembali pada penggunaan selanjutnya. Memori yang dialokasikan untuk variabel-variabel yang dialokasikan pada <em>stack</em> benar-benar disamping satu sama lain sehingga itulah yang membuat <em>stack</em> benar-benar cepat - si program tidak butuh untuk mencari dimana variabel selanjutnya harus berada dalam memori karena ia hanya menaruh/mengalokasikan si variabel diatas variabel sebelumnya pada <em>stack</em> dan membuatnya mudah diakses. Karena itulah ukuran dari tipe primitif harus diketahui dan <em>fixed</em>. Variabel yang dialokasikan pada <em>stack</em> tidak dapat tumbuh atau <em>grow</em> karena tidak ada tempat di dalam <em>stack</em> tersebut - yang ukurannya telah ditetapkan.</p>
+
+<p>Lalu dimana bagian memory managementnya disini? Ini adalah tentang si kurung kurawal/<em>curly bracket</em> yang merupakan penentu <em>scope</em> dalam bahasa Rust. Mari kita lihat contohnya.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">5</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Kode diatas akan mengalami error dikarenakan oleh penggunaan variabel <code class="language-plaintext highlighter-rouge">y</code> diluar <em>scope</em> <code class="language-plaintext highlighter-rouge">if</code> statement. Sejauh ini, konsep ini merupakan hal yang biasa di bahasa pemrograman lainnya juga. Disaat variabel yang berada di dalam <em>scope</em> menemukan akhir dari kurung kurawal, maka “PUFF”, si variabel akan hilang seperti asap dan memori akan dibebaskan dan diambil kembali. Hal ini juga berlaku pada prosedur dan fungsi, juga pada setiap segala sesuatu yang memiliki kurung kurawal.</p>
+
+<h2 id="tipe-heap">Tipe <em>heap</em></h2>
+<p>Tipe <em>heap</em> merupakan tipe yang fleksibel - ukurannya dapat berubah-ubah, memori yang dapat hidup diluar <em>scope</em> yang membuatnya. Memori ini akan diambil kembali secara otomatis ketika <em>OWNER</em>-nya keluar dari <em>scope</em>. Tipe kompleks adalah merupakan tipe yang termasuk kedalam <em>heap</em>, contohnya <em>Vector</em>, <em>String</em>, <em>HashMap</em>, dan sebagainya. Kita juga dapat mengalokasikan tipe <em>stack</em> pada <em>heap</em> dengan menggunakan <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code>. Berikut adalah contoh tipe data yang berada pada <em>heap</em>.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">vector</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">];</span>
+<span class="k">let</span> <span class="n">string</span><span class="p">:</span> <span class="nb">String</span> <span class="o">=</span> <span class="s">"Aku string"</span><span class="nf">.to_string</span><span class="p">();</span>
+<span class="k">let</span> <span class="n">boxed_i32</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="perbedaan">Perbedaan</h2>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{} {}"</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Potongan kode diatas memuat sebuah tipe primitif yaitu <code class="language-plaintext highlighter-rouge">a</code> yang bertipe <code class="language-plaintext highlighter-rouge">i32</code> kita assign pada variabel <code class="language-plaintext highlighter-rouge">b</code>, kemudian kita <em>print</em> menggunakan macro <code class="language-plaintext highlighter-rouge">println!</code>. Kode tersebut akan berjalan dengan baik, tanpa <em>error</em>. Sekarang, mari kita lihat contoh berikutnya - contoh yang akan menjawab <em>error</em> di bagian paling atas.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Halo"</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{} {}"</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Kode diatas memuat sebuah tipe kompleks yaitu <code class="language-plaintext highlighter-rouge">a</code> yang bertipe <code class="language-plaintext highlighter-rouge">String</code>. Seperti pada potongan kode yang memuat <code class="language-plaintext highlighter-rouge">stack</code>, kita me-assign variabel <code class="language-plaintext highlighter-rouge">a</code> ke <code class="language-plaintext highlighter-rouge">b</code>. Segalanya terlihat sama. Namun, mengapa terjadi <em>error</em>? Nah, disini terlihat perbedaan bagaimana Rust mengatur <em>stack</em> dan <em>heap</em> dengan jelas. Variabel <em>stack-allocated</em> - para tipe primitif akan di-copy, karena mengcopy variabel <em>stack</em> itu “murah”. Tipe-tipe primitif memiliki trait <code class="language-plaintext highlighter-rouge">Copy</code> yang memungkinkan itu terjadi sedangkan tipe kompleks - Rust memindahkan (<em>move</em>) <em>ownership</em> dan tidak mengimplementasikan trait <code class="language-plaintext highlighter-rouge">Copy</code>.</p>
+
+<h2 id="ownership-dan-borrowing">Ownership dan Borrowing</h2>
+
+<p>Sekarang, kalian sudah tahu kan beda dari <em>stack</em> dan <em>heap</em>? Oke, jadi simpelnya, <em>ownership</em> itu seperti ini:</p>
+
+<ul>
+  <li>Data di-assign kepada sebuah variabel.</li>
+  <li>Si variabel menjadi <em>owner</em> atau pemilik dari data tersebut.</li>
+  <li>Hanya dapat ada satu pemilik dalam satu waktu.</li>
+  <li>Ketika si pemilik keluar dari <em>scope</em>, maka data tersebut akan hilang dari memori.</li>
+</ul>
+
+<p>Sekarang, lihatlah potongan kode berikut:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Halo"</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{} {}"</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Kode diatas merupakan kode yang akan <em>error</em>, seperti yang telah kalian lihat. Lalu, bila kita ingin me-assign variabel <code class="language-plaintext highlighter-rouge">a</code> kepada variabel <code class="language-plaintext highlighter-rouge">b</code> - atau untuk variabel <code class="language-plaintext highlighter-rouge">b</code> mengambil data variabel <code class="language-plaintext highlighter-rouge">a</code>, bagaimana kita melakukannya? Ada dua cara untuk melakukannya.</p>
+
+<p>Cara pertama adalah dengan menggunakan method <code class="language-plaintext highlighter-rouge">clone()</code>.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Halo"</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="nf">.clone</span><span class="p">();</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{} {}"</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">clone()</code> akan membuat data baru yang sama - yang dialokasikan di <em>heap</em> dan kemudian me-assignnya pada variabel baru, yang dalam kasus diatas, pada variabel <code class="language-plaintext highlighter-rouge">b</code>. Method <code class="language-plaintext highlighter-rouge">.clone()</code> membuat sebuah “kopi” dari si memori. Jadi, kedua variabel tersebut merupakan variabel yang benar-benar berbeda. Namun, <em>cloning</em> relatif “mahal” pada <em>heap</em>.</p>
+
+<p>Yang kedua adalah dengan “meminjam” atau “<em>borrow</em>” si <em>ownership</em> sebagai sebuah <em>reference</em>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Halo"</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{} {}"</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Pada bahasa lain, dua variabel dapat menunjuk kepada memori yang sama sehingga, bila satu variabel diubah, maka variabel lain juga akan ikut terubah. Hal ini dapat mengakibatkan masalah <em>parallel</em> dan <em>concurrency</em> seperti <em>race conditions</em>. Masalah seperti ini bukanlah masalah bagi Rust.</p>
+
+<p>Sekarang, kita akan menggali lebih dalam tentang <em>borrowing</em>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nb">int</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">boxed_int</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Diatas sini kita dapat melihat kedua variabel <code class="language-plaintext highlighter-rouge">int</code> dan <code class="language-plaintext highlighter-rouge">boxed_int</code> dimana <code class="language-plaintext highlighter-rouge">int</code> merupakan tipe primitif yang berada pada <em>stack</em> dan <code class="language-plaintext highlighter-rouge">boxed_int</code> merupakan tipe integer yang dialokasikan pada <em>heap</em> (<em>heap allocated integer</em>). Sekarang kita akan mencoba membuat <em>procedure</em> sederhana.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nb">int</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">boxed_int</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+  <span class="nf">stack_proc</span><span class="p">(</span><span class="nb">int</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="nb">int</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">stack_proc</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>   
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Diatas sini ada sebuah prosedur yang akan mem-print si variabel <code class="language-plaintext highlighter-rouge">int</code>. Kode diatas akan berjalan dengan sempurna. Kita masih akan tetap bisa menggunakan macro <code class="language-plaintext highlighter-rouge">println!</code> pada variabel <code class="language-plaintext highlighter-rouge">int</code> bahkan setelah prosedur tersebut dipanggil. Hal ini menandakan bahwa Rust akan meng-kopi si variabel <code class="language-plaintext highlighter-rouge">int</code> yang merupakan sebuah tipe primitif kepada parameter <code class="language-plaintext highlighter-rouge">x</code> pada prosedur <code class="language-plaintext highlighter-rouge">stack_proc</code> yang kemudian membuat variabel <code class="language-plaintext highlighter-rouge">int</code> dan parameter <code class="language-plaintext highlighter-rouge">x</code> menunjuk pada memori yang berbeda - tumpukan memori baru ditambahkan kepada <em>stack</em>. Hal ini dapat dibuktikan lebih jelas dengan mengubah nilai <code class="language-plaintext highlighter-rouge">x</code>.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nb">int</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">boxed_int</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+  <span class="nf">stack_proc</span><span class="p">(</span><span class="nb">int</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="nb">int</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c">// Jangan lupa keyword mut untuk mutability</span>
+<span class="k">fn</span> <span class="nf">stack_proc</span><span class="p">(</span><span class="k">mut</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>   
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Output yang dikeluarkan oleh si prosedur dan macro <code class="language-plaintext highlighter-rouge">println!</code> yang mem-print langsung variabel <code class="language-plaintext highlighter-rouge">int</code> akan berbeda - karena mereka menunjuk pada memori yang berbeda. Sekarang, kita akan melakukan hal yang sama pada tipe kompleks.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nb">int</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">boxed_int</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+  <span class="nf">stack_proc</span><span class="p">(</span><span class="nb">int</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="nb">int</span><span class="p">);</span>
+  
+  <span class="nf">heap_proc</span><span class="p">(</span><span class="n">boxed_int</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">boxed_int</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c">// Jangan lupa keyword mut untuk mutability</span>
+<span class="k">fn</span> <span class="nf">stack_proc</span><span class="p">(</span><span class="k">mut</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>   
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">heap_proc</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Apa yang akan terjadi dengan kode diatas? Yap, seperti yang sudah kalian duga, akan terjadi error pada kode diatas. Seperti yang kalian tahu, Rust akan membersihkan memori yang telah keluar dari <em>scope</em> dan tipe-tipe kompleks akan memindahkan <em>ownership</em>, bukan mengkopi memori. Jadi setelah variabel kompleks kalian, yang dalam kasus diatas, adalah <code class="language-plaintext highlighter-rouge">boxed_int</code> keluar dari scope prosedur <code class="language-plaintext highlighter-rouge">heap_proc</code>, memori akan dibersihkan sehingga si variabel <code class="language-plaintext highlighter-rouge">boxed_int</code> kalian tidak lagi memiliki <em>ownership</em> kepada memori tersebut. Memori yang telah kalian pindahkan kepada parameter <code class="language-plaintext highlighter-rouge">y</code> pada prosedur <code class="language-plaintext highlighter-rouge">heap_proc</code> diatas akan lenyap seperti abu setelah menemui akhir dari <em>scope</em> prosedur tersebut sehingga disaat variabel <code class="language-plaintext highlighter-rouge">boxed_int</code> digunakan oleh macro <code class="language-plaintext highlighter-rouge">println!</code> setelah prosedur <code class="language-plaintext highlighter-rouge">heap_proc</code> dipanggil, Rust sudah membersihkan memori <code class="language-plaintext highlighter-rouge">boxed_int</code> tersebut yang membuatnya tidak memiliki <em>ownership</em> lagi. Tentunya seperti sebelumnya, kalian bisa menggunakan <code class="language-plaintext highlighter-rouge">clone()</code> sebelum memasukkannya ke dalam parameter. Namun, seperti yang kalian tahu, <code class="language-plaintext highlighter-rouge">clone()</code> mahal pada memori. Dan itu juga bukan merupakan solusi yang efektif. Apa yang harus kita lakukan? Benar, kita harus “meminjam” <em>ownership</em> dari memori tersebut!</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nb">int</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">boxed_int</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+  <span class="nf">stack_proc</span><span class="p">(</span><span class="nb">int</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="nb">int</span><span class="p">);</span>
+  
+  <span class="nf">heap_proc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">boxed_int</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">boxed_int</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c">// Jangan lupa keyword mut untuk mutability</span>
+<span class="k">fn</span> <span class="nf">stack_proc</span><span class="p">(</span><span class="k">mut</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>   
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">heap_proc</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Seperti yang kalian lihat, bila kita ingin mem- <em>borrow</em> atau meminjam <em>ownership</em>, kita harus menggunakan tanda <code class="language-plaintext highlighter-rouge">&amp;</code>. Bila dalam parameter, maka kita harus menggunakannya didepan tipe parameter tersebut seperti yang kalian lihat diatas, kemudian mem-pass argumen/variabel dengan tanda yang sama kedalam parameter tersebut. Kemudian semuanya akan berjalan dengan baik. Dengan <em>borrow</em>, dalam kasus diatas, si parameter <code class="language-plaintext highlighter-rouge">y</code> akan menjadi pemilik atau <em>owner</em> dari memori yang dialokasikan. Namun, itu hanya sementara. Ketika parameter <code class="language-plaintext highlighter-rouge">y</code> menemukan akhir dari <em>scope</em> nya, maka <em>ownership</em> akan dikembalikan kepada pemilik aslinya yang dalam kasus diatas, variabel <code class="language-plaintext highlighter-rouge">boxed_i32</code> lalu anda bisa memakai kembali <code class="language-plaintext highlighter-rouge">boxed_i32</code> sekehendak hati anda.</p>
+
+<p>Kesimpulannya adalah, tipe primitif yang dialokasikan pada <em>stack</em> mengimplementasikan <code class="language-plaintext highlighter-rouge">trait</code> <code class="language-plaintext highlighter-rouge">Copy</code> dan akan meng-kopi variabel karena operasi biaya memori yang digunakan “murah” sedangkan tipe kompleks akan memindahkan <em>ownership</em>. Hanya bisa ada satu <em>owner</em> dalam satu waktu.</p>
+
+<p>Terima kasih banyak karena telah membaca, nantikan part selanjutnya dari pembahasan Ownership dan Borrowing yang memang topik yang agak sulit.</p>
+:ET

@@ -1,0 +1,200 @@
+I"\b<p><img src="/images/rust-4.png" alt="rust" /></p>
+
+<p>Looping merupakan sebuah logika dimana sebuah <em>iterator</em> akan terus mengulang hingga batas yang ditentukan, atau selamanya. Loop dibagi menjadi for loop dan while loop dimana 
+dalam for loop kita dapat menentukan <em>iterable</em> untuk mengulang untuk setiap elemen dalam <em>iterator</em> sedangkan while akan mengulang sampai kondisi terpenuhi. Vector merupakan array dinamis yang <em>iterable</em> atau dapat kita iterasi untuk setiap elemen di dalamnya. Di bagian ke-4 ini kita akan membahas tentang cara-cara looping yang “idiomatic” dan method-methodnya. Untuk for loop tidak akan dibahas secara langsung dan hanya akan masuk ke dalam contoh-contoh disini. While loop dapat dilihat sendiri <a href="https://doc.rust-lang.org/1.2.0/book/while-loops.html">disini</a>.</p>
+
+<h2 id="vector">Vector</h2>
+
+<p>Seperti yang telah dijelaskan di bagian sebelumnya, vector merupakan tipe data heap yang dapat dimanipulasi. Vector memiliki banyak method berguna dan merupakan tipe yang menyimpan generic atau dapat dimasukkan tipe data apapun. Berikut adalah cara-cara untuk membuat vector:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vector</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+   <span class="n">vector</span><span class="nf">.push</span><span class="p">(</span><span class="s">"Elemen index 0"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Diatas ini merupakan cara pertama untuk membuat vector dimana method tersebut akan membuat sebuah vector kosong yang tidak akan mengalokasi sampai sebuah atau banyak elemen 
+dimasukkan kedalamnya dengan method <code class="language-plaintext highlighter-rouge">push()</code>. Keyword <code class="language-plaintext highlighter-rouge">mut</code> tentu akan dibutuhkan agar vector tersebut dapat diubah. Compiler akan menentukan tipe data sendiri dari tipe 
+yang di-push ke dalam vector tersebut. Namun untuk lebih spesifiknya, disaat strong typing dibutuhkan, kita dapat dengan dua cara memberikannya tipe.</p>
+
+<p>Cara pertama adalah dengan memberi variabel tersebut tipe dengan cara normal.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vector</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span> <span class="c">// Vec&lt;i32&gt;</span>
+   <span class="n">vector</span><span class="nf">.push</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c">// Sukses</span>
+   <span class="n">vector</span><span class="nf">.push</span><span class="p">(</span><span class="s">"Tiga"</span><span class="p">);</span> <span class="c">// Error</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Cara kedua adalah dengan syntax khusus Rust bernama <code class="language-plaintext highlighter-rouge">turbofish</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vector</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span> <span class="c">// Sama hasilnya dengan yang diatas (Vec&lt;i32&gt;)</span>
+   <span class="n">vector</span><span class="nf">.push</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kedua cara diatas dikhususkan untuk membuat vector kosong yang akan dimasukkan elemen di lain waktu. Berikut adalah contoh penggunaannya:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">bilangan_ganjil</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+   <span class="c">// Iterasi dari 1 sampai 10</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
+       <span class="c">// Bila i mod 2 tidak sama dengan 0 (Ganjil)</span>
+       <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+          <span class="n">bilangan_ganjil</span><span class="nf">.push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span>
+       <span class="p">}</span>
+   <span class="p">}</span>
+   
+   <span class="c">// Formatting :? adalah formatting untuk struct (Dengan Debug implemented)</span>
+   <span class="c">// OUTPUT: [1,3,5,7,9]</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">bilangan_ganjil</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Sudah paham kan penggunaannya? Digunakan ketika kita ingin memasukkan sebuah elemen yang biasanya diproses terlebih dahulu saat runtime.</p>
+
+<p>Sekarang, mari kita lihat pembuatan vector yang kedua: Dengan macro <code class="language-plaintext highlighter-rouge">vec!</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="n">vector</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">vector</span> <span class="p">{</span>
+   	  <span class="c">// OUTPUT: 12345</span>
+      <span class="nd">print!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Biasanya macro ini digunakan untuk membuat vector secara instan dengan kapasitas yang pasti. Ada beberapa cara lain yang ekuivalen untuk membuat vector dengan kapasitas pasti seperti:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">with_capacity</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">0</span><span class="o">..</span><span class="mi">5</span> <span class="p">{</span>
+      <span class="n">vec</span><span class="nf">.push</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="c">// OUTPUT: [0, 1, 2, 3, 4]</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Dengan menggunakan kapasitas pasti, vector akan melakukan alokasi dengan lebih baik.</p>
+
+<h3 id="method-method-berguna">Method-method berguna</h3>
+
+<p>Berikut adalah method-method yang akan sangat berguna dalam manipulasi vector:</p>
+
+<h4 id="is_empty">is_empty()</h4>
+
+<p>Method untuk mengecek apakah sebuah vector kosong atau tidak</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// OUTPUT: Vector kosong</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+   <span class="k">if</span> <span class="n">vec</span><span class="nf">.is_empty</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"Vector kosong"</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="k">else</span> <span class="p">{</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"Vector tidak kosong"</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="len">len()</h4>
+
+<p>Method untuk mengecek panjang index sebuah vector</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// OUTPUT: Vector kosong</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">];</span>
+   <span class="c">// OUTPUT: 4</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">vec</span><span class="nf">.len</span><span class="p">());</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h4 id="capacity">capacity()</h4>
+
+<p>Method untuk mengecek kapasitas vector</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// OUTPUT: Vector kosong</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vec</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">with_capacity</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+   <span class="c">// OUTPUT: 10</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">vec</span><span class="nf">.capacity</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="loop">Loop</h2>
+
+<p>Daripada menggunakan <code class="language-plaintext highlighter-rouge">while</code>, rust memiliki metode yang lebih baik untuk menggantikan <code class="language-plaintext highlighter-rouge">while true</code> di saat yang memang harus menggunakan loop terus-menerus seperti console application. Yaitu dengan menggunakan <code class="language-plaintext highlighter-rouge">loop {}</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Write</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">input</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+   <span class="k">loop</span> <span class="p">{</span>
+      <span class="nn">io</span><span class="p">::</span><span class="nf">stdin</span><span class="p">()</span><span class="nf">.read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">input</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"Yang anda masukkan adalah: {}"</span><span class="p">,</span> <span class="n">input</span><span class="p">);</span>
+      <span class="k">match</span> <span class="nn">io</span><span class="p">::</span><span class="nf">stdout</span><span class="p">()</span><span class="nf">.flush</span><span class="p">()</span> <span class="p">{</span>
+         <span class="nf">Ok</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">(),</span>
+         <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">e</span><span class="p">),</span>
+      <span class="p">};</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Kode diatas merupakan contoh program yang membaca input dan akan terus menerus meminta input dan 
+kemudian mengeluarkan outputnya. Memakai <code class="language-plaintext highlighter-rouge">loop {}</code> lebih efektif dari <code class="language-plaintext highlighter-rouge">while true</code> untuk beberapa kondisi. 
+Contohnya dalam kode berikut:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">x</span><span class="p">;</span>
+<span class="k">while</span> <span class="k">true</span> <span class="p">{</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Kode diatas akan gagal dalam mengcompile dikarenakan ada kemungkinan variabel <code class="language-plaintext highlighter-rouge">x</code> tidak diinitialisasi - rust mengharuskan semua kondisi terpenuhi. Sedangkan kode ini:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">x</span><span class="p">;</span>
+<span class="k">loop</span> <span class="p">{</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Akan bekerja dengan baik dikarenakan tidak memiliki kondisi.</p>
+
+<h2 id="idiomatic-iterator">Idiomatic Iterator</h2>
+
+<p>Dengan menggunakan method-method yang akan dijelaskan ini, mengiterasi sebuah Vector akan menjadi lebih simpel daripada menggunakan for loop. Dapat disebut juga dengan “Idiomatic” - yang berarti kode tersebut memiliki sesuatu yang unik dari bahasa yang dipakai. Mari lihat contoh penggunaannya:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">bilangan</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">100</span><span class="p">)</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">bilangan_genap</span> <span class="o">=</span> <span class="n">bilangan</span><span class="nf">.iter</span><span class="p">()</span>
+                            <span class="nf">.filter</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="o">*</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                            <span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="mi">_</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">bilangan_genap</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Method <code class="language-plaintext highlighter-rouge">iter()</code> pada <code class="language-plaintext highlighter-rouge">Vec</code> akan mengembalikan <code class="language-plaintext highlighter-rouge">Iter&lt;'_, T&gt;</code>, sebuah <code class="language-plaintext highlighter-rouge">trait</code> iterator yang sangat berguna. Kita akan dapat memanipulasi tiap elemen dalam vector tanpa perlu repot-repot membuat for loop. Berikut adalah contoh menggunakan method <code class="language-plaintext highlighter-rouge">iter()</code> bersama dengan method-method penting lainnya untuk mengambil bilangan genap, menggantikan kode <code class="language-plaintext highlighter-rouge">for loop</code> diatas. Mari bahasa method-method lainnya yang terlihat diatas. 
+Method .filter() akan memfilter sejumlah elemen berdasarkan kondisi yang diberikan. Contohnya diatas sana ada <code class="language-plaintext highlighter-rouge">|x|</code>. <code class="language-plaintext highlighter-rouge">||</code> dengan sebuah variabel didalamnya merupakan closure, atau dapat kita bilang sebagai <code class="language-plaintext highlighter-rouge">lambda function</code>-nya Rust. Dia akan membuat sebuah fungsi anonim yang langsung diproses kemudian. Variabel <code class="language-plaintext highlighter-rouge">x</code> disana merupakan “parameter” dari si closure tersebut, yang kemudian diproses setelahnya secara langsung. Variabel <code class="language-plaintext highlighter-rouge">x</code> mewakili setiap elemen dalam vector <code class="language-plaintext highlighter-rouge">bilangan</code>. Elemen tersebut kemudian diproses dengan <code class="language-plaintext highlighter-rouge">*x % 2 == 0</code> yang berarti bila nilai x (setelah direferencing, karena <code class="language-plaintext highlighter-rouge">.iter()</code> mengiterasi dengan mengambil reference/meminjam elemen dalam vector) mod 2 adalah 0 (Logika sederhana bilangan genap), maka <code class="language-plaintext highlighter-rouge">filter</code> akan mengembalikan <code class="language-plaintext highlighter-rouge">Iterator</code> yang hanya berisi nilai-nilai yang telah memenuhi kondisi tadi (<code class="language-plaintext highlighter-rouge">*x % 2 == 0</code>). Yang terakhkir merupakan method <code class="language-plaintext highlighter-rouge">.collect()</code>. Method ini merupakan method yang mengumpulkan value dari <code class="language-plaintext highlighter-rouge">Iterator</code> tadi ke dalam sebuah <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code>. Method ini membutuhkan type. Maksud dari <code class="language-plaintext highlighter-rouge">Vec&lt;_&gt;</code> diatas adalah kita membiarkan compiler untuk menentukan tipe generic tersebut (type inference). Dapat dikatakan bahwa 
+menggunakan <code class="language-plaintext highlighter-rouge">Vec&lt;_&gt;</code> seperti mengatakan pada compiler “Aku menggunakan generic <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> namun tolong tentukan apa itu <code class="language-plaintext highlighter-rouge">T</code> untukku”. Kadangkala <code class="language-plaintext highlighter-rouge">_</code> juga disebut dengan “type placeholder”. Namun tentunya kalian juga bisa memberi tipe secara langsung ke <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> seperti <code class="language-plaintext highlighter-rouge">.collect::&lt;Vec&lt;i32&gt;&gt;()</code> dengan turbofish, atau <code class="language-plaintext highlighter-rouge">let x: Vec&lt;i32&gt; = ... .collect()</code> dengan memberi tipe setelah nama variabel karena seperti yang sudah disebutkan bahwa <code class="language-plaintext highlighter-rouge">collect()</code> membutuhkan tipe.</p>
+
+<h4 id="map">map()</h4>
+
+<p>Menggunakan map merupakan salah satu cara untuk memanipulasi elemen di dalam sebuah vector dengan idiomatic. Seperti <code class="language-plaintext highlighter-rouge">filter()</code>, method ini juga menggunakan <code class="language-plaintext highlighter-rouge">closure</code>. Berikut adalah contoh penggunaannya:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vec</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">)</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+   <span class="k">let</span> <span class="k">mut</span> <span class="n">vec_kali_3</span> <span class="o">=</span> <span class="n">vec</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="mi">_</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+   <span class="c">// OUTPUT: [3, 6, 9, 12, 15, 18, 21, 24, 27]</span>
+   <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">vec_kali_3</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Method <code class="language-plaintext highlighter-rouge">map()</code> diatas akan mengalikan 3 tiap elemen dalam vector <code class="language-plaintext highlighter-rouge">vec</code> yang diwakili dengan <code class="language-plaintext highlighter-rouge">x</code>. Singkatnya, <code class="language-plaintext highlighter-rouge">map()</code> dapat dengan instan memanipulasi akan seperti apa elemen baru yang akan dimasukkan 
+ke dalam sebuah vector baru. Untuk <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> dan <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code>, dengan <code class="language-plaintext highlighter-rouge">map()</code> kita juga dapat secara langsung me-unwrap() value mereka. Kedua <code class="language-plaintext highlighter-rouge">enum</code> tersebut akan dibahas di bagian selanjutnyabersamaan dengan pattern matching menggunakan <code class="language-plaintext highlighter-rouge">match</code>.</p>
+
+<p>Terima kasih karena telah membaca sampai jumpa di bagian selanjutnya.</p>
+:ET
