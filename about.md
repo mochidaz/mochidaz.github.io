@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Software Engineering student that got interested in data science (maybe?) and low level thingy. Linux enthusiast
+Software Engineering student and I like Rust
 
 ### Contact me
 
