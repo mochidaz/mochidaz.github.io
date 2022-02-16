@@ -1,6 +1,6 @@
-I"m<p><img src="/images/deref.png" alt="deref" /></p>
+I"üm<p><img src="/images/deref.png" alt="deref" /></p>
 
-<p>Di artikel kali ini, kita akan membahas tentang sebuah trait yang sangat berguna untuk tipe yang kita buat, terutama tipe yang merupakan sebuah <em>smart pointer</em>. Trait tersebut adalah <code class="language-plaintext highlighter-rouge">Deref</code>.</p>
+<p>Sebuah <em>smart pointer</em> adalah sebuah tipe yang mengipmlementasikan trait <code class="language-plaintext highlighter-rouge">Deref</code> dan trait <code class="language-plaintext highlighter-rouge">Drop</code>. Di artikel kali ini, kita akan membahas tentang trait <code class="language-plaintext highlighter-rouge">Deref</code> yang membuat kita dapat memperlakukan sebuah pointer seperti reference biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti reference biasa?</p>
 
 <p>Sebelum itu, mari kita membahas lebih lanjut tentang <em>Dereferencing</em>.</p>
 

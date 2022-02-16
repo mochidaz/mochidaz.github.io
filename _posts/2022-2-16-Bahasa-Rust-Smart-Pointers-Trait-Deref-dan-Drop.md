@@ -8,7 +8,7 @@ permalink: /id/Bahasa-Rust-SP-Deref
 
 ![deref]({{ site.baseurl }}/images/deref.png)
 
-Di artikel kali ini, kita akan membahas tentang sebuah trait yang sangat berguna untuk tipe yang kita buat, terutama tipe yang merupakan sebuah _smart pointer_. Trait tersebut adalah `Deref`.
+Sebuah _smart pointer_ adalah sebuah tipe yang mengipmlementasikan trait `Deref` dan trait `Drop`. Di artikel kali ini, kita akan membahas tentang trait `Deref` yang membuat kita dapat memperlakukan sebuah pointer seperti reference biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti sebuah reference biasa?
 
 Sebelum itu, mari kita membahas lebih lanjut tentang _Dereferencing_.
 
@@ -75,7 +75,7 @@ fn main() {
 
 Seperti reference, `Box` juga menunjuk kepada nilai yang disimpan di suatu tempat di memori, yang dalam hal ini adalah `10`. Perbedaannya disini adalah `b` menunjuk pada sebuah copy dari `10` karena value tipe primitif akan di-copy, bukan di-move ownershipnya.
 
-`Box<T>` merupakan sebuah _smart pointer_ yang mengimplementasikan trait `Deref` yang memperbolehkan dereference operator bekerja sama seperti ia bekerja pada reference biasa.
+`Box<T>` merupakan sebuah _smart pointer_ yang mengimplementasikan trait `Deref`. Inilah yang dimaksud dengan memperlakukan sebuah pointer seperti sebuah reference biasa. Trait `Deref` memperbolehkan dereference operator bekerja pada `Box<T>` sama seperti ia bekerja pada reference biasa.
 
 Untuk mengerti bagaimana itu bekerja, kita akan mendefinisikan sebuah _smart pointer_ kita sendiri yang akan mengimplementasikan `Deref`.
 
