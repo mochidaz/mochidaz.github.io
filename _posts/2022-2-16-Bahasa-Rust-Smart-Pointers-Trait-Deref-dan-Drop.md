@@ -8,7 +8,7 @@ permalink: /id/Bahasa-Rust-SP-Deref
 
 ![deref]({{ site.baseurl }}/images/deref.png)
 
-Sebuah _smart pointer_ adalah sebuah tipe yang mengipmlementasikan trait `Deref` dan trait `Drop`. Di artikel kali ini, kita akan membahas tentang trait `Deref` yang membuat kita dapat memperlakukan sebuah pointer seperti reference sebuah biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti sebuah reference biasa?
+Sebuah _smart pointer_ adalah sebuah tipe yang mengimplementasikan trait `Deref` dan trait `Drop`. Di artikel kali ini, kita akan membahas tentang trait `Deref` yang membuat kita dapat memperlakukan sebuah pointer seperti reference sebuah biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti sebuah reference biasa?
 
 Sebelum itu, mari kita membahas lebih lanjut tentang _Dereferencing_.
 
