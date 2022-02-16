@@ -8,7 +8,7 @@ permalink: /id/Bahasa-Rust-SP-Deref
 
 ![deref]({{ site.baseurl }}/images/deref.png)
 
-Sebuah _smart pointer_ adalah sebuah tipe yang mengipmlementasikan trait `Deref` dan trait `Drop`. Di artikel kali ini, kita akan membahas tentang trait `Deref` yang membuat kita dapat memperlakukan sebuah pointer seperti reference biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti sebuah reference biasa?
+Sebuah _smart pointer_ adalah sebuah tipe yang mengipmlementasikan trait `Deref` dan trait `Drop`. Di artikel kali ini, kita akan membahas tentang trait `Deref` yang membuat kita dapat memperlakukan sebuah pointer seperti reference sebuah biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti sebuah reference biasa?
 
 Sebelum itu, mari kita membahas lebih lanjut tentang _Dereferencing_.
 
@@ -57,7 +57,7 @@ Pada Rust, sebuah reference (`&`) sebenarnya juga merupakan pointer. Jadi, varia
 
 Pada _assertion_ pertama, kita membandingkan 10 dan `a`, yang hasilnya adalah benar. Pada assertion kedua, kita membandingkan 10 dan `b` yang sudah kita dereference sehingga `b` disana merupakan `value` yang ia tunjuk, yaitu 10. Kode akan berjalan dengan baik.
 
-# Deref Trait
+# Trait `Deref`
 
 ## Memperlakukan _smart pointer_ seperti sebuah reference biasa??
 
