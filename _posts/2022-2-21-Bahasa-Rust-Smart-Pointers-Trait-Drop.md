@@ -16,7 +16,7 @@ Seperti yang telah kita ketahui, _smart pointer_ adalah sebuah tipe yang mengimp
 
 Trait `Drop` dapat diimplementasikan pada tipe apapun, dan hampir akan selalu digunakan ketika kita mengimplementasikan sebuah _smart pointer_. Trait `Drop` adalah sebuah trait yang membuat kita dapat mengatur atau mengkustomisasi apa yang akan terjadi bila sebuah nilai keluar dari _scope_-nya (_out of scope_). Mari kita ambil `Box<T>` sebagai contoh. Implementasi kustom tentang apa yang akan terjadi ketika sebuah nilai keluar dari _scope-nya_ pada `Box<T>` adalah, ia akan mendealokasikan nilai yang ia tunjuk pada heap. 
 
-Sekarang, mari kita langsung implementasikan trait `Debug` pada _smart pointer_ `Kotak<T>` kita kemarin agar kita dapat menampilkan value `T` pada _smart pointer_ `Kotak<T>` kita.
+Sekarang, mari kita gunakan _constraint_ trait `Debug` pada _smart pointer_ `Kotak<T>` kita kemarin dan semua implementasinya agar kita dapat menampilkan value `T` pada _smart pointer_ `Kotak<T>` kita.
 
 ```rust
 use std::ops::Deref;
