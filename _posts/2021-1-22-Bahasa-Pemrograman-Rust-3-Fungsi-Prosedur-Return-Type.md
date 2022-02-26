@@ -71,8 +71,9 @@ adalah 32-bit integer dan nilai tersebut diwakili dengan variabel `x` dan `y` ya
 `x + y` dibawah merupakan sebuah *expression*, yang menjadi nilai yang dikembalikan atau direturn. Dalam bahasa Rust, kita dapat mengembalikan nilai dari sebuah fungsi dengan dua cara: 
 Menggunakan keyword `return`, atau menaruh sebuah *expression* di paling akhir baris fungsi TANPA TITIK KOMA. Keduanya sama saja, namun menggunakan `return` dianggap sebagai gaya penulisan yang buruk 
 atau *bad style*. Mengapa begitu? Karena Rust merupakan *expression-oriented language*. Untuk menekankan bahwa Rust merupakan *expression-oriented language*, hal semacam itu dilakukan. 
-Bila kita ingin mengembalikan nilai dengan gaya seperti itu, JANGAN taruh titik koma di akhir baris karena *expression* tersebut akan berubah menjadi *statement*. Bila menggunakan `return`, maka bebas 
-bila anda ingin menaruh titik koma di akhir baris atau tidak. Fungsi membutuhkan variabel saat dipanggil, untuk menyimpan nilai yang dikembalikan di dalam variabel tersebut.
+Bila kita ingin mengembalikan nilai dengan gaya seperti itu, JANGAN taruh titik koma di akhir baris karena *expression* tersebut akan berubah menjadi *statement*. Gunakan `return` hanya pada saat anda ingin melakukan _early return_ atau mengembalikan nilai lebih awal. _Early return_ akan dibahas pada bab _Result, Option, dan Pattern Matching_. 
+
+Fungsi membutuhkan variabel saat dipanggil, untuk menyimpan nilai yang dikembalikan di dalam variabel tersebut.
 
 ```rust
 fn add(x: i32, y: i32) -> i32 {
