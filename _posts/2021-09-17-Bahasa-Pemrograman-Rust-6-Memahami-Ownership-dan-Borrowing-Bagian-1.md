@@ -1,13 +1,14 @@
 ---
 layout: post
-title: "Bahasa Pemrograman Rust 6: Memahami Ownership dan Borrowing - Bagian 1"
-tags: rust programming coding
+title: "Bahasa Pemrograman Rust 6: Memahami Ownership dan Borrowing"
 lang: id
 date: 2021-09-21
-permalink: /id/Bahasa-Rust-6
----
+permalink: /Bahasa-Rust-6
+categories: [rust, programming]
+image: /assets/images/rust-6.png
+author: "mochidaz"
 
-![rust]({{ site.baseurl }}/images/rust-6.png)
+---
 
 Kali ini kita masuk ke topik yang lumayan ribet dan membingungkan bagi siapapun yang baru saja belajar Rust, entah itu seorang programmer yang berpengalaman maupun tidak. Topik ini merupakan hal yang membuat Rust unik - yang membuat Rust adalah Rust. Benar, kita akan membahas tentang Ownership, fitur terunik bahasa Rust yang menjamin keamanan memory tanpa penggunaan garbage collector. Di artikel ini, kita akan membahas tentang ownership dan borrowing, juga tipe _stack_ dan tipe _heap_.
 

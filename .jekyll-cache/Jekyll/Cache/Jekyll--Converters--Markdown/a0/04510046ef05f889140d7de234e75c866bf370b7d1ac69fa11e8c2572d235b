@@ -1,0 +1,2 @@
+I"Í<p>Seperti yang telah kita ketahui, <em>smart pointer</em> adalah sebuah tipe yang mengimplementasikan trait <code class="language-plaintext highlighter-rouge">Deref</code> dan <code class="language-plaintext highlighter-rouge">Drop</code>. Kita sudah membahas tentang <code class="language-plaintext highlighter-rouge">Deref</code> di artikel sebelumnya. Kali ini, kita akan membahas tentang <code class="language-plaintext highlighter-rouge">Drop</code>.</p>
+:ET

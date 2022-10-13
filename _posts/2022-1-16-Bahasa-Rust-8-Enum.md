@@ -1,12 +1,15 @@
 ---
 layout: post
 title: "Bahasa Pemrograman Rust 8: Enumerasi"
-permalink: /id/Bahasa-Rust-8
+permalink: /Bahasa-Rust-8
 lang: id
 date: 2022-01-16 01:00
+categories: [rust, programming]
+image: /assets/images/rust-8.png
+author: "mochidaz"
+
 ---
 
-![rust]({{site.baseurl}}/images/rust-8.png)
 
 Kita sudah pernah membahas tentang enum di [Bab Result, Option, dan Pattern Matching](https://mochidaz.github.io/id/Bahasa-Rust-5). Namun, kita belum membahasnya lebih dalam lagi. Artikel kali ini akan lebih pendek dari artikel-artikel sebelumnya, namun sangatlah berguna. Artikel kali ini akan menyambung dengan artikel selanjutnya yaitu tentang generics. Karena itu, bacalah artikel ini dengan baik!
 

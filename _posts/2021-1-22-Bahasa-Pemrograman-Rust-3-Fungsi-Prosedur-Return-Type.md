@@ -2,11 +2,13 @@
 layout: post
 title: "Bahasa Pemrograman Rust 3: Fungsi, Prosedur, dan Return Type"
 lang: id
-permalink: /id/Bahasa-Rust-3
+permalink: /Bahasa-Rust-3
 date: 2021-1-22 23:58
----
+categories: [rust, programming]
+image: /assets/images/rust-3.png
+author: "mochidaz"
 
-![rust]({{site.baseurl}}/images/rust-3.png)
+---
 
 Pada bagian ketiga ini, sesuai judul, kita akan membahas tentang fungsi, prosedur, dan return type atau tipe data yang dikembalikan oleh sebuah fungsi. 
 Anda pastinya sudah tidak asing dengan fungsi bila anda telah belajar tentang fungsi pada matematika, atau bahasa pemrograman lain. Benar, fungsi menerima 

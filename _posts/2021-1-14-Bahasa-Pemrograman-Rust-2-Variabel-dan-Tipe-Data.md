@@ -1,13 +1,15 @@
 ---
 layout: post
 title: "Bahasa Pemrograman Rust 2: Variabel, Mutability, dan Tipe Data"
-tags: rust programming coding
+categories: [rust, programming]
 lang: id
 date: 2021-1-16 19:19
-permalink: /id/Bahasa-Rust-2
+permalink: /Bahasa-Rust-2
+image: /assets/images/rust-2.png
+author: "mochidaz"
+
 ---
 
-![rust]({{ site.baseurl }}/images/rust-2.png)
 
 ## Variabel
 Pada bahasa Rust, kita dapat mendeklarasikan variabel dengan tiga keyword berikut: `const`, `static`, dan `let`.

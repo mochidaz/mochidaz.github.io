@@ -1,0 +1,122 @@
+I"-<p>Seperti yang telah kita ketahui, <em>smart pointer</em> adalah sebuah tipe yang mengimplementasikan trait <code class="language-plaintext highlighter-rouge">Deref</code> dan <code class="language-plaintext highlighter-rouge">Drop</code>. Kita sudah membahas tentang <code class="language-plaintext highlighter-rouge">Deref</code> di artikel sebelumnya. Kali ini, kita akan membahas tentang <code class="language-plaintext highlighter-rouge">Drop</code>.</p>
+
+<h1 id="tentang-drop">Tentang <code class="language-plaintext highlighter-rouge">Drop</code></h1>
+
+<p>Trait <code class="language-plaintext highlighter-rouge">Drop</code> dapat diimplementasikan pada tipe apapun, dan hampir akan selalu digunakan ketika kita mengimplementasikan sebuah <em>smart pointer</em>. Trait <code class="language-plaintext highlighter-rouge">Drop</code> adalah sebuah trait yang membuat kita dapat mengatur atau mengkustomisasi apa yang akan terjadi bila sebuah nilai keluar dari <em>scope</em>-nya (<em>out of scope</em>). Mari kita ambil <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code> sebagai contoh. Implementasi kustom tentang apa yang akan terjadi ketika sebuah nilai keluar dari <em>scope-nya</em> pada <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code> adalah, ia akan mendealokasikan nilai yang ia tunjuk pada heap.</p>
+
+<p>Sekarang, mari kita gunakan <em>constraint</em> trait <code class="language-plaintext highlighter-rouge">Debug</code> pada <em>smart pointer</em> <code class="language-plaintext highlighter-rouge">Kotak&lt;T&gt;</code> kita kemarin dan semua implementasinya agar kita dapat menampilkan value <code class="language-plaintext highlighter-rouge">T</code> pada <em>smart pointer</em> <code class="language-plaintext highlighter-rouge">Kotak&lt;T&gt;</code> kita.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="n">Deref</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">Debug</span><span class="o">&gt;</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">Debug</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">Self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Deref</span> <span class="k">for</span> <span class="n">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">Debug</span> <span class="p">{</span>
+    <span class="k">type</span> <span class="n">Target</span> <span class="o">=</span> <span class="n">T</span><span class="p">;</span>
+
+    <span class="k">fn</span> <span class="nf">deref</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="k">Self</span><span class="p">::</span><span class="n">Target</span> <span class="p">{</span>
+        <span class="o">&amp;</span><span class="k">self</span><span class="na">.0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Lalu kita implementasikan <code class="language-plaintext highlighter-rouge">Drop</code> pada <code class="language-plaintext highlighter-rouge">Kotak&lt;T&gt;</code> kita.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nb">Drop</span> <span class="k">for</span> <span class="n">Kotak</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">Debug</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"Dropping Kotak yang memiliki data {:?}!"</span><span class="p">,</span> <span class="k">self</span><span class="na">.0</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Kita hanya akan menggunakan macro <code class="language-plaintext highlighter-rouge">println!</code> untuk sekarang, karena sekarang kita hanya akan berfokus pada bagaimana trait <code class="language-plaintext highlighter-rouge">Drop</code> bekerja, dan tidak pada implementasi kustom aslinya seperti mendealokasikan nilai di heap. Sekarang, mari kita lihat fungsi <code class="language-plaintext highlighter-rouge">main</code> kita.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nn">Kotak</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+	<span class="p">{</span>
+		<span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="nn">Kotak</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="s">"Halo"</span><span class="p">);</span>
+	<span class="p">}</span>	
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Bila kita compile lalu kita jalankan kode kita, maka kita akan menerima output seperti ini:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>Dropping Kotak yang memiliki data "Halo"!
+Dropping Kotak yang memiliki data 20!
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Lihat, begitu variabel <code class="language-plaintext highlighter-rouge">Kotak&lt;T&gt;</code> kita menyentuh akhir dari <em>scope</em>, maka apa yang ada di dalam method <code class="language-plaintext highlighter-rouge">drop</code> kita akan terpanggil. Diatas, variabel <code class="language-plaintext highlighter-rouge">x</code> akan di-drop ketika ia menyentuh akhir dari <em>scope</em> <code class="language-plaintext highlighter-rouge">main</code> sehingga fungsi <code class="language-plaintext highlighter-rouge">y</code> akan lebih dahulu di-drop. Karena itulah output <code class="language-plaintext highlighter-rouge">Dropping Kotak yang memiliki data "Halo"!</code> keluar lebih dahulu. Selalu ingat bahwa trait <code class="language-plaintext highlighter-rouge">Drop</code> ini digunakan untuk mengkustomisasi apa yang akan dilakukan ketika data kita di-drop, bukan kita harus mengimplementasikan trait <code class="language-plaintext highlighter-rouge">Drop</code> terlebih dahulu baru data kita dapat di-drop. Rust akan secara otomatis men-drop nilai yang sudah mencapai akhir <em>scope</em>.</p>
+
+<h1 id="early-drop">Early Drop</h1>
+
+<p>Ada kalanya kita ingin men-drop nilai kita lebih dahulu sebelum mencapai akhri <em>scope</em>, seperti saat kita menggunakan <em>lock</em> atau <em>Mutex</em>. Rust melarang kita untuk memanggil method <code class="language-plaintext highlighter-rouge">drop</code> secara langsung dari value. Kita harus menggunakan fungsi <code class="language-plaintext highlighter-rouge">drop</code> dari <code class="language-plaintext highlighter-rouge">std::mem::drop</code>. Kita tidak perlu menggunakan <code class="language-plaintext highlighter-rouge">use</code> untuk memanggil fungsi tersebut. Seperti <code class="language-plaintext highlighter-rouge">Vec</code>, fungsi itu sudah tersedia didalam <em>prelude</em>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nn">Kotak</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+	<span class="nf">drop</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+	<span class="p">{</span>
+		<span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="nn">Kotak</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="s">"Halo"</span><span class="p">);</span>
+	<span class="p">}</span>	
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Dan output yang akan dikeluarkan adalah:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>Dropping Kotak yang memiliki data 20!
+Dropping Kotak yang memiliki data "Halo"!
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Variabel <code class="language-plaintext highlighter-rouge">x</code> akan di-drop terlebih dahulu.</p>
+
+<p>Terima kasih telah membaca :).</p>
+:ET

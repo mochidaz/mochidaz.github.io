@@ -1,12 +1,14 @@
 ---
 layout: post
 title: "Bahasa Pemrograman Rust 4: Vector dan Loop"
-permalink: /id/Bahasa-Rust-4
+permalink: /Bahasa-Rust-4
 lang: id
 date: 2021-02-5 17:56
----
+categories: [rust, programming]
+image: /assets/images/rust-4.png
+author: "mochidaz"
 
-![rust]({{site.baseurl}}/images/rust-4.png)
+---
 
 Looping merupakan sebuah logika dimana sebuah _iterator_ akan terus mengulang hingga batas yang ditentukan, atau selamanya. Loop dibagi menjadi for loop dan while loop dimana 
 dalam for loop kita dapat menentukan _iterable_ untuk mengulang untuk setiap elemen dalam _iterator_ sedangkan while akan mengulang sampai kondisi terpenuhi. Vector merupakan array dinamis yang _iterable_ atau dapat kita iterasi untuk setiap elemen di dalamnya. Di bagian ke-4 ini kita akan membahas tentang cara-cara looping yang "idiomatic" dan method-methodnya. Untuk for loop tidak akan dibahas secara langsung dan hanya akan masuk ke dalam contoh-contoh disini. While loop dapat dilihat sendiri [disini](https://doc.rust-lang.org/1.2.0/book/while-loops.html).

@@ -1,12 +1,14 @@
 ---
 layout: post
 title: "Membersihkan Wine dan Package Multilib di Arch Linux"
-permalink: /id/Membersihkan-Wine-dan-Package-Multilib
+permalink: /Membersihkan-Wine-dan-Package-Multilib
 lang: id
 date: 2021-1-22 03:16
----
+categories: [linux]
+image: /assets/images/rika-drinks-wine.jpg
+author: "mochidaz"
 
-![wine]({{site.baseurl}}/images/rika-drinks-wine.jpg)
+---
 
 Apa kamu telah bosan dengan Wine, ingin menghapus package tertentu seperti Visual C++ atau memang ingin menghapus seluruhnya dikarenakan ukurannya, library-library nya, dan package-packagenya yang sangat besar? Apa kamu ingin membersihkan library-library multilib (lib32) yang tidak kamu butuhkan lagi namun sangat banyak dan menyebalkan hingga bersih? Simak artikel ini!
 
@@ -14,7 +16,7 @@ Apa kamu telah bosan dengan Wine, ingin menghapus package tertentu seperti Visua
 
 Bila kamu ingin menghapus Wine secara total, maka kamu harus membersihkan package seperti Mono, Gecko, Visual C++, dan sebagainya terlebih dahulu. Namun, dengan menggunakan metode yang akan saya jelaskan ini, kamu yang tidak ingin menghapus wine, hanya package wine tertentu juga dapat melakukannya dengan cara disini yaitu dengan menggunakan builtin uninstallernya. Wine memiliki builtin uninstaller yang dapat kamu gunakan untuk menghapus package-package yang tidak kamu butuhkan lagi. Cara untuk membuka wine uninstaller sangatlah mudah. Run saja command `wine uninstaller` atau `wine64 uninstaller` kemudian kamu dapat melihat menu GUI terbuka. 
 
-![wine-un]({{ site.baseurl }}/images/wine-uninstaller.png)
+![wine-un](images/wine-uninstaller.png)
 
 Disana, kamu dapat melihat package-package seperti Microsoft Visual C++, Wine-Mono, dan Gecko. Kamu tinggal memencet package yang ingin kamu remove, kemudian klik tombol remove. Package tersebut akan segera dihapus. Bila kamu masih ingin menggunakan wine dan hanya menghapus package tertentu, maka langkah diatas sudah cukup. Bila ingin sepenuhnya menghapus wine, jalankan perintah-perintah berikut:
 

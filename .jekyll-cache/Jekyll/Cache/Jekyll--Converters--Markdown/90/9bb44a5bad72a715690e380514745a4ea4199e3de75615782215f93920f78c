@@ -1,0 +1,2 @@
+I"ş<p>Sebuah <em>smart pointer</em> adalah sebuah tipe yang mengimplementasikan trait <code class="language-plaintext highlighter-rouge">Deref</code> dan trait <code class="language-plaintext highlighter-rouge">Drop</code>. Di artikel kali ini, kita akan membahas tentang trait <code class="language-plaintext highlighter-rouge">Deref</code> yang membuat kita dapat memperlakukan sebuah pointer seperti sebuah reference biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti sebuah reference biasa?</p>
+:ET

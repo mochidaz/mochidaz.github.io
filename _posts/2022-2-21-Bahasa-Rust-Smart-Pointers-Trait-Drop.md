@@ -4,11 +4,13 @@ layout: post
 tags: rust programming coding
 lang: id
 date: 2022-2-21
-permalink: /id/Bahasa-Rust-SP-Drop
+permalink: /Bahasa-Rust-SP-Drop
+categories: [rust, programming]
+image: /assets/images/drop.png
+author: "mochidaz"
 
 ---
 
-![drop]({{ site.baseurl }}/images/drop.png)
 
 Seperti yang telah kita ketahui, _smart pointer_ adalah sebuah tipe yang mengimplementasikan trait `Deref` dan `Drop`. Kita sudah membahas tentang `Deref` di artikel sebelumnya. Kali ini, kita akan membahas tentang `Drop`.
 

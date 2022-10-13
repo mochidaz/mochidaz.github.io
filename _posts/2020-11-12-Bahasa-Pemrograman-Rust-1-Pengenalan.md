@@ -1,13 +1,15 @@
 ---
 layout: post
 title: "Bahasa Pemrograman Rust 1: Perkenalan, Instalasi, dan Cargo"
-tags: rust programming coding
+categories: [rust, programming]
 lang: id
 date: 2020-11-11 14:41:20
-permalink: /id/Bahasa-Rust-1
+permalink: /Bahasa-Rust-1
+featured: true
+hidden: true
+image: /assets/images/rust-1.png
+author: "mochidaz"
 ---
-
-![rust]({{ site.baseurl }}/images/rust-1.png)
 
 ### Pengenalan
 

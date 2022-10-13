@@ -1,12 +1,15 @@
 ---
 layout: post
 title: "Bahasa Pemrograman Rust 9: Generics"
-permalink: /id/Bahasa-Rust-9
+permalink: /Bahasa-Rust-9
 lang: id
 date: 2022-01-16 02:00
+categories: [rust, programming]
+image: /assets/images/rust-9.png
+author: "mochidaz"
+
 ---
 
-![rust]({{site.baseurl}}/images/rust-9.png)
 
 Saya sudah pernah menjelaskan tentang generics pada [Bab Result, Option, dan Pattern Matching](https://mochidaz.github.io/id/Bahasa-Rust-5). Dengan generics, kita dapat menuliskan tipe data abstrak dengan _placeholder types_ untuk struct, enum, dan juga fungsi. Kita menggunakan _placeholder types_ daripada mendefinisikan tipe datanya secara eksplisit. Kita dapat menuliskan kode yang bekerja untuk tipe-tipe data yang berbeda sehingga menambah fleksibilitas kode kita. Dengan generics, kita dapat mengurangi duplikasi kode. Ingat bahwa generics tidak memiliki _runtime cost_ - Generics dibuat saat _compile time_ sehingga performa _runtime_ akan tetap sama, dengan saat anda tidak menggunakan generics. Mari kita langsung masuk ke masalah pertama!
 

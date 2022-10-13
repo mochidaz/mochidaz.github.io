@@ -1,0 +1,10 @@
+I"<h2 id="variabel">Variabel</h2>
+<p>Pada bahasa Rust, kita dapat mendeklarasikan variabel dengan tiga keyword berikut: <code class="language-plaintext highlighter-rouge">const</code>, <code class="language-plaintext highlighter-rouge">static</code>, dan <code class="language-plaintext highlighter-rouge">let</code>.
+Variabel <code class="language-plaintext highlighter-rouge">const</code> tidak akan dapat diubah atau immutable. Variabel <code class="language-plaintext highlighter-rouge">static</code> dapat diubah, namun membutuhkan keyword <code class="language-plaintext highlighter-rouge">unsafe</code>
+karena operasi ini tidak aman bagi memory. Untuk <code class="language-plaintext highlighter-rouge">let</code>, <code class="language-plaintext highlighter-rouge">let</code> merupakan keyword paling umum untuk mendefinisikan variabel
+dalam Rust. Tidak seperti <code class="language-plaintext highlighter-rouge">static</code> dan <code class="language-plaintext highlighter-rouge">const</code>, <code class="language-plaintext highlighter-rouge">let</code> <strong>TIDAK DAPAT</strong>	 digunakan diluar fungsi. Bila anda menggunakan <code class="language-plaintext highlighter-rouge">static</code> maupun
+<code class="language-plaintext highlighter-rouge">const</code>, anda harus mendefinisikan tipe datanya secara eksplisit, sedangkan <code class="language-plaintext highlighter-rouge">let</code> tidak perlu karena compiler akan menentukannya sendiri. Namun untuk contoh di artikel ini di bagian bawah, saya akan terus mendefinisikan tipe datanya secara eksplisit untuk memperjelas. 
+Keyword <code class="language-plaintext highlighter-rouge">let</code> memliki tipe data default. Bila anda me-assign sebuah nilai integer contohnya kepada variabel yang dideklarasikan dengan
+keyword <code class="language-plaintext highlighter-rouge">let</code>, maka integer tersebut otomatis akan menjadi 32 bit integer (i32). Bila anda ingin memakai 8 bit integer, maka anda harus 
+menuliskannya secara eksplisit. Hal ini juga berlaku pada nilai float.</p>
+:ET

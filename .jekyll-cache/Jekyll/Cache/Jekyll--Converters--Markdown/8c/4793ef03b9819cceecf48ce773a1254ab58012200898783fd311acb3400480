@@ -1,0 +1,758 @@
+I"��<p>Di artikel kali ini, kita akan membahas tentang structs, traits, dan implementasi. Pertama-tama, kita harus mengetahui terlebih dahulu secara umum tentang struct.</p>
+
+<p>Struct merepresentasikan tipe data kompleks yang kita definisikan sendiri. Struct dapat berisi banyak field atau tidak berisi field sama sekali. Rust memiliki method yang dapat diimplementasikan pada sebuah struct, namun Rust tidak memiliki inheritance. Untuk mencapat <em>polymorphism</em>, Rust menggunakan trait.</p>
+
+<h2 id="struct">Struct</h2>
+
+<p>Untuk mendefinisikan sebuah struct, kita menggunakan keyword <code class="language-plaintext highlighter-rouge">struct</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">struct</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+	<span class="n">field_a</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_b</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Tidak seperti bahasa C, Rust tidak mengharuskan kita menaruh titik koma setelah kita mendefinisikan sebuah struct. <em>Naming Convention</em> untuk struct pada Rust adalah dengan <em>PascalCase</em> untuk nama struct dan <em>snake_case</em> untuk nama field.</p>
+
+<p>Sekarang, kita akan membuat sebuah variabel baru dari struct tersebut.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+	<span class="p">};</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Dengan begini kita telah membuat sebuah struct baru <code class="language-plaintext highlighter-rouge">tipe_saya</code> dengan <code class="language-plaintext highlighter-rouge">field_a</code> yang bernilai 10 dan <code class="language-plaintext highlighter-rouge">field_b</code> yang bernilai 20. Sekarang kita akan coba untuk mengubah <code class="language-plaintext highlighter-rouge">field_a</code> menjadi 30.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Lalu apakah yang akan terjadi? Akan terjadi error pada kode ini. Seperti yang kalian tahu, seluruh variabel pada bahasa Rust itu <em>Immutable</em> atau tidak dapat diubah secara default sehingga field dalam variabel <code class="language-plaintext highlighter-rouge">tipe_saya</code> tidak dapat diubah. Hal ini tentu dapat diatasi dengan keyword yang telah kita pelajari: Keyword <code class="language-plaintext highlighter-rouge">mut</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Daaaaan, kode akan ter-compile.</p>
+
+<p>Sekarang, kita akan membuat sebuah file baru bernama <code class="language-plaintext highlighter-rouge">apalah.rs</code>.</p>
+
+<p>Didalam <code class="language-plaintext highlighter-rouge">apalah.rs</code>, saya akan mendefinisikan sebuah struct baru yang bernama <code class="language-plaintext highlighter-rouge">TipeApalah</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1">//apalah.rs</span>
+<span class="k">struct</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+	<span class="n">hitung</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">bil_bulat</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">bool_apalah</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Sekarang, kita akan memanggil struct ini di file <code class="language-plaintext highlighter-rouge">main.rs</code> kita dengan menggunakan <code class="language-plaintext highlighter-rouge">mod</code> dan <code class="language-plaintext highlighter-rouge">use</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">mod</span> <span class="n">apalah</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">apalah</span><span class="p">::</span><span class="n">TipeApalah</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Untuk membuat sebuah module, kita harus menaruh <code class="language-plaintext highlighter-rouge">mod &lt;nama_file&gt;</code> pada file <code class="language-plaintext highlighter-rouge">main.rs</code> project kita dan kemudian menggunakan keyword <code class="language-plaintext highlighter-rouge">use</code> untuk menggunakan fungsi, variabel static/constant, trait, atau struct didalam file tersebut. Untuk langsung memanggil semuanya tanpa menuliskan secara eksplisit, kita dapat menuliskan sebagai berikut: <code class="language-plaintext highlighter-rouge">use nama_file::*;</code>. Biasanya <code class="language-plaintext highlighter-rouge">mod</code> dan <code class="language-plaintext highlighter-rouge">use</code> digunakan di bagian paling atas file. Namun, <code class="language-plaintext highlighter-rouge">mod</code> dan <code class="language-plaintext highlighter-rouge">use</code> juga dapat digunakan untuk scope khusus seperti didalam sebuah fungsi.</p>
+
+<p>Sekarang, kita akan coba membuat sebuah variabel dari <code class="language-plaintext highlighter-rouge">TipeApalah</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah</span> <span class="o">=</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+		<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+		<span class="n">bil_bulat</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+		<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+	<span class="p">};</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Kira-kira apa yang akan terjadi pada kode diatas? Kode tersebut akan mengalami error!</p>
+
+<p>Mengapa begitu? Itu dikarenakan struct dan field didalam struct tersebut berstatus <em>private</em>. Untuk mengatasi hal ini, kita harus menggunakan sebuah keyword bernama <code class="language-plaintext highlighter-rouge">pub</code> pada saat pendefinisian struct dan juga untuk setiap field didalam struct.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1">//apalah.rs</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="n">hitung</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="k">pub</span> <span class="n">bil_bulat</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="k">pub</span> <span class="n">bool_apalah</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Dan bingo! Semua akan berjalan dengan lancar. Hal ini juga berlaku pada fungsi dan method, namun tidak untuk method dari trait yang diimplementasikan pada struct.</p>
+
+<p>Sekarang kita akan coba membuat method untuk struct <code class="language-plaintext highlighter-rouge">TipeApalah</code>.</p>
+
+<p>Untuk membuat method, kita menggunakan keyword <code class="language-plaintext highlighter-rouge">impl</code> yang berarti <em>implement</em> atau implementasikan diikuti dengan nama struct kita. Pertama-tama, saya akan membuat sebuah method bernama <code class="language-plaintext highlighter-rouge">new()</code> yang akan digunakan untuk membuat variabel dari struct <code class="language-plaintext highlighter-rouge">TipeApalah</code> tanpa harus mengetik panjang-panjang.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="c1">//apalah.rs</span>
+<span class="k">impl</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+		<span class="k">Self</span> <span class="p">{</span>
+			<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+			<span class="n">bil_bulat</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+			<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Pada kode diatas, kita menggunakan <code class="language-plaintext highlighter-rouge">Self</code> sebagai return type kita yang berarti, return type kita adalah tipe yang kita implementasikan - yang dalam kasus ini adalah struct <code class="language-plaintext highlighter-rouge">TipeApalah</code> kita. Ingat bahwa kita langsung mengembalikan struct <code class="language-plaintext highlighter-rouge">TipeApalah</code> baru kita sehingga kita tidak perlu menaruh titik koma di akhir.</p>
+
+<p>Method diatas dapat kita panggil dengan cara berikut:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah</span> <span class="o">=</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+		<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+		<span class="n">bil_bulat</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+		<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+	<span class="p">};</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Menggunakan operator <code class="language-plaintext highlighter-rouge">::</code> kita memanggil method <code class="language-plaintext highlighter-rouge">new</code> kita. Kita memasukkan angka 20 kedalam method <code class="language-plaintext highlighter-rouge">new</code> yang nantinya akan di-assign kepada field <code class="language-plaintext highlighter-rouge">bil_bulat</code> didalam struct <code class="language-plaintext highlighter-rouge">TipeApalah</code>. Kalian juga dapat membuat parameter lain, untuk memberi nilai kepada <code class="language-plaintext highlighter-rouge">hitung</code>. Namun pada kasus ini, sebagai contoh, saya akan membiarkan <code class="language-plaintext highlighter-rouge">hitung</code> dan <code class="language-plaintext highlighter-rouge">bool_apalah</code> untuk dibuat secara otomatis didalam method <code class="language-plaintext highlighter-rouge">new()</code>.</p>
+
+<p>Sekarang, mari kita coba membuat satu method lagi yang berbeda dari method <code class="language-plaintext highlighter-rouge">new()</code> ini.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="c1">//apalah.rs</span>
+<span class="k">impl</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+		<span class="k">Self</span> <span class="p">{</span>
+			<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+			<span class="n">bil_bulat</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+			<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">lebih_dari</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+		<span class="k">self</span><span class="py">.bil_bulat</span> <span class="o">&gt;</span> <span class="n">x</span> 
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Disini kita menggunakan “self” juga, yang diawali dengan tanda ampersand (&amp;). Namun, seperti yang kalian lihat, <code class="language-plaintext highlighter-rouge">self</code> disini berbeda. Disini, kita tidak memakai huruf S kapital, dan juga memakainnya pada parameter. <code class="language-plaintext highlighter-rouge">self</code> disini menunjuk pada data didalam struct, sedangkan <code class="language-plaintext highlighter-rouge">Self</code> dengan S kapital menunjuk kepada tipe.</p>
+
+<p>Dengan menggunakan <code class="language-plaintext highlighter-rouge">self</code>, kita dapat menggunakan field struct kita di dalam method.</p>
+
+<p>Sekarang mari kita panggil method kedua kita ini.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah</span> <span class="o">=</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+		<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+		<span class="n">bil_bulat</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+		<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+	<span class="p">};</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+	
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Nah, lihat perbedaannya? Pada <code class="language-plaintext highlighter-rouge">tipe_apalah2</code>, kita memakai <code class="language-plaintext highlighter-rouge">::</code> untuk memanggil method <code class="language-plaintext highlighter-rouge">new()</code> sedangkan pada <code class="language-plaintext highlighter-rouge">check</code>, kita memakai <code class="language-plaintext highlighter-rouge">.</code> untuk memanggil method <code class="language-plaintext highlighter-rouge">lebih_dari()</code>. Yang membuatnya berbeda adalah dari <code class="language-plaintext highlighter-rouge">&amp;self</code> di parameter. Bila kita tidak memakai <code class="language-plaintext highlighter-rouge">&amp;self</code> pada parameter method kita, kita memakai operator <code class="language-plaintext highlighter-rouge">::</code> untuk memanggilnya. Namun bila kita memakai <code class="language-plaintext highlighter-rouge">&amp;self</code>, kita memakai dot operator/<code class="language-plaintext highlighter-rouge">.</code> untuk memanggilnya.</p>
+
+<p>Omong-omong, kita juga dapat menjadikan struct lainnya sebagai field pada struct kita.</p>
+
+<p>Nah, sekarang kita akan membuat satu method lagi untuk <code class="language-plaintext highlighter-rouge">TipeApalah</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="c1">//apalah.rs</span>
+<span class="k">impl</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+		<span class="k">Self</span> <span class="p">{</span>
+			<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+			<span class="n">bil_bulat</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+			<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">lebih_dari</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+		<span class="k">self</span><span class="py">.bil_bulat</span> <span class="o">&gt;</span> <span class="n">x</span> 
+	<span class="p">}</span>
+	
+	<span class="k">pub</span> <span class="k">fn</span> <span class="nf">tambah_satu</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">self</span><span class="py">.hitung</span> <span class="o">+=</span> <span class="mi">1</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Lihat perbedaannya? Kita memakai keyword <code class="language-plaintext highlighter-rouge">mut</code> setelah tanda ampersand untuk membuat field menjadi mutable. Setelahnya, kita dapat memanipulasi field tersebut dengan method. Sekarang, saya akan ubah variabel <code class="language-plaintext highlighter-rouge">tipe_apalah</code> menjadi mutable dan kemudian memanggil method <code class="language-plaintext highlighter-rouge">tambah_satu</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+	
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_apalah</span> <span class="o">=</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+		<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+		<span class="n">bil_bulat</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+		<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+	<span class="p">};</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+	
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	
+	<span class="n">tipe_apalah</span><span class="nf">.tambah_satu</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Sekarang field <code class="language-plaintext highlighter-rouge">hitung</code> dalam <code class="language-plaintext highlighter-rouge">tipe_apalah</code> memiliki nilai 1.</p>
+
+<p>Sekarang, kita akan membahas tentang trait.</p>
+
+<p>Trait digunakan untuk mencapai <em>polymorphism</em> dalam Rust. Dengan trait, kita dapat mendefinisikan <em>shared behavior</em> untuk tipe-tipe yang berbeda. <em>Shared behaviour</em> berarti kita membagi fungsionalitas sebuah tipe kepada tipe lainnya.</p>
+
+<p>Membuat sebuah trait hampir mirip dengan membuat implementasi, hanya saja kita tidak menuliskan <code class="language-plaintext highlighter-rouge">body</code> untuk method didalamnya. Sekarang, saya akan membuat sebuah trait bernama <code class="language-plaintext highlighter-rouge">TraitApalah</code> di file <code class="language-plaintext highlighter-rouge">apalah.rs</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1">//apalah.rs</span>
+<span class="k">pub</span> <span class="k">trait</span> <span class="n">TraitApalah</span> <span class="p">{</span>
+	<span class="k">fn</span> <span class="nf">is_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Nah, sekarang kita sudah membuat trait kita. Ingat bahwa seperti struct, kita juga harus menggunakan keyword <code class="language-plaintext highlighter-rouge">pub</code> agar kita dapat mengakses trait tersebut di file lain, seperti struct namun kita tidak harus menuliskan <code class="language-plaintext highlighter-rouge">pub</code> untuk setiap method didalamnya. Kita tidak menuliskan <code class="language-plaintext highlighter-rouge">method body</code>, melainkan nama method, parameter <code class="language-plaintext highlighter-rouge">&amp;self</code>, dan return type secara langsung dan diakhiri dengan titik koma untuk setiap method. Parameter <code class="language-plaintext highlighter-rouge">&amp;self</code> diatas akan menunjuk pada setiap field dalam tipe yang diimplementasikan.</p>
+
+<p>Mari kita coba implementasikan <code class="language-plaintext highlighter-rouge">TraitApalah</code> pada <code class="language-plaintext highlighter-rouge">TipeApalah</code>.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="c1">//apalah.rs</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+	<span class="k">pub</span> <span class="n">hitung</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="k">pub</span> <span class="n">bil_bulat</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="k">pub</span> <span class="n">bool_apalah</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">TraitApalah</span> <span class="k">for</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+	<span class="k">fn</span> <span class="nf">is_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+		<span class="k">self</span><span class="py">.bool_apalah</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Kita menggunakan keyword <code class="language-plaintext highlighter-rouge">for</code> untuk implementasi trait, lalu mengimplementasikan method abstrak yang berada dalam trait tersebut didalamnya. Disini sebagai contoh, saya akan mengecek apalah field <code class="language-plaintext highlighter-rouge">bool_apalah</code> true atau false pada method <code class="language-plaintext highlighter-rouge">is_valid()</code>.</p>
+
+<p>Nah, kalian pasti berpikir “Lalu buat apa?” “Kenapa repot-repot bikin trait? Kan bisa langsung aja didalem implementasi structnya?”. Ok, mari kita lihat contoh simpelnya. Sekarang, kita akan implementasikan dulu trait <code class="language-plaintext highlighter-rouge">TraitApalah</code> pada <code class="language-plaintext highlighter-rouge">TipeSaya</code> juga.</p>
+
+<p>Pertama-tama, kita akan menambahkan field bertipe boolean untuk <code class="language-plaintext highlighter-rouge">TipeSaya</code> juga sehingga <code class="language-plaintext highlighter-rouge">main.rs</code> akan menjadi begini:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">mod</span> <span class="n">apalah</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">apalah</span><span class="p">::</span><span class="n">TipeApalah</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+	<span class="n">field_a</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_b</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_c</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+		<span class="n">field_c</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+	
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_apalah</span> <span class="o">=</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+		<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+		<span class="n">bil_bulat</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+		<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+	<span class="p">};</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+	
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	
+	<span class="n">tipe_apalah</span><span class="nf">.tambah_satu</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Lalu kita akan mengimplementasikan <code class="language-plaintext highlighter-rouge">TraitApalah</code> pada <code class="language-plaintext highlighter-rouge">TipeSaya</code> juga. Jangan lupa untuk memanggil <code class="language-plaintext highlighter-rouge">TraitApalah</code> dengan <code class="language-plaintext highlighter-rouge">use</code> juga.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">mod</span> <span class="n">apalah</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">apalah</span><span class="p">::{</span><span class="n">TipeApalah</span><span class="p">,</span> <span class="n">TraitApalah</span><span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Lalu kita implementasikan seperti tadi.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">struct</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+	<span class="n">field_a</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_b</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_c</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">TraitApalah</span> <span class="k">for</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+	<span class="k">fn</span> <span class="nf">is_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+		<span class="k">self</span><span class="py">.field_c</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Dan sekarang, saya akan membuat sebuah fungsi baru.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+
+<span class="k">fn</span> <span class="nf">print_jika_valid</span><span class="p">(</span><span class="n">check</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">dyn</span> <span class="n">TraitApalah</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="n">check</span><span class="nf">.is_valid</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nd">println!</span><span class="p">(</span><span class="s">"Valid!"</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Lihat, fungsi diatas tidak menerima sebuah struct - melainkan sebuah trait! Kita menggunakan keyword <code class="language-plaintext highlighter-rouge">dyn</code> dengan didahului oleh ampersand untuk menggunakan trait sebagai tipe pada parameter, atau menggunakan trait sebagai return type.</p>
+
+<p>Dengan begini, fungsi diatas dapat digunakan untuk kedua struct kita, yaitu <code class="language-plaintext highlighter-rouge">TipeSaya</code> dan <code class="language-plaintext highlighter-rouge">TipeApalah</code>! Sekarang, <code class="language-plaintext highlighter-rouge">main.rs</code> kita akan terlihat seperti ini:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">mod</span> <span class="n">apalah</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">apalah</span><span class="p">::{</span><span class="n">TipeApalah</span><span class="p">,</span> <span class="n">TraitApalah</span><span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+	<span class="n">field_a</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_b</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_c</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">TraitApalah</span> <span class="k">for</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+	<span class="k">fn</span> <span class="nf">is_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+		<span class="k">self</span><span class="py">.field_c</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">print_jika_valid</span><span class="p">(</span><span class="n">check</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">dyn</span> <span class="n">TraitApalah</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="n">check</span><span class="nf">.is_valid</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nd">println!</span><span class="p">(</span><span class="s">"Valid!"</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+		<span class="n">field_c</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+	
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_apalah</span> <span class="o">=</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+		<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+		<span class="n">bil_bulat</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+		<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+	<span class="p">};</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+	
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	
+	<span class="n">tipe_apalah</span><span class="nf">.tambah_satu</span><span class="p">();</span>
+	
+	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tipe_saya</span><span class="p">);</span>
+	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tipe_apalah</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Jangan lupa untuk menggunakan ampersand (&amp;) karena <code class="language-plaintext highlighter-rouge">print_jika_valid</code> menerima <code class="language-plaintext highlighter-rouge">&amp;dyn TraitApalah</code>.</p>
+
+<p>Sekarang kita akan membahas tentang trait-trait built-in rust yang sangat berguna, dan juga menggunakan macro <code class="language-plaintext highlighter-rouge">derive</code>.</p>
+
+<p>Kita dapat mengimplementasikan trait <code class="language-plaintext highlighter-rouge">Default</code> untuk membuat default value untuk struct kita seperti ini:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>//main.rs
+impl Default for TipeSaya {
+	fn default() -&gt; Self {
+		Self {
+			field_a: 0,
+			field_b: 0,
+			field_c: true,
+		}
+	}
+}
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Nah, sekarang mari kita coba menggunakan macro <code class="language-plaintext highlighter-rouge">println!</code> untuk tipe-tipe yang telah kita buat. Untuk mencetak sebuah struct, kita membutuhkan formatter yang berbeda pada <code class="language-plaintext highlighter-rouge">println!</code>, yaitu yang berupa <code class="language-plaintext highlighter-rouge">{:?}</code> seperti: <code class="language-plaintext highlighter-rouge">println!("{:?}", vec![1,2,3])</code>. Namun, walaupun begitu, macro <code class="language-plaintext highlighter-rouge">println!</code> kita tidak akan langsung bekerja. Akan terjadi error bila kita langsung saja menaruh sebuah struct di dalam macro <code class="language-plaintext highlighter-rouge">println!</code>. Untuk mengatasinya, struct kita harus mengimplementasikan trait <code class="language-plaintext highlighter-rouge">Debug</code>. Mengimplementasikan setiap trait secara manual pasti akan sangat membosankan. Jadi, kita dapat mengimplementasikan banyak trait dengan macro <code class="language-plaintext highlighter-rouge">derive</code>!</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+	<span class="n">field_a</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_b</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+	<span class="n">field_c</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Dan sekarang, kita akan dapat mencetak <code class="language-plaintext highlighter-rouge">TipeSaya</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre><span class="c1">//main.rs</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_saya</span> <span class="o">=</span> <span class="n">TipeSaya</span> <span class="p">{</span>
+		<span class="n">field_a</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+		<span class="n">field_b</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+		<span class="n">field_c</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+	<span class="p">};</span>
+	<span class="n">tipe_saya</span><span class="py">.field_a</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+	
+	<span class="k">let</span> <span class="k">mut</span> <span class="n">tipe_apalah</span> <span class="o">=</span> <span class="n">TipeApalah</span> <span class="p">{</span>
+		<span class="n">hitung</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+		<span class="n">bil_bulat</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+		<span class="n">bool_apalah</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+	<span class="p">};</span>
+	
+	<span class="k">let</span> <span class="n">tipe_apalah2</span> <span class="o">=</span> <span class="nn">TipeApalah</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+	
+	<span class="k">let</span> <span class="n">check</span> <span class="o">=</span> <span class="n">tipe_apalah2</span><span class="nf">.lebih_dari</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+	
+	<span class="n">tipe_apalah</span><span class="nf">.tambah_satu</span><span class="p">();</span>
+	
+	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tipe_saya</span><span class="p">);</span>
+	<span class="nf">print_jika_valid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tipe_apalah</span><span class="p">);</span>
+	
+	<span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">tipe_saya</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Lakukanlah hal yang sama untuk <code class="language-plaintext highlighter-rouge">TipeApalah</code> dan <code class="language-plaintext highlighter-rouge">TipeApalah</code> juga akan dapat dicetak.</p>
+
+<p>Lebih detailnya tentang trait, akan kita bahas di artikel selanjutnya - tentang generics.</p>
+
+<p>Terima kasih telah membaca artikel ini, silahkan kirim email ke rahmanhakim2435@pm.me bila ada pertanyaan dan tunggu update berikutnya ya! :).</p>
+:ET

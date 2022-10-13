@@ -3,10 +3,12 @@ title: "Bahasa Pemrograman Rust: Smart Pointers - Trait Deref"
 layout: post
 lang: id
 date: 2022-02-16
-permalink: /id/Bahasa-Rust-SP-Deref
----
+permalink: /Bahasa-Rust-SP-Deref
+categories: [rust, programming]
+image: /assets/images/deref.png
+author: "mochidaz"
 
-![deref]({{ site.baseurl }}/images/deref.png)
+---
 
 Sebuah _smart pointer_ adalah sebuah tipe yang mengimplementasikan trait `Deref` dan trait `Drop`. Di artikel kali ini, kita akan membahas tentang trait `Deref` yang membuat kita dapat memperlakukan sebuah pointer seperti sebuah reference biasa. Lalu apa maksud dari memperlakukan sebuah pointer seperti sebuah reference biasa?
 

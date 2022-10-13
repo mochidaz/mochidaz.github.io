@@ -3,10 +3,13 @@ title: "Bahasa Pemrograman Rust: Smart Pointers - Box"
 layout: post
 lang: id
 date: 2022-02-12
-permalink: /id/Bahasa-Rust-SP-Box
+permalink: /Bahasa-Rust-SP-Box
+categories: [rust, programming]
+image: /assets/images/box.png
+author: "mochidaz"
+
 ---
 
-![cons]({{ site.baseurl }}/images/box.png)
 
 Kita telah mencapai bab Smart Pointer. Namun, ini tidak terdapat pada seri utama Bahasa Rust kita. Karena itu saya memberi judul artikel ini "Bahasa: Rust Smart Pointers" dan bukan dengan memberi seri nomor seperti biasanya.
 
@@ -47,7 +50,7 @@ enum List<T> {
 
 Kita memiliki sebuah `enum` bernama `List` yang merupakan sebuah struktur data bernama _Cons List_ yang berasal dari bahasa Lisp. 
 
-![cons]({{ site.baseurl }}/images/cons.png)
+![cons](images/cons.png)
 
 Gambar diatas merupakan representasi visual dari sebuah _Cons List_ dimana ia akan terus berulang bila bertemu dengan `Cons` dan memuat nilai hingga ia bertemu dengan `Nil`.
 

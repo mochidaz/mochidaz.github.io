@@ -1,12 +1,14 @@
 ---
 layout: post
 title: "Bahasa Rust 5: Result, Option, dan Pattern Matching"
-permalink: /id/Bahasa-Rust-5 
+permalink: /Bahasa-Rust-5 
 lang: id
 date: 2021-02-26 00:54
----
+categories: [rust, programming]
+image: /assets/images/rust-5.png
+author: "mochidaz"
 
-![rust]({{site.baseurl}}/images/rust-5.png)
+---
 
 
 Error handling merupakan salah satu logika penting dalam pemrograman. Error handling merupakan cara untuk memproses suatu logika disaat logika yang lainnya mengalami `error` atau kegagalan. Error handling dapat juga disebut dengan `exception handling`. 

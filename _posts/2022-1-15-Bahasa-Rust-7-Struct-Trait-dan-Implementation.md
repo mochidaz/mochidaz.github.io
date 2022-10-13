@@ -1,12 +1,15 @@
 ---
 layout: post
 title: "Bahasa Pemrograman Rust 7: Struct, Trait, dan Implementasi"
-permalink: /id/Bahasa-Rust-7 
+permalink: /Bahasa-Rust-7 
 lang: id
 date: 2022-01-15
+categories: [rust, programming]
+image: /assets/images/rust-7.png
+author: "mochidaz"
+
 ---
 
-![rust]({{site.baseurl}}/images/rust-7.png)
 
 Di artikel kali ini, kita akan membahas tentang structs, traits, dan implementasi. Pertama-tama, kita harus mengetahui terlebih dahulu secara umum tentang struct.
 
