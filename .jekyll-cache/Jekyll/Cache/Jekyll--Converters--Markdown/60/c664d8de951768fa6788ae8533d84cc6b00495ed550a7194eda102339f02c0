@@ -1,4 +1,4 @@
-I">@<p>Kita telah mencapai bab Smart Pointer. Namun, ini tidak terdapat pada seri utama Bahasa Rust kita. Karena itu saya memberi judul artikel ini “Bahasa: Rust Smart Pointers” dan bukan dengan memberi seri nomor seperti biasanya.</p>
+I"F@<p>Kita telah mencapai bab Smart Pointer. Namun, ini tidak terdapat pada seri utama Bahasa Rust kita. Karena itu saya memberi judul artikel ini “Bahasa: Rust Smart Pointers” dan bukan dengan memberi seri nomor seperti biasanya.</p>
 
 <p>Sebuah pointer, sebuah konsep umum untuk sebuah variabel yang menyimpan alamat memory. Alamat memory ini menunjuk - <em>pointing</em> pada sebuah data. Smart Pointer, atau pointer pintar namun, adalah struktur data yang tidak hanya berperilaku seperti sebuah pointer, namun juga memiliki kapabilitas lain. Konsep smart pointer ini berawal dari C++.</p>
 
@@ -48,7 +48,7 @@
 
 <p>Kita memiliki sebuah <code class="language-plaintext highlighter-rouge">enum</code> bernama <code class="language-plaintext highlighter-rouge">List</code> yang merupakan sebuah struktur data bernama <em>Cons List</em> yang berasal dari bahasa Lisp.</p>
 
-<p><img src="images/cons.png" alt="cons" /></p>
+<p><img src="/assets/images/cons.png" alt="cons" /></p>
 
 <p>Gambar diatas merupakan representasi visual dari sebuah <em>Cons List</em> dimana ia akan terus berulang bila bertemu dengan <code class="language-plaintext highlighter-rouge">Cons</code> dan memuat nilai hingga ia bertemu dengan <code class="language-plaintext highlighter-rouge">Nil</code>.</p>
 

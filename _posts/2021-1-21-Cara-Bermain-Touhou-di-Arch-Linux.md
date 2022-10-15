@@ -60,29 +60,29 @@ Include = /etc/pacman.d/mirrorlist
 
 #### Touhou 10: Mountain of Faith
 
-![touhou2](images/touhou-mof.png)
+![touhou2](/assets/images/touhou-mof.png)
 
 #### Touhou 13: Ten Desires
 
-![touhou3](images/touhou-td.png)
+![touhou3](/assets/images/touhou-td.png)
 
 #### Touhou 14: Double Dealing Character
 
-![touhou4](images/touhou-ddc.png)
+![touhou4](/assets/images/touhou-ddc.png)
 
 ### Fighting Game
 
 #### Touhou 12.3: Hisoutensoku
-![touhou5](images/touhou-hisoutensoku.png)
+![touhou5](/assets/images/touhou-hisoutensoku.png)
 
 #### Touhou 13.5: Hopeless Masquerade
 
-![touhou6](images/touhou-hm.png)
+![touhou6](/assets/images/touhou-hm.png)
 
 #### Touhou 14.5: Urban Legends in Limbo
-![touhou7](images/touhou-ulil.png)
+![touhou7](/assets/images/touhou-ulil.png)
 
 #### Touhou 15.5: Antinomy of Common Flowers
-![touhou8](images/touhou-aocf.jpg)
+![touhou8](/assets/images/touhou-aocf.jpg)
 
 Terima kasih telah membaca artikel ini. Bila ada pertanyaan, kamu dapat mengirim email ke rahmanhakim2435@pm.me :).

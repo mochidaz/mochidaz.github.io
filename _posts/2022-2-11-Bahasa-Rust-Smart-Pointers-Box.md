@@ -50,7 +50,7 @@ enum List<T> {
 
 Kita memiliki sebuah `enum` bernama `List` yang merupakan sebuah struktur data bernama _Cons List_ yang berasal dari bahasa Lisp. 
 
-![cons](images/cons.png)
+![cons](/assets/images/cons.png)
 
 Gambar diatas merupakan representasi visual dari sebuah _Cons List_ dimana ia akan terus berulang bila bertemu dengan `Cons` dan memuat nilai hingga ia bertemu dengan `Nil`.
 

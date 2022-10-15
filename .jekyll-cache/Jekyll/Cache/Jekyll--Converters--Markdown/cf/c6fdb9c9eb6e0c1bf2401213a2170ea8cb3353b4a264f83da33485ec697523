@@ -1,4 +1,4 @@
-I"-<p>Bermain game terutama game Windows di Linux dewasa ini bukanlah lagi sebuah sesuatu yang luar biasa. Dengan banyak usaha dari komunitas open source yang membangun compatibility layer, menjalankan software Windows terutama game menjadi sangatlah mudah. Compatibility layer yang dimaksud tersebut adalah Wine. Wine merupakan software compatibility layer Windows untuk Linux yang dapat dipakai dengan sangat mudah.</p>
+I"e<p>Bermain game terutama game Windows di Linux dewasa ini bukanlah lagi sebuah sesuatu yang luar biasa. Dengan banyak usaha dari komunitas open source yang membangun compatibility layer, menjalankan software Windows terutama game menjadi sangatlah mudah. Compatibility layer yang dimaksud tersebut adalah Wine. Wine merupakan software compatibility layer Windows untuk Linux yang dapat dipakai dengan sangat mudah.</p>
 
 <h4 id="touhou-project">Touhou Project</h4>
 
@@ -59,30 +59,30 @@ Include = /etc/pacman.d/mirrorlist
 
 <h4 id="touhou-10-mountain-of-faith">Touhou 10: Mountain of Faith</h4>
 
-<p><img src="images/touhou-mof.png" alt="touhou2" /></p>
+<p><img src="/assets/images/touhou-mof.png" alt="touhou2" /></p>
 
 <h4 id="touhou-13-ten-desires">Touhou 13: Ten Desires</h4>
 
-<p><img src="images/touhou-td.png" alt="touhou3" /></p>
+<p><img src="/assets/images/touhou-td.png" alt="touhou3" /></p>
 
 <h4 id="touhou-14-double-dealing-character">Touhou 14: Double Dealing Character</h4>
 
-<p><img src="images/touhou-ddc.png" alt="touhou4" /></p>
+<p><img src="/assets/images/touhou-ddc.png" alt="touhou4" /></p>
 
 <h3 id="fighting-game">Fighting Game</h3>
 
 <h4 id="touhou-123-hisoutensoku">Touhou 12.3: Hisoutensoku</h4>
-<p><img src="images/touhou-hisoutensoku.png" alt="touhou5" /></p>
+<p><img src="/assets/images/touhou-hisoutensoku.png" alt="touhou5" /></p>
 
 <h4 id="touhou-135-hopeless-masquerade">Touhou 13.5: Hopeless Masquerade</h4>
 
-<p><img src="images/touhou-hm.png" alt="touhou6" /></p>
+<p><img src="/assets/images/touhou-hm.png" alt="touhou6" /></p>
 
 <h4 id="touhou-145-urban-legends-in-limbo">Touhou 14.5: Urban Legends in Limbo</h4>
-<p><img src="images/touhou-ulil.png" alt="touhou7" /></p>
+<p><img src="/assets/images/touhou-ulil.png" alt="touhou7" /></p>
 
 <h4 id="touhou-155-antinomy-of-common-flowers">Touhou 15.5: Antinomy of Common Flowers</h4>
-<p><img src="images/touhou-aocf.jpg" alt="touhou8" /></p>
+<p><img src="/assets/images/touhou-aocf.jpg" alt="touhou8" /></p>
 
 <p>Terima kasih telah membaca artikel ini. Bila ada pertanyaan, kamu dapat mengirim email ke rahmanhakim2435@pm.me :).</p>
 :ET
