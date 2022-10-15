@@ -4,7 +4,7 @@ title: "Cara bermain Touhou di Arch Linux dan Turunannya"
 date: 2021-1-21 23:37
 permalink: /Bermain-Touhou-di-Linux
 lang: id
-categories: [Touhou, linux]
+categories: [touhou, linux]
 featured: true
 hidden: true
 image: /assets/images/touhou.png
