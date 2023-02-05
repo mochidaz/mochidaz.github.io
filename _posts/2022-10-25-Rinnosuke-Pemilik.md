@@ -10,8 +10,6 @@ image: /assets/images/rinno.webp
 author: "mochidaz"
 ---
 
-# Rinnosuke Morichika - Pemilik Toko yang Sedikit Terlalu Banyak Tahu
-
 Rinnosuke Morichika merupakan salah satu dari sedikit tokoh laki-laki di Touhou Project, dan bahkan dapat dibilang satu-satunya yang benar-benar penting. Rinnosuke memiliki hubungan yang dekat dengan kedua protagonis, terutama Marisa, dan telah berjasa atas banyak hal pada mereka (ia juga sering direpotkan). Rinnosuke adalah setengah _youkai_ dan setengah manusia. Karena ia setengah _youkai_, ia kebal terhadap penyakit manusia (walau terkadang ia bisa sakit), dan juga _youkai_ tidak menyerangnya. Meskipun begitu, ia sama sekali tidak buas dan tidak memiliki keinginan untuk memakan manusia. Ia adalah pemilik toko Kourindou yang berada di antara hutan sihir dan desa manusia.
 
 **Kemampuan dan Pengetahuan (Yang Sedikit Berlebihan)**

@@ -10,10 +10,7 @@ image: /assets/images/ideals.png
 author: "mochidaz"
 ---
 
-
-# Kemanusiaan Gensokyo
-
-Bagaimanakah Status Manusia di Gensokyo?
+# Bagaimanakah Status Manusia di Gensokyo?
 
 Manusia, makhluk yang menguasai permukaan bumi yang memiliki populasi yang berjumlah mencapai hingga 7 miliar manusia. Namun, itu adalah kondisi manusia yang berada di dunia luar. Manusia yang hidup di dalam Gensokyo, mereka diperlakukan sebagai “alat” untuk mempertahankan eksistensi para _youkai_ di sana. Dengan kata lain, manusia seperti hewan ternak. Gensokyo dibagi menjadi dua belah pihak, yaitu pihak manusia dan pihak _youkai_ dimana keduanya memiliki hubungan yang hampir tidak dapat dipisahkan. _Youkai _membutuhkan manusia untuk keberlangsungan hidup mereka. Bukan hanya sebagai makanan, namun juga sebagai media agar eksistensi mereka dapat dipertahankan.
 
