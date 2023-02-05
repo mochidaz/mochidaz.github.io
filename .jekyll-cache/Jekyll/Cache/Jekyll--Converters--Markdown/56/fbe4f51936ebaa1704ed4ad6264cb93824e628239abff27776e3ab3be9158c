@@ -1,0 +1,82 @@
+I"Å<h1 id="lifetime-dan-anotasinya">Lifetime dan Anotasinya</h1>
+
+<p>Kita sudah mencapai bab lifetime. Lifetime merupakan cara Rust mengetahui apakah suatu memory masih valid untuk kita reference. Lifetime sendiri merupakan semacam generics, namun bukan untuk memastikan sebuah tipe memiliki behavior atau hal-hal yang kita inginkan (menggunakan Trait), melainkan untuk memastikan reference masih valid selama kita membutuhkan mereka.</p>
+
+<h2 id="lifetime-annotation">Lifetime Annotation</h2>
+
+<p>Semua reference pada Rust sebenarnya memiliki lifetime, namun diberikan oleh compiler Rust secara implisit. Sekarang, kita akan melihat bagaimana compiler Rust melakukan pengecekkan lifetime secara implisit.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">r</span><span class="p">;</span>
+    <span class="p">{</span>
+        <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"r: {}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Kode di atas akan menghasilkan error seperti berikut:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>error[E0597]: `x` does not live long enough
+ --&gt; a.rs:5:13
+  |
+5 |         r = &amp;x;
+  |             ^^ borrowed value does not live long enough
+6 |     }
+  |     - `x` dropped here while still borrowed
+7 |     println!("r: {}", r);
+  |                       - borrow later used here
+
+error: aborting due to previous error
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Error ini terjadi dikarenakan value <code class="language-plaintext highlighter-rouge">x</code> berada dalam scope yang lebih kecil dari <code class="language-plaintext highlighter-rouge">r</code>, dan <code class="language-plaintext highlighter-rouge">r</code> mencoba untuk menyimpan reference kepada <code class="language-plaintext highlighter-rouge">x</code>. Begitu scope <code class="language-plaintext highlighter-rouge">x</code> berakhir, <code class="language-plaintext highlighter-rouge">x</code> akan di-drop dan reference kepada <code class="language-plaintext highlighter-rouge">x</code> tidaklah lagi valid. Ia mereferensikan sampah yang tidak akan diperbolehkan oleh Rust. Rust dapat mengecek error seperti diatas dengan borrow checkernya.</p>
+
+<p>Kemudian, kita akan melihat fungsi berikut:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="n">take_r</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">i32</span> <span class="p">{</span>
+  <span class="n">r</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Bila kita panggil fungsi tersebut di <code class="language-plaintext highlighter-rouge">main</code>, kemudian menjalankannya, maka kode akan berjalan dengan sempurna.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="n">take_r</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">i32</span> <span class="p">{</span>
+  <span class="n">r</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="nf">take_r</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">5</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
