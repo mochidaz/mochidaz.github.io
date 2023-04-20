@@ -8,7 +8,6 @@ permalink: /Bahasa-Rust-SP-Drop
 categories: [rust, programming]
 image: /assets/images/drop.png
 author: "mochidaz"
-
 ---
 
 

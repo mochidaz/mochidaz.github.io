@@ -1,0 +1,2 @@
+I"Q<p>Dalam bahasa Rust, setiap variabel atau objek memiliki lifetime yang terkait dengannya, yaitu berapa lama variabel atau objek tersebut diperlukan dan digunakan dalam program. Rust memastikan bahwa memori yang digunakan oleh variabel atau objek hanya disediakan selama periode waktu yang diperlukan, dan tidak lebih lama dari itu.</p>
+:ET

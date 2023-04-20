@@ -1,4 +1,4 @@
-I"¸K
+I"ŒL
 <!-- Featured
 ================================================== -->
 <section class="featured-posts">
@@ -6,6 +6,10 @@
         <h2><span>Featured</span></h2>
     </div>
     <div class="row">
+
+    
+
+        
 
     
 
@@ -205,6 +209,52 @@
 <div class="col-lg-4 col-md-6 mb-30px card-group">
     <div class="card h-100">
         <div class="maxthumb">
+            <a href="/Bahasa-Rust-10">
+                
+
+                    
+                        <img class="img-fluid" src="/assets/images/drop.png" alt="Bahasa Pemrograman Rust 9: Lifetime" /> 
+                    
+
+                
+            </a>
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">
+                <a class="text-dark" href="/Bahasa-Rust-10">Bahasa Pemrograman Rust 9: Lifetime</a>
+                
+            </h2>
+            <h4 class="card-text">Dalam bahasa Rust, setiap variabel atau objek memiliki lifetime yang terkait dengannya, yaitu berapa lama variabel atau objek tersebut diperlukan dan digunakan dalam program. Rust memastikan bahwa memori yang digunakan...</h4>
+        </div>
+        <div class="card-footer bg-white">
+            <div class="wrapfooter">
+                
+                <span class="meta-footer-thumb">
+                
+                <img class="author-thumb" src="https://www.gravatar.com/avatar/55dd4fd20aa96b50486e49214b1346f0?s=250&amp;d=mm&amp;r=x" alt="Mochidaz" />
+                
+                </span>
+                <span class="author-meta">
+                <span class="post-name"><a target="_blank" href="https://kakashispiritnews.my.id">Mochidaz</a></span><br />
+                
+                <span class="post-date">20 Apr 2023</span>
+                </span>
+                <span class="post-read-more"><a href="/Bahasa-Rust-10" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end post -->
+
+        
+
+        <!-- begin post -->
+
+
+<div class="col-lg-4 col-md-6 mb-30px card-group">
+    <div class="card h-100">
+        <div class="maxthumb">
             <a href="/Rinnosuke-2">
                 
 
@@ -220,8 +270,7 @@
                 <a class="text-dark" href="/Rinnosuke-2">Rinnosuke Morichika - Pemilik Toko yang Sedikit Terlalu Banyak Tahu</a>
                 
             </h2>
-            <h4 class="card-text">Rinnosuke Morichika - Pemilik Toko yang Sedikit Terlalu Banyak Tahu
-</h4>
+            <h4 class="card-text">Rinnosuke Morichika merupakan salah satu dari sedikit tokoh laki-laki di Touhou Project, dan bahkan dapat dibilang satu-satunya yang benar-benar penting. Rinnosuke memiliki hubungan yang dekat dengan kedua protagonis, terutama Marisa,...</h4>
         </div>
         <div class="card-footer bg-white">
             <div class="wrapfooter">
@@ -267,7 +316,7 @@
                 <a class="text-dark" href="/Kemanusiaan-Gensokyo">Kemanusiaan Gensokyo</a>
                 
             </h2>
-            <h4 class="card-text">Kemanusiaan Gensokyo
+            <h4 class="card-text">Bagaimanakah Status Manusia di Gensokyo?
 </h4>
         </div>
         <div class="card-footer bg-white">
@@ -422,52 +471,6 @@
                 <span class="post-date">12 Feb 2022</span>
                 </span>
                 <span class="post-read-more"><a href="/Bahasa-Rust-SP-Box" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end post -->
-
-        
-
-        <!-- begin post -->
-
-
-<div class="col-lg-4 col-md-6 mb-30px card-group">
-    <div class="card h-100">
-        <div class="maxthumb">
-            <a href="/Bahasa-Rust-9">
-                
-
-                    
-                        <img class="img-fluid" src="/assets/images/rust-9.png" alt="Bahasa Pemrograman Rust 9: Generics" /> 
-                    
-
-                
-            </a>
-        </div>
-        <div class="card-body">
-            <h2 class="card-title">
-                <a class="text-dark" href="/Bahasa-Rust-9">Bahasa Pemrograman Rust 9: Generics</a>
-                
-            </h2>
-            <h4 class="card-text">Saya sudah pernah menjelaskan tentang generics pada Bab Result, Option, dan Pattern Matching. Dengan generics, kita dapat menuliskan tipe data abstrak dengan placeholder types untuk struct, enum, dan juga fungsi....</h4>
-        </div>
-        <div class="card-footer bg-white">
-            <div class="wrapfooter">
-                
-                <span class="meta-footer-thumb">
-                
-                <img class="author-thumb" src="https://www.gravatar.com/avatar/55dd4fd20aa96b50486e49214b1346f0?s=250&amp;d=mm&amp;r=x" alt="Mochidaz" />
-                
-                </span>
-                <span class="author-meta">
-                <span class="post-name"><a target="_blank" href="https://kakashispiritnews.my.id">Mochidaz</a></span><br />
-                
-                <span class="post-date">16 Jan 2022</span>
-                </span>
-                <span class="post-read-more"><a href="/Bahasa-Rust-9" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
                 <div class="clearfix"></div>
             </div>
         </div>
