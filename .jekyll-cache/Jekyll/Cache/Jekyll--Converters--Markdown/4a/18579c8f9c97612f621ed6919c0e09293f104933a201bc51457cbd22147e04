@@ -1,0 +1,278 @@
+I"QO<p>Dalam bahasa Rust, setiap variabel atau objek memiliki lifetime yang terkait dengannya, yaitu berapa lama variabel atau objek tersebut diperlukan dan digunakan dalam program. Rust memastikan bahwa memori yang digunakan oleh variabel atau objek hanya disediakan selama periode waktu yang diperlukan, dan tidak lebih lama dari itu.</p>
+
+<p>Lifetime biasanya ditentukan oleh tempat variabel atau objek dideklarasikan, serta hubungannya dengan variabel atau objek lain dalam program. Rust menggunakan aturan-aturan tertentu untuk menentukan lifetime secara otomatis, sehingga programmer tidak perlu secara manual menentukan lifetime setiap variabel atau objek.</p>
+
+<p>Sebagai contoh, Rust akan menentukan lifetime dari variabel <code class="language-plaintext highlighter-rouge">x</code> sebagai berikut:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Karena <code class="language-plaintext highlighter-rouge">x</code> dideklarasikan di dalam fungsi <code class="language-plaintext highlighter-rouge">main</code>, maka <code class="language-plaintext highlighter-rouge">x</code> akan memiliki lifetime yang sama dengan fungsi <code class="language-plaintext highlighter-rouge">main</code>. Ketika fungsi <code class="language-plaintext highlighter-rouge">main</code> selesai dieksekusi, maka <code class="language-plaintext highlighter-rouge">x</code> akan dihapus dari memori.</p>
+
+<p>Sekarang, lihat kode dibawah ini.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="p">{</span>
+        <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Karena <code class="language-plaintext highlighter-rouge">y</code> dideklarasikan di dalam sebuah <em>scope</em> baru, maka <code class="language-plaintext highlighter-rouge">y</code> akan memiliki lifetime yang sama dengan <em>scope</em> tersebut dan lifetimenya akan berakhir ketika ia mencapai akhir scope. Di sini, <code class="language-plaintext highlighter-rouge">y</code> adalah <em>reference</em> yang menunjuk pada variabel <code class="language-plaintext highlighter-rouge">x</code>. Karena <code class="language-plaintext highlighter-rouge">y</code> hanya memiliki lifetime yang sama dengan <em>scope</em>-nya, maka Rust memastikan bahwa referensi ini tidak akan mencoba untuk mengakses memori yang tidak valid. Lifetime disini menunjukkan bahwa <code class="language-plaintext highlighter-rouge">y</code> akan tetap valid selama <code class="language-plaintext highlighter-rouge">x</code> masih ada di memori, dan ia belum keluar dari <em>scope</em> miliknya.</p>
+
+<h2 id="explicit-annotation">Explicit Annotation</h2>
+
+<p>Ada kalanya Rust tidak dapat menentukan lifetime secara implisit, seperti saat kita menggunakan <em>reference</em> pada tipe data kompleks seperti <code class="language-plaintext highlighter-rouge">struct</code> atau <code class="language-plaintext highlighter-rouge">enum</code>, Rust tidak dapat menentukan lifetime secara otomatis. Dalam kasus ini, programmer harus secara manual menentukan lifetime dari variabel atau objek tersebut. Hal ini disebut dengan <em>explicit annotation</em>.</p>
+
+<p>Lihat contoh dibawah ini.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nf">get_value</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">get_value</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">i32</span> <span class="p">{</span>
+    <span class="n">x</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Kode diatas akan berjalan dengan baik karena Rust dapat menentukan lifetime secara otomatis. Hal ini disebut dengan <em>lifetime elision</em>.</p>
+
+<p>Namun, jika kita mengubah kode tersebut menjadi seperti dibawah ini, maka Rust akan mengeluarkan error.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nf">get_bigger</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">);</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">get_bigger</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">i32</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span>  <span class="o">&amp;</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">i32</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="p">{</span>
+        <span class="n">a</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">b</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>   |
+10 | fn get_bigger(a: &amp;i32, b:  &amp;i32) -&gt; &amp;i32 {
+   |                  ----      ----     ^ expected named lifetime parameter
+   |
+   = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `a` or `b`
+help: consider introducing a named lifetime parameter
+   |
+10 | fn get_bigger&lt;'a&gt;(a: &amp;'a i32, b:  &amp;'a i32) -&gt; &amp;'a i32 {
+   |     
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Hal ini disebabkan oleh Rust yang tidak dapat menentukan <em>reference</em> mana yang akan dikembalikan oleh fungsi <code class="language-plaintext highlighter-rouge">get_bigger</code>. Bisa jadi <code class="language-plaintext highlighter-rouge">a</code> dan <code class="language-plaintext highlighter-rouge">b</code> memiliki lifetime yang berbeda dan Rust tidak mengetahui harus mengembalikan lifetime yang mana untuk <em>reference</em> yang dikembalikan. Karena itu, kita harus secara manual menentukan lifetime parameter dari variabel <code class="language-plaintext highlighter-rouge">a</code> dan <code class="language-plaintext highlighter-rouge">b</code> dengan menambahkan lifetime specifier di antara reference dan tipe data disana.</p>
+
+<p>Biasanya, nama lifetime parameter dimulai dari <code class="language-plaintext highlighter-rouge">'a</code>, <code class="language-plaintext highlighter-rouge">'b</code>, dan seterusnya. Namun, kita juga dapat memberikan nama lain untuk lifetime parameter, seperti <code class="language-plaintext highlighter-rouge">'x</code>, <code class="language-plaintext highlighter-rouge">'y</code>, dan seterusnya.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nf">get_bigger</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">);</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="n">get_bigger</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span>  <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">i32</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="p">{</span>
+        <span class="n">a</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">b</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Dengan begini, Rust mengetahui bahwa fungsi <code class="language-plaintext highlighter-rouge">get_bigger</code> akan mengembalikan <em>reference</em> yang memiliki lifetime yang sama dengan variabel <code class="language-plaintext highlighter-rouge">a</code> dan <code class="language-plaintext highlighter-rouge">b</code>.</p>
+
+<h2 id="lifetime-pada-struct">Lifetime pada Struct</h2>
+
+<p>Bila sebuah <code class="language-plaintext highlighter-rouge">struct</code> memiliki field yang merupakan <em>reference</em>, Rust tidak dapat menentukan lifetime secara otomatis. Kita harus secara manual menentukan lifetime parameter dari <code class="language-plaintext highlighter-rouge">struct</code> tersebut.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">Magician</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="n">name</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">power</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"Marisa Kirisame"</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">power</span> <span class="o">=</span> <span class="s">"Heat Magic"</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">magician</span> <span class="o">=</span> <span class="n">Magician</span> <span class="p">{</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">power</span><span class="p">,</span>
+    <span class="p">};</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{} has {} power"</span><span class="p">,</span> <span class="n">magician</span><span class="py">.name</span><span class="p">,</span> <span class="n">magician</span><span class="py">.power</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Dan kemudian, pada <em>implementation block</em> kita dapat menuliskannya seperti ini.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="k">impl</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span> <span class="n">Magician</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">,</span> <span class="n">power</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">Self</span> <span class="p">{</span>
+            <span class="n">name</span><span class="p">,</span>
+            <span class="n">power</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">introduce</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"{} is {} years old and has {} power"</span><span class="p">,</span> <span class="k">self</span><span class="py">.name</span><span class="p">,</span> <span class="k">self</span><span class="py">.power</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="static-lifetime">Static Lifetime</h2>
+
+<p>Lifetime <code class="language-plaintext highlighter-rouge">static</code> adalah lifetime yang paling panjang, yaitu selama program berjalan. Lifetime <code class="language-plaintext highlighter-rouge">static</code> biasanya digunakan untuk variabel atau objek yang memiliki nilai yang tetap selama program berjalan, seperti konstanta.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="k">static</span> <span class="n">PI</span><span class="p">:</span> <span class="nb">f64</span> <span class="o">=</span> <span class="mf">3.14159265359</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">PI</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">PI</code> yang dideklarasikan sebagai <code class="language-plaintext highlighter-rouge">static</code> akan memiliki lifetime <code class="language-plaintext highlighter-rouge">static</code> yang sama dengan program. Ketika program selesai dieksekusi, maka <code class="language-plaintext highlighter-rouge">PI</code> akan dihapus dari memori.</p>
+
+<p>Penggunaan lifetime annotation <code class="language-plaintext highlighter-rouge">'static</code> juga dapat digunakan. Biasanya dalam kasus pengembalian <em>value</em> yang bertipe <code class="language-plaintext highlighter-rouge">&amp;str</code> dari fungsi.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nf">get_name</span><span class="p">();</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">get_name</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span> <span class="p">{</span>
+    <span class="s">"Marisa Kirisame"</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Di Rust, <code class="language-plaintext highlighter-rouge">str</code> selalu menjadi sebuah <em>reference</em> karena ia merepresentasikan string slice yang menunjuk ke sebuah urutan byte-byte yang UTF-8 di dalam memori. String slice merupakan tampilan atau representasi dari sebuah string, sehingga ia meminjam memori yang mendasari yang memuat byte-byte dari string tersebut. Oleh karena itu, str selalu menjadi sebuah reference, yaitu &amp;str.</p>
+
+<p>Karena lifetime sebuah <em>reference</em> hanya berlaku pada <em>scope</em> tempat ia dibuat, <code class="language-plaintext highlighter-rouge">&amp;str</code> yang merupakan sebuah <em>reference</em> akan memaksa kita untuk menggunakan lifetime <code class="language-plaintext highlighter-rouge">static</code> dimana ia akan memiliki lifetime yang sama dengan program dalam kasus di atas.</p>
+:ET

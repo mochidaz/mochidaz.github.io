@@ -147,16 +147,15 @@ Dan kemudian, pada *implementation block* kita dapat menuliskannya seperti ini.
 
 ```rust
 impl<'a> Magician<'a> {
-    fn new(name: &'a str, age: u8, power: &'a str) -> Self {
+    fn new(name: &'a str, power: &'a str) -> Self {
         Self {
             name,
-            age,
             power,
         }
     }
 
     fn introduce(&self) {
-        println!("{} is {} years old and has {} power", self.name, self.age, self.power);
+        println!("{} has {} power", self.name, self.power);
     }
 }
 ```
