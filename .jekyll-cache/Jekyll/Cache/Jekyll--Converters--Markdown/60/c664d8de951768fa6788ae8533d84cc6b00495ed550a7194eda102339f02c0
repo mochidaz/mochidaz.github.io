@@ -1,4 +1,4 @@
-I"F@<p>Kita telah mencapai bab Smart Pointer. Namun, ini tidak terdapat pada seri utama Bahasa Rust kita. Karena itu saya memberi judul artikel ini “Bahasa: Rust Smart Pointers” dan bukan dengan memberi seri nomor seperti biasanya.</p>
+I"A@<p>Kita telah mencapai bab Smart Pointer. Namun, ini tidak terdapat pada seri utama Bahasa Rust kita. Karena itu saya memberi judul artikel ini “Bahasa: Rust Smart Pointers” dan bukan dengan memberi seri nomor seperti biasanya.</p>
 
 <p>Sebuah pointer, sebuah konsep umum untuk sebuah variabel yang menyimpan alamat memory. Alamat memory ini menunjuk - <em>pointing</em> pada sebuah data. Smart Pointer, atau pointer pintar namun, adalah struktur data yang tidak hanya berperilaku seperti sebuah pointer, namun juga memiliki kapabilitas lain. Konsep smart pointer ini berawal dari C++.</p>
 
@@ -42,7 +42,7 @@
 </pre></td><td class="rouge-code"><pre><span class="nd">#[derive(Debug)]</span>
 <span class="k">enum</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nf">Cons</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">),</span>
-    <span class="nb">Nil</span><span class="p">,</span>
+    <span class="n">Nil</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
@@ -79,14 +79,14 @@
 </pre></td><td class="rouge-code"><pre><span class="nd">#[derive(Debug)]</span>
 <span class="k">enum</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nf">Cons</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">),</span>
-    <span class="nb">Nil</span><span class="p">,</span>
+    <span class="n">Nil</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="c1">// Agar dapat langsung menggunakan varian didalam List</span>
 <span class="k">use</span> <span class="nn">List</span><span class="p">::</span><span class="o">*</span><span class="p">;</span> 
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">613</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">)));</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">613</span><span class="p">,</span> <span class="n">Nil</span><span class="p">)));</span>
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">l</span><span class="p">);</span>
 <span class="p">}</span>
@@ -154,7 +154,7 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` r
 </pre></td><td class="rouge-code"><pre><span class="nd">#[derive(Debug)]</span>
 <span class="k">enum</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nf">Cons</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">),</span>
-    <span class="nb">Nil</span><span class="p">,</span>
+    <span class="n">Nil</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="k">use</span> <span class="nn">List</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
@@ -162,7 +162,7 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` r
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 
 	<span class="c1">// Untuk me-wrap nilai dalam Box, gunakan Box::new(nilai)</span>
-    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">613</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nb">Nil</span><span class="p">))))));</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">613</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">Nil</span><span class="p">))))));</span>
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">l</span><span class="p">);</span>
 <span class="p">}</span>

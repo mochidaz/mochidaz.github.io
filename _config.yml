@@ -3,12 +3,12 @@ name: "Kakashi Spirit News Bandung"
 title: "Kakashi Spirit News"
 description: "The place where my mind roams free (there are free tutorials too!)"
 logo: '/assets/images/logo.png'
-favicon: '/assets/images/logo.png'
+favicon: '/assets/images/favicon.ico'
 baseurl: /
 url: "kakashispiritnews.my.id"
 google_analytics: 'UA-150900029-1'
 disqus: 'kakashispiritnews'
-include: ["_pages"]
+include: ["_pages", "robots.txt"]
 permalink: /:title/
 
 # Authors

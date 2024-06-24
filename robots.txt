@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://kakashispiritnews.my.id/sitemap.xml
