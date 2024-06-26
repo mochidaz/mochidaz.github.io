@@ -3,7 +3,7 @@ title: "Menulis dan Membaca Format File Binary Custom"
 layout: post
 tags: c++ programming coding
 lang: id
-date: 2024-6-27
+date: 2024-6-26
 permalink: /Custom-Binary-Format
 categories: [rust, programming]
 image: /assets/images/binary-file.png
